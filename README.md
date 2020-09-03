@@ -74,7 +74,7 @@ aws-vault exec moj-pttp-dev -- terraform workspace list
 
 The current workspace you're using is indicated by an asterisk (*) in the list.
 
-1. If you don't see your workspace selected, run:
+3. If you don't see your workspace selected, run:
 
 ```
 aws-vault exec moj-pttp-dev -- terraform workspace select <my-name>
