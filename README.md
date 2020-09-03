@@ -1,45 +1,108 @@
 # Prison Technology Transformation Program Monitoring and Alerting Platform
 
+## Table of contents
+
+- [Getting started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Set up AWS Vault](#set-up-aws-vault)
+  - [Set up MFA on your AWS account](#set-up-mfa-on-your-aws-account)
+  - [Set up your Terraform workspace](#set-up-your-terraform-workspace)
+  - [Set up a default region for AWS](#set-up-a-default-region-for-aws)
+- [Usage](#usage)
+  - [Running the code](#running-the-code)
+
 ## Getting started
 
 ### Prerequisites
 
-- The [AWS CLI](https://aws.amazon.com/cli/) should be installed.
-- [aws-vault](https://github.com/99designs/aws-vault) should be installed. This is used to easily manage and switch between AWS account profiles on the command line.
-- [Terraform](https://www.terraform.io/) should be installed. We recommend using a Terraform version manager such as [tfenv](https://github.com/tfutils/tfenv). Please make sure that the version of Terraform which you use on your local machine is the same as the one referenced in the file `buildspec.yml`.
-- You should have AWS account access to at least the Dev and Shared Services AWS accounts (ask in the channel `#moj-pttp` in Slack if you don't have this).
+- [AWS Command Line Interface (CLI)](https://aws.amazon.com/cli/) - to manage AWS services
+- [AWS Vault](https://github.com/99designs/aws-vault) - to easily manage and switch between AWS account profiles on the command line
+- [tfenv](https://github.com/tfutils/tfenv) - to easily manage and switch [Terraform](https://www.terraform.io/) versions
 
-### Set up aws-vault
+You should also have AWS account access to at least the Dev and Shared Services AWS accounts.
 
-Once aws-vault is installed, run the following two commands to create profiles for your AWS Dev and AWS Shared Services account:
+### Set up AWS Vault
 
-- `aws-vault add moj-pttp-dev` (this will prompt you for the values of your AWS Dev account's IAM user).
-- `aws-vault add moj-pttp-shared-services` (this will prompt you for the values of your AWS Shared Services account's IAM user).
+1. Create a profile for the AWS Dev account
+
+```
+aws-vault add moj-pttp-dev
+```
+
+This will prompt you for the values of your AWS Dev account's IAM user.
+
+2. Create a profile for the AWS Shared Services account
+
+```
+aws-vault add moj-pttp-shared-services
+```
+
+This will prompt you for the values of your AWS Shared Services account's IAM user.
 
 ### Set up MFA on your AWS account
 
-Multi-Factor Authentication (MFA) is required on AWS accounts in this project. You will need to do this for both your Dev and Shared Services AWS accounts.
+Multi-Factor Authentication (MFA) is required on AWS accounts in this project.
+You will need to do this for both your Dev and Shared Services AWS accounts.
 
-The steps to set this up are as follows:
+1. Navigate to the AWS Management Console for a given account
 
-- Navigate to the AWS console for a given account.
-- Click on "IAM" under Services in the AWS console.
-- Click on "Users" in the IAM menu.
-- Find your username within the list and click on it.
-- Select the security credentials tab, then assign an MFA device using the "Virtual MFA device" option (follow the on-screen instructions for this step).
-- Edit your local `~/.aws/config` file with the key value pair of `mfa_serial=<iam_role_from_mfa_device>` for each of your accounts. The value for `<iam_role_from_mfa_device>` can be found in the AWS console on your IAM user details page, under "Assigned MFA device". Ensure that you remove the text "(Virtual)" from the end of key value pair's value when you edit this file.
+```
+aws-vault login <AWS account name>
+# For Dev: aws-vault login moj-pttp-dev
+# For Shared Services: aws-vault login moj-pttp-shared-services
+```
+
+2. Click on **IAM** under Security, Identity, & Compliance in Services
+3. Click on **Users** under Access management in the IAM sidebar
+4. Find and click on your username within the list
+5. Select the **Security credentials** tab, then assign an MFA device using the **Virtual MFA device** option (follow the on-screen instructions for this step)
+6. Edit your local `~/.aws/config` file with the key value pair of `mfa_serial=<iam_role_from_mfa_device>` for each of your accounts. The value for `<iam_role_from_mfa_device>` can be found in the AWS console on your IAM user details page, under **Assigned MFA device**. Ensure that you remove the text "(Virtual)" from the end of key value pair's value when you edit this file.
+
+### Set up your Terraform workspace
+
+1. Create your own personal workspace by replacing `<my-name>` with your name and running:
+
+```
+aws-vault exec moj-pttp-dev -- terraform workspace new <my-name>
+```
+
+2. Ensure your workspace is created by listing all available workspaces:
+
+```
+aws-vault exec moj-pttp-dev -- terraform workspace list
+```
+
+The current workspace you're using is indicated by an asterisk (*) in the list.
+
+1. If you don't see your workspace selected, run:
+
+```
+aws-vault exec moj-pttp-dev -- terraform workspace select <my-name>
+```
+
+### Set up a default region for AWS
+
+1. Open your AWS config file (usually found in `~/.aws/config`)
+2. Add `region=eu-west-2` for both the `profile moj-pttp-dev` and the `profile moj-pttp-shared-services` workspaces
+
+## Usage
 
 ### Running the code
 
-Run the following commands to get the code running on your machine:
+To create an execution plan:
 
-- Run `aws-vault exec moj-pttp-dev -- terraform workspace new <myname>` (replace `<myname>` with your own name).
-- Run `aws-vault exec moj-pttp-dev -- terraform workspace list` and make sure that your new workspace with your name is selected.
-- If you don't see your new workspace selected, run `aws-vault exec moj-pttp-dev -- terraform workspace select <myname>`.
-- Edit your aws config (usually found in `~/.aws/config`) to include the key value pair of `region=eu-west-2` for both the `profile moj-pttp-dev` and the `profile moj-pttp-shared-services` workspaces.
-- Run `aws-vault exec moj-pttp-dev -- terraform plan` and check that for an output. If it appears as correct terraform output, run `aws-vault exec moj-pttp-dev -- terraform apply`.
+```
+aws-vault exec moj-pttp-dev -- terraform plan
+```
 
-### Tearing down infrastructure
+To execute changes:
 
-To minimise costs and keep the environment clean, regularly run teardown in your workspace. E.g:  
-`aws-vault exec moj-pttp-dev -- terraform destroy`
+```
+aws-vault exec moj-pttp-dev -- terraform apply
+```
+
+To minimise costs and keep the environment clean, regularly run teardown in your workspace using:
+
+```
+aws-vault exec moj-pttp-dev -- terraform destroy
+```
