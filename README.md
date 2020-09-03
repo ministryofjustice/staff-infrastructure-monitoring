@@ -7,7 +7,7 @@
   - [Set up AWS Vault](#set-up-aws-vault)
   - [Set up MFA on your AWS account](#set-up-mfa-on-your-aws-account)
   - [Set up your Terraform workspace](#set-up-your-terraform-workspace)
-  - [Set up a default region for AWS](#set-up-a-default-region-for-aws)
+  - [Set a default region for your AWS profiles](#set-a-default-region-for-your-aws-profiles)
 - [Usage](#usage)
   - [Running the code](#running-the-code)
 
@@ -83,7 +83,7 @@ The current workspace you're using is indicated by an asterisk (*) in the list.
 aws-vault exec moj-pttp-dev -- terraform workspace select <my-name>
 ```
 
-### Set up a default region for AWS
+### Set a default region for your AWS profiles
 
 1. Open your AWS config file (usually found in `~/.aws/config`)
 2. Add `region=eu-west-2` for both the `profile moj-pttp-dev` and the `profile moj-pttp-shared-services` workspaces
