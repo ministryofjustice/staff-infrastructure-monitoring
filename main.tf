@@ -35,4 +35,5 @@ module "grafana" {
   source = "./modules/grafana"
 
   prefix = module.label.id
+  admin_password = var.grafana_admin_password
 }

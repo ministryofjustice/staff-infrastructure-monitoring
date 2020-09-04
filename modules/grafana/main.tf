@@ -13,6 +13,10 @@ resource "aws_ecs_task_definition" "grafana" {
   cpu                      = "${var.fargate_cpu}"
   memory                   = "${var.fargate_memory}"
 
+      # - GF_SECURITY_ADMIN_USER=pttp
+      # - GF_SECURITY_ADMIN_PASSWORD=password
+      # - GF_USERS_ALLOW_SIGN_UP=false
+
   container_definitions = <<DEFINITION
 [
   {
@@ -20,6 +24,10 @@ resource "aws_ecs_task_definition" "grafana" {
     "cpu": ${var.fargate_cpu},
     "image": "${var.app_image}",
     "memory": ${var.fargate_memory},
+    "environment": [
+      {"name": "GF_SECURITY_ADMIN_USER", "value": "pttp"},
+      {"name": "GF_SECURITY_ADMIN_PASSWORD", "value": "${var.admin_password}"}
+    ],
     "portMappings": [{
       "hostPort": ${var.app_port},
       "containerPort": ${var.app_port}

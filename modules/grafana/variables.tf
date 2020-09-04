@@ -40,3 +40,7 @@ variable "fargate_memory" {
 variable "prefix" {
   type = string
 }
+
+variable "admin_password" {
+  type = string
+}
