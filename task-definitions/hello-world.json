@@ -1,9 +1,0 @@
-[{
-  "name": "hello-world",
-  "image": "hello-world",
-  "essential": true,
-  "portMappings": [{
-    "containerPort": 80,
-    "hostPort": 80
-  }]
-}]

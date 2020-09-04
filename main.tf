@@ -3,8 +3,8 @@ terraform {
 
   backend "s3" {
     region     = "eu-west-2"
-    bucket     = "pttp-default-monitoring-tf-remote-state"
     key        = "terraform/v1/state"
+    bucket     = "pttp-default-monitoring-tf-remote-state"
     lock_table = "pttp-default-monitoring-terrafrom-remote-state-lock-dynamo"
   }
 }
@@ -13,38 +13,26 @@ provider "aws" {
   version = "~> 2.52"
 }
 
-data "aws_region" "current_region" {}
-
 module "label" {
-  source  = "cloudposse/label/null"
   version = "0.16.0"
+  source  = "cloudposse/label/null"
 
-  namespace = "pttp"
-  stage     = terraform.workspace
-  name      = "monitoring"
   delimiter = "-"
+  namespace = "pttp"
+  name      = "IMA"
+  stage     = terraform.workspace
 
   tags = {
     "business-unit" = "MoJO"
-    "application"   = "monitoring-and-alerting",
-    "is-production" = tostring(var.is-production),
+    "application"   = "Infrastructure Monitoring and Alerting"
     "owner"         = var.owner-email
-
     "environment-name" = "global"
     "source-code"      = "https://github.com/ministryofjustice/staff-infrastructure-monitoring"
   }
 }
 
-# Load Balancer
-  # Listener
-  # Target group
-# Networking
-  # VPC
-  # Availability zones
-  # Subnets
-# Cluster
-  # Service
-  # Task definition
-    # Docker image
+module "grafana" {
+  source = "./modules/grafana"
 
-# Security groups (maybe)
+  prefix = module.label.id
+}
