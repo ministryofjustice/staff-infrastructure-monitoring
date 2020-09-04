@@ -26,7 +26,8 @@ resource "aws_ecs_task_definition" "grafana" {
     "memory": ${var.fargate_memory},
     "environment": [
       {"name": "GF_SECURITY_ADMIN_USER", "value": "pttp"},
-      {"name": "GF_SECURITY_ADMIN_PASSWORD", "value": "${var.admin_password}"}
+      {"name": "GF_SECURITY_ADMIN_PASSWORD", "value": "${var.admin_password}"},
+      {"name": "GF_USERS_ALLOW_SIGN_UP", "value": "false"}
     ],
     "portMappings": [{
       "hostPort": ${var.app_port},
