@@ -13,7 +13,7 @@ module "label" {
   version = "0.16.0"
 
   namespace = "pttp"
-  stage     = terraform.workspace
+  stage     = "shared"
   name      = "monitoring"
   delimiter = "-"
 
