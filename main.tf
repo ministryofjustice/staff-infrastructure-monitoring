@@ -4,8 +4,8 @@ terraform {
   backend "s3" {
     region     = "eu-west-2"
     key        = "terraform/v1/state"
-    bucket     = "pttp-shared-monitoring-tf-remote-state"
-    lock_table = "pttp-shared-monitoring-terrafrom-remote-state-lock-dynamo"
+    bucket     = "pttp-global-monitoring-tf-remote-state"
+    lock_table = "pttp-global-monitoring-terrafrom-remote-state-lock-dynamo"
   }
 }
 
