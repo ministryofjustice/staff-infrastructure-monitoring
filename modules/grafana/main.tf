@@ -12,6 +12,7 @@ resource "aws_ecs_task_definition" "grafana" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = "${var.fargate_cpu}"
   memory                   = "${var.fargate_memory}"
+  execution_role_arn       = aws_iam_role.cloudwatch_role.arn
 
   volume {
     name      = "grafana_data"
@@ -38,7 +39,15 @@ resource "aws_ecs_task_definition" "grafana" {
     "portMappings": [{
       "hostPort": ${var.app_port},
       "containerPort": ${var.app_port}
-    }]
+    }],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-region" : "eu-west-2",
+        "awslogs-group" : "${aws_cloudwatch_log_group.cloudwatch_log_group.name}",
+        "awslogs-stream-prefix": "${var.prefix}"
+      }
+    }
   }
 ]
 DEFINITION
@@ -65,4 +74,9 @@ resource "aws_ecs_service" "main" {
   depends_on = [
     aws_alb_listener.front_end
   ]
+}
+
+resource "aws_cloudwatch_log_group" "cloudwatch_log_group" {
+  name              = "${var.prefix}-cloudwatch-log-group"
+  retention_in_days = 7
 }
