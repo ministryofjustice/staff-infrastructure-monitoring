@@ -13,6 +13,10 @@ resource "aws_ecs_task_definition" "grafana" {
   cpu                      = "${var.fargate_cpu}"
   memory                   = "${var.fargate_memory}"
 
+  volume {
+    name      = "grafana_data"
+  }
+
   container_definitions = <<DEFINITION
 [
   {
@@ -24,6 +28,12 @@ resource "aws_ecs_task_definition" "grafana" {
       {"name": "GF_SECURITY_ADMIN_USER", "value": "pttp"},
       {"name": "GF_SECURITY_ADMIN_PASSWORD", "value": "${var.admin_password}"},
       {"name": "GF_USERS_ALLOW_SIGN_UP", "value": "false"}
+    ],
+    "mountPoints": [
+      {
+        "sourceVolume": "grafana_data",
+        "containerPath": "/var/lib/grafana"
+      }
     ],
     "portMappings": [{
       "hostPort": ${var.app_port},
