@@ -13,10 +13,6 @@ resource "aws_ecs_task_definition" "grafana" {
   cpu                      = "${var.fargate_cpu}"
   memory                   = "${var.fargate_memory}"
 
-      # - GF_SECURITY_ADMIN_USER=pttp
-      # - GF_SECURITY_ADMIN_PASSWORD=password
-      # - GF_USERS_ALLOW_SIGN_UP=false
-
   container_definitions = <<DEFINITION
 [
   {
