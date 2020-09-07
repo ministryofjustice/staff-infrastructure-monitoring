@@ -3,10 +3,6 @@ variable "aws_region" {
   default     = "eu-west-2"
 }
 
-# variable "aws_account_id" {
-#   description = "AWS account ID"
-# }
-
 variable "az_count" {
   description = "Number of AZs to cover in a given AWS region"
   default     = "2"
@@ -24,7 +20,7 @@ variable "app_port" {
 
 variable "app_count" {
   description = "Number of docker containers to run"
-  default     = 2
+  default     = 1
 }
 
 variable "fargate_cpu" {
