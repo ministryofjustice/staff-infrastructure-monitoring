@@ -17,6 +17,7 @@ variable "grafana_db_password" {
 
 variable "grafana_db_backup_retention_period" {
   type  = number
+  default = 7
 }
 
 variable "assume_role" {

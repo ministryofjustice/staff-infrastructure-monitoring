@@ -52,5 +52,4 @@ variable "db_password" {
 variable "db_backup_retention_period" {
   description = "The days to retain Grafana database backups for"
   type        = number
-  default     = 7
 }
