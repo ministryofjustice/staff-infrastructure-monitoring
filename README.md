@@ -65,13 +65,19 @@ You will need to do this for both your Dev and Shared Services AWS accounts.
 
 ### Set up your Terraform workspace
 
-1. Create your own personal workspace by replacing `<my-name>` with your name and running:
+1. Prepare your working directory for Terraform
+
+```
+aws-vault exec moj-pttp-shared-services -- terraform init
+```
+
+2. Create your own personal workspace by replacing `<my-name>` with your name and running:
 
 ```
 aws-vault exec moj-pttp-shared-services -- terraform workspace new <my-name>
 ```
 
-2. Ensure your workspace is created by listing all available workspaces:
+3. Ensure your workspace is created by listing all available workspaces:
 
 ```
 aws-vault exec moj-pttp-shared-services -- terraform workspace list
@@ -79,7 +85,7 @@ aws-vault exec moj-pttp-shared-services -- terraform workspace list
 
 The current workspace you're using is indicated by an asterisk (*) in the list.
 
-3. If you don't see your workspace selected, run:
+4. If you don't see your workspace selected, run:
 
 ```
 aws-vault exec moj-pttp-shared-services -- terraform workspace select <my-name>
