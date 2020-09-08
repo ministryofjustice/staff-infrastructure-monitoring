@@ -28,7 +28,12 @@ resource "aws_ecs_task_definition" "grafana" {
     "environment": [
       {"name": "GF_SECURITY_ADMIN_USER", "value": "pttp"},
       {"name": "GF_SECURITY_ADMIN_PASSWORD", "value": "${var.admin_password}"},
-      {"name": "GF_USERS_ALLOW_SIGN_UP", "value": "false"}
+      {"name": "GF_USERS_ALLOW_SIGN_UP", "value": "false"},
+      {"name": "GF_DATABASE_TYPE", "value": "postgres"},
+      {"name": "GF_DATABASE_HOST", "value": "${aws_db_instance.db.endpoint}"},
+      {"name": "GF_DATABASE_NAME", "value": "${aws_db_instance.db.name}"},
+      {"name": "GF_DATABASE_USER", "value": "${var.db_username}"},
+      {"name": "GF_DATABASE_PASSWORD", "value": "${var.db_password}"}
     ],
     "mountPoints": [
       {

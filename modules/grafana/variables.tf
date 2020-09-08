@@ -40,3 +40,17 @@ variable "prefix" {
 variable "admin_password" {
   type = string
 }
+
+variable "db_username" {
+  type = string
+}
+
+variable "db_password" {
+  type = string
+}
+
+variable "db_backup_retention_period" {
+  description = "The days to retain Grafana database backups for"
+  type        = number
+  default     = 7
+}

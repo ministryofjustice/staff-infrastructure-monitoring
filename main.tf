@@ -36,4 +36,7 @@ module "grafana" {
 
   prefix = module.label.id
   admin_password = var.grafana_admin_password
+  db_username = var.grafana_db_username
+  db_password = var.grafana_db_password
+  db_backup_retention_period = var.grafana_db_backup_retention_period
 }
