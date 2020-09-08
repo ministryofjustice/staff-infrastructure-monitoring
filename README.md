@@ -68,13 +68,13 @@ You will need to do this for both your Dev and Shared Services AWS accounts.
 1. Create your own personal workspace by replacing `<my-name>` with your name and running:
 
 ```
-aws-vault exec moj-pttp-dev -- terraform workspace new <my-name>
+aws-vault exec moj-pttp-shared-services -- terraform workspace new <my-name>
 ```
 
 2. Ensure your workspace is created by listing all available workspaces:
 
 ```
-aws-vault exec moj-pttp-dev -- terraform workspace list
+aws-vault exec moj-pttp-shared-services -- terraform workspace list
 ```
 
 The current workspace you're using is indicated by an asterisk (*) in the list.
@@ -82,7 +82,7 @@ The current workspace you're using is indicated by an asterisk (*) in the list.
 3. If you don't see your workspace selected, run:
 
 ```
-aws-vault exec moj-pttp-dev -- terraform workspace select <my-name>
+aws-vault exec moj-pttp-shared-services -- terraform workspace select <my-name>
 ```
 
 ### Set a default region for your AWS profiles
@@ -102,19 +102,19 @@ aws-vault exec moj-pttp-dev -- terraform workspace select <my-name>
 To create an execution plan:
 
 ```
-aws-vault exec moj-pttp-dev -- terraform plan
+aws-vault exec moj-pttp-shared-services -- terraform plan
 ```
 
 To execute changes:
 
 ```
-aws-vault exec moj-pttp-dev -- terraform apply
+aws-vault exec moj-pttp-shared-services -- terraform apply
 ```
 
 To minimise costs and keep the environment clean, regularly run teardown in your workspace using:
 
 ```
-aws-vault exec moj-pttp-dev -- terraform destroy
+aws-vault exec moj-pttp-shared-services -- terraform destroy
 ```
 
 ## License

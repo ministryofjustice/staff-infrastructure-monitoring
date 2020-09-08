@@ -3,14 +3,17 @@ terraform {
 
   backend "s3" {
     region     = "eu-west-2"
-    key        = "terraform/v1/state"
-    bucket     = "pttp-global-monitoring-tf-remote-state"
-    lock_table = "pttp-global-monitoring-terrafrom-remote-state-lock-dynamo"
+    bucket     = "pttp-ci-infrastructure-ima-client-core-tf-state"
+    lock_table = "pttp-ci-infrastructure-ima-client-core-tf-lock-table"
   }
 }
 
 provider "aws" {
   version = "~> 2.52"
+  alias   = "env"
+  assume_role {
+    role_arn = var.assume_role
+  }
 }
 
 module "label" {
