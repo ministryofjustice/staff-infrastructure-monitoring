@@ -8,8 +8,10 @@
   - [Set up MFA on your AWS account](#set-up-mfa-on-your-aws-account)
   - [Set up your Terraform workspace](#set-up-your-terraform-workspace)
   - [Set a default region for your AWS profiles](#set-a-default-region-for-your-aws-profiles)
+  - [Create a terraform.tfvars](#create-a-terraformtfvars)
 - [Usage](#usage)
   - [Running the code](#running-the-code)
+- [License](#license)
 
 ## Getting started
 
@@ -88,6 +90,11 @@ aws-vault exec moj-pttp-dev -- terraform workspace select <my-name>
 1. Open your AWS config file (usually found in `~/.aws/config`)
 2. Add `region=eu-west-2` for both the `profile moj-pttp-dev` and the `profile moj-pttp-shared-services` workspaces
 
+### Create a `terraform.tfvars`
+
+1. Duplicate `terraform.tfvars.example` and rename the file to `terraform.tfvars`
+2. Set values for all the variables
+
 ## Usage
 
 ### Running the code
@@ -109,3 +116,7 @@ To minimise costs and keep the environment clean, regularly run teardown in your
 ```
 aws-vault exec moj-pttp-dev -- terraform destroy
 ```
+
+## License
+
+[MIT License](LICENSE)
