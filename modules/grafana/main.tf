@@ -4,6 +4,8 @@ data "aws_availability_zones" "available" {}
 ### ECS
 resource "aws_ecs_cluster" "main" {
   name = "${var.prefix}-ecs-cluster"
+
+  tags = var.tags
 }
 
 resource "aws_ecs_task_definition" "grafana" {
@@ -56,6 +58,8 @@ resource "aws_ecs_task_definition" "grafana" {
   }
 ]
 DEFINITION
+
+  tags = var.tags
 }
 
 resource "aws_ecs_service" "main" {
@@ -84,4 +88,6 @@ resource "aws_ecs_service" "main" {
 resource "aws_cloudwatch_log_group" "cloudwatch_log_group" {
   name              = "${var.prefix}-cloudwatch-log-group"
   retention_in_days = 7
+
+  tags = var.tags
 }

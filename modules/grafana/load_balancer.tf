@@ -2,6 +2,8 @@ resource "aws_alb" "main" {
   name            = "${var.prefix}-grafana-alb"
   subnets         = aws_subnet.public.*.id
   security_groups = [aws_security_group.lb.id]
+
+  tags = var.tags
 }
 
 resource "aws_alb_target_group" "app" {
@@ -10,6 +12,8 @@ resource "aws_alb_target_group" "app" {
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main.id
   target_type = "ip"
+
+  tags = var.tags
 }
 
 # Redirect all traffic from the ALB to the target group

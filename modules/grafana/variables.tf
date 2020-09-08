@@ -53,3 +53,7 @@ variable "db_backup_retention_period" {
   description = "The days to retain Grafana database backups for"
   type        = number
 }
+
+variable "tags" {
+  type = map(string)
+}

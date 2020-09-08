@@ -18,6 +18,8 @@ resource "aws_security_group" "lb" {
     protocol  = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = var.tags
 }
 
 # Traffic to the ECS Cluster should only come from the ALB
@@ -39,6 +41,8 @@ resource "aws_security_group" "ecs_tasks" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = var.tags
 }
 
 resource "aws_security_group" "db_in" {
@@ -52,4 +56,6 @@ resource "aws_security_group" "db_in" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = var.tags
 }

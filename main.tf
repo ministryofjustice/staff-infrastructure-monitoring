@@ -42,4 +42,5 @@ module "grafana" {
   db_username = var.grafana_db_username
   db_password = var.grafana_db_password
   db_backup_retention_period = var.grafana_db_backup_retention_period
+  tags = module.label.tags
 }
