@@ -11,6 +11,7 @@ resource "aws_db_instance" "db" {
   engine_version              = "12"
   identifier                  = "${var.prefix}-db"
   instance_class              = "db.t2.medium"
+  monitoring_interval         = 60
   monitoring_role_arn         = aws_iam_role.rds_monitoring_role.arn
   multi_az                    = true
   name                        = replace(var.prefix, "-", "")
