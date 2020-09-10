@@ -3,7 +3,7 @@
 resource "aws_security_group" "lb" {
   name        = "${var.prefix}-alb-sg"
   description = "controls access to the ALB"
-  vpc_id      = "${aws_vpc.main.id}"
+  vpc_id      = aws_vpc.main.id
   tags        = var.tags
 
   ingress {
@@ -25,14 +25,14 @@ resource "aws_security_group" "lb" {
 resource "aws_security_group" "ecs_tasks" {
   name        = "${var.prefix}-ecs-tasks"
   description = "allow inbound access from the ALB only"
-  vpc_id      = "${aws_vpc.main.id}"
+  vpc_id      = aws_vpc.main.id
   tags        = var.tags
 
   ingress {
     protocol        = "tcp"
-    from_port       = "${var.app_port}"
-    to_port         = "${var.app_port}"
-    security_groups = ["${aws_security_group.lb.id}"]
+    from_port       = var.app_port
+    to_port         = var.app_port
+    security_groups = [aws_security_group.lb.id]
   }
 
   egress {
@@ -46,7 +46,7 @@ resource "aws_security_group" "ecs_tasks" {
 resource "aws_security_group" "db_in" {
   name        = "${var.prefix}-db-in"
   description = "allow connections to the DB"
-  vpc_id      = "${aws_vpc.main.id}"
+  vpc_id      = aws_vpc.main.id
   tags        = var.tags
 
   ingress {

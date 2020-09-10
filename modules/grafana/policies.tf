@@ -1,4 +1,3 @@
-
 data "template_file" "cloudwatch_assume_role_policy" {
   template = file("${path.module}/policies/cloudwatch_assume_role_policy.json")
 }
@@ -25,6 +24,6 @@ resource "aws_iam_role" "rds_monitoring_role" {
 }
 
 resource "aws_iam_role_policy_attachment" "rds_monitoring_policy_attachment" {
-  role       = "${aws_iam_role.rds_monitoring_role.name}"
-  policy_arn = "${data.aws_iam_policy.rds_monitoring_policy.arn}"
+  role       = aws_iam_role.rds_monitoring_role.name
+  policy_arn = data.aws_iam_policy.rds_monitoring_policy.arn
 }
