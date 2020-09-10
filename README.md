@@ -128,3 +128,13 @@ aws-vault exec moj-pttp-shared-services -- terraform destroy
 ## License
 
 [MIT License](LICENSE)
+
+## Links
+* `https://github.com/ministryofjustice/staff-device-dns-dhcp-infrastructure/`
+* `https://github.com/ministryofjustice/pttp-infrastructure`
+* `https://section411.com/2019/07/hello-world/`
+* `https://github.com/cds-snc/aws-ecs-fargate`
+* `https://github.com/telia-oss/terraform-aws-grafana`
+* `https://github.com/mashun4ek/ecs_terraform_workshop`
+* `https://github.com/Oxalide/terraform-fargate-example/blob/master/main.tf`
+* `https://github.com/ulikabbq/grafana-fargate`
