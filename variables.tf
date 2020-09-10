@@ -3,6 +3,10 @@ variable "owner-email" {
   default = "pttp@justice.gov.uk"
 }
 
+variable "grafana_admin_username" {
+  type = string
+}
+
 variable "grafana_admin_password" {
   type = string
 }

@@ -1,5 +1,5 @@
-assume_role=""
-
-grafana_admin_password = ""
-grafana_db_password = ""
 grafana_db_username = "pttp_db"
+grafana_db_password = ""
+grafana_admin_username = ""
+grafana_admin_password = ""
+assume_role = "arn:aws:iam::068084030754:role/pttp-development-infra-shared-services-admin"

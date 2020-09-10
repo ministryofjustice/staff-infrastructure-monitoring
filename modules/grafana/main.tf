@@ -66,7 +66,7 @@ resource "aws_ecs_service" "main" {
   task_definition = aws_ecs_task_definition.grafana.arn
   desired_count   = var.app_count
   launch_type     = "FARGATE"
-  tags            = var.tags
+  # tags            = var.tags # Cannot use till ID and ARN settings are updated
 
   network_configuration {
     security_groups = ["${aws_security_group.ecs_tasks.id}"]

@@ -138,3 +138,10 @@ aws-vault exec moj-pttp-shared-services -- terraform destroy
 * `https://github.com/mashun4ek/ecs_terraform_workshop`
 * `https://github.com/Oxalide/terraform-fargate-example/blob/master/main.tf`
 * `https://github.com/ulikabbq/grafana-fargate`
+
+## Opt In to new ID and ARN formats
+* `https://aws.amazon.com/blogs/compute/migrating-your-amazon-ecs-deployment-to-the-new-arn-and-resource-id-format-2/`
+* `https://console.aws.amazon.com/ecs/home#/settings`
+
+## Diagrams
+* `https://drive.google.com/file/d/10seoRJlnN4QsOphleAg9M5NrhADQdFV0/view`
