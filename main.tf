@@ -11,15 +11,15 @@ terraform {
 provider "aws" {
   alias   = "env"
   version = "~> 2.52"
-  
+
   assume_role {
     role_arn = var.assume_role
   }
 }
 
 module "label" {
-  version   = "0.16.0"
-  source    = "cloudposse/label/null"
+  version = "0.16.0"
+  source  = "cloudposse/label/null"
 
   delimiter = "-"
   name      = "IMA"
