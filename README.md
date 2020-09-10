@@ -69,6 +69,8 @@ You will need to do this for both your Dev and Shared Services AWS accounts.
 
 ```
 aws-vault exec moj-pttp-shared-services -- terraform init
+path to state file: terraform.development.state
+assume_role: arn:aws:iam::068084030754:role/pttp-development-infra-shared-services-admin
 ```
 
 2. Create your own personal workspace by replacing `<my-name>` with your name and running:

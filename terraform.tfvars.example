@@ -1,3 +1,5 @@
+assume_role=""
+
 grafana_admin_password = ""
-grafana_db_username = "pttp_db"
 grafana_db_password = ""
+grafana_db_username = "pttp_db"

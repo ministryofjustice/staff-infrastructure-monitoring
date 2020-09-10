@@ -9,27 +9,28 @@ terraform {
 }
 
 provider "aws" {
-  version = "~> 2.52"
   alias   = "env"
+  version = "~> 2.52"
+  
   assume_role {
     role_arn = var.assume_role
   }
 }
 
 module "label" {
-  version = "0.16.0"
-  source  = "cloudposse/label/null"
+  version   = "0.16.0"
+  source    = "cloudposse/label/null"
 
   delimiter = "-"
-  namespace = "pttp"
   name      = "IMA"
+  namespace = "pttp"
   stage     = terraform.workspace
 
   tags = {
-    "business-unit" = "MoJO"
-    "application"   = "Infrastructure Monitoring and Alerting"
-    "owner"         = var.owner-email
+    "business-unit"    = "MoJO"
     "environment-name" = "global"
+    "owner"            = var.owner-email
+    "application"      = "Infrastructure Monitoring and Alerting"
     "source-code"      = "https://github.com/ministryofjustice/staff-infrastructure-monitoring"
   }
 }
@@ -37,10 +38,10 @@ module "label" {
 module "grafana" {
   source = "./modules/grafana"
 
-  prefix = module.label.id
-  admin_password = var.grafana_admin_password
-  db_username = var.grafana_db_username
-  db_password = var.grafana_db_password
+  prefix                     = module.label.id
+  tags                       = module.label.tags
+  db_username                = var.grafana_db_username
+  db_password                = var.grafana_db_password
+  admin_password             = var.grafana_admin_password
   db_backup_retention_period = var.grafana_db_backup_retention_period
-  tags = module.label.tags
 }

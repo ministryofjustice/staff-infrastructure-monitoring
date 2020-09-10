@@ -19,18 +19,17 @@ resource "aws_db_instance" "db" {
   storage_encrypted           = true
   storage_type                = "gp2"
   vpc_security_group_ids      = [aws_security_group.db_in.id]
-
-  tags = var.tags
+  tags                        = var.tags
 }
 
 resource "aws_db_subnet_group" "db_subnet_group" {
   name       = "${var.prefix}-db-subnet-group"
+  tags       = var.tags
+
   subnet_ids = [
     aws_subnet.public[0].id,
     aws_subnet.public[1].id,
     aws_subnet.private[0].id,
     aws_subnet.private[1].id
   ]
-
-  tags = var.tags
 }

@@ -4,6 +4,7 @@ resource "aws_security_group" "lb" {
   name        = "${var.prefix}-alb-sg"
   description = "controls access to the ALB"
   vpc_id      = "${aws_vpc.main.id}"
+  tags        = var.tags
 
   ingress {
     protocol    = "tcp"
@@ -13,13 +14,11 @@ resource "aws_security_group" "lb" {
   }
 
   egress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  tags = var.tags
 }
 
 # Traffic to the ECS Cluster should only come from the ALB
@@ -27,6 +26,7 @@ resource "aws_security_group" "ecs_tasks" {
   name        = "${var.prefix}-ecs-tasks"
   description = "allow inbound access from the ALB only"
   vpc_id      = "${aws_vpc.main.id}"
+  tags        = var.tags
 
   ingress {
     protocol        = "tcp"
@@ -41,14 +41,13 @@ resource "aws_security_group" "ecs_tasks" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  tags = var.tags
 }
 
 resource "aws_security_group" "db_in" {
   name        = "${var.prefix}-db-in"
   description = "allow connections to the DB"
   vpc_id      = "${aws_vpc.main.id}"
+  tags        = var.tags
 
   ingress {
     from_port   = 5432
@@ -56,6 +55,4 @@ resource "aws_security_group" "db_in" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  tags = var.tags
 }
