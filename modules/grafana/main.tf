@@ -34,6 +34,7 @@ resource "aws_ecs_task_definition" "grafana" {
         {"name": "GF_DATABASE_USER", "value": "${var.db_username}"},
         {"name": "GF_DATABASE_PASSWORD", "value": "${var.db_password}"},
         {"name": "GF_DATABASE_NAME", "value": "${aws_db_instance.db.name}"},
+        {"name": "GF_SECURITY_ADMIN_USER", "value": "${var.admin_username}"},
         {"name": "GF_DATABASE_HOST", "value": "${aws_db_instance.db.endpoint}"},
         {"name": "GF_SECURITY_ADMIN_PASSWORD", "value": "${var.admin_password}"}
       ],

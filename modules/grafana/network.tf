@@ -58,7 +58,7 @@ resource "aws_route_table" "private" {
   tags   = var.tags
 
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block     = "0.0.0.0/0"
     nat_gateway_id = element(aws_nat_gateway.gw.*.id, count.index)
   }
 }
