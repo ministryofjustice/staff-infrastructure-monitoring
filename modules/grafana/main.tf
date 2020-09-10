@@ -28,7 +28,7 @@ resource "aws_ecs_task_definition" "grafana" {
     "image": "${var.app_image}",
     "memory": ${var.fargate_memory},
     "environment": [
-      {"name": "GF_SECURITY_ADMIN_USER", "value": "pttp"},
+      {"name": "GF_SECURITY_ADMIN_USER", "value": "${var.admin_username}"},
       {"name": "GF_SECURITY_ADMIN_PASSWORD", "value": "${var.admin_password}"},
       {"name": "GF_USERS_ALLOW_SIGN_UP", "value": "false"},
       {"name": "GF_DATABASE_TYPE", "value": "postgres"},

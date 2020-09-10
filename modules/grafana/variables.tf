@@ -37,6 +37,10 @@ variable "prefix" {
   type = string
 }
 
+variable "admin_username" {
+  default = "pttp"
+}
+
 variable "admin_password" {
   type = string
 }
