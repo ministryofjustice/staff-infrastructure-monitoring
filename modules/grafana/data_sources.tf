@@ -4,8 +4,8 @@ provider "grafana" {
 }
 
 resource "grafana_data_source" "cloudwatch_data_source" {
-  type = "cloudwatch"
   name = "${var.prefix}-cloudwatch"
+  type = "cloudwatch"
 
   json_data {
     default_region = var.aws_region
@@ -16,4 +16,8 @@ resource "grafana_data_source" "cloudwatch_data_source" {
     access_key = "123"
     secret_key = "456"
   }
+
+  depends_on = [
+    aws_alb.main
+  ]
 }
