@@ -29,9 +29,9 @@ variable "assume_role" {
 }
 
 variable "aws_cloudwatch_access_key" {
-  type  = string
+  type = string
 }
 
 variable "aws_cloudwatch_secret" {
-  type  = string
+  type = string
 }
