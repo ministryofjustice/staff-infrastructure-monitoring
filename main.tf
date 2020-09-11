@@ -44,5 +44,7 @@ module "grafana" {
   db_password                = var.grafana_db_password
   admin_username             = var.grafana_admin_username
   admin_password             = var.grafana_admin_password
+  aws_cloudwatch_secret      = var.aws_cloudwatch_secret
+  aws_cloudwatch_access_key  = var.aws_cloudwatch_access_key
   db_backup_retention_period = var.grafana_db_backup_retention_period
 }

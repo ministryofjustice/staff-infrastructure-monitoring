@@ -13,8 +13,8 @@ resource "grafana_data_source" "cloudwatch_data_source" {
   }
 
   secure_json_data {
-    access_key = "123"
-    secret_key = "456"
+    access_key = var.aws_cloudwatch_access_key
+    secret_key = var.aws_cloudwatch_secret
   }
 
   depends_on = [
