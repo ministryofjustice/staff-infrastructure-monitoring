@@ -23,3 +23,11 @@ variable "grafana_db_backup_retention_period" {
 variable "assume_role" {
   type = string
 }
+
+variable "aws_cloudwatch_access_key" {
+  type  = string
+}
+
+variable "aws_cloudwatch_secret" {
+  type  = string
+}
