@@ -6,6 +6,7 @@ provider "grafana" {
 resource "grafana_data_source" "cloudwatch_data_source" {
   type = "cloudwatch"
   name = "${var.prefix}-cloudwatch"
+  url  = "http://${aws_alb.main.dns_name}"
 
   json_data {
     default_region = var.aws_region
