@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "aws" {
-  version = "~> 2.52"
+  version = "~> 2.68"
   alias   = "env"
   assume_role {
     role_arn = var.assume_role
@@ -45,4 +45,8 @@ module "grafana" {
   tags = module.label.tags
   aws_cloudwatch_access_key = var.aws_cloudwatch_access_key
   aws_cloudwatch_secret = var.aws_cloudwatch_secret
+
+  providers = {
+    aws = aws.env
+  }
 }
