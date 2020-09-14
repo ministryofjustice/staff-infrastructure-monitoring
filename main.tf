@@ -9,8 +9,8 @@ terraform {
 }
 
 provider "aws" {
+  version = "~> 2.68"
   alias   = "env"
-  version = "~> 2.52"
 
   assume_role {
     role_arn = var.assume_role
@@ -37,6 +37,10 @@ module "label" {
 
 module "grafana" {
   source = "./modules/grafana"
+
+  providers = {
+    aws = aws.env
+  }
 
   prefix                     = module.label.id
   tags                       = module.label.tags
