@@ -15,8 +15,6 @@ env:
     TF_VAR_assume_role: "/codebuild/pttp-ci-ima-pipeline/$ENV/assume_role"
     TF_VAR_grafana_db_username: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_db_username" 
     TF_VAR_grafana_db_password: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_db_password"
-    TF_VAR_aws_cloudwatch_access_key: "/codebuild/pttp-ci-ima-pipeline/$ENV/aws_cloudwatch_access_key" 
-    TF_VAR_aws_cloudwatch_secret: "/codebuild/pttp-ci-ima-pipeline/$ENV/aws_cloudwatch_secret"
 
 phases:
   install:
