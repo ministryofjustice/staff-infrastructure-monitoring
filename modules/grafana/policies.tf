@@ -22,7 +22,7 @@ resource "aws_iam_role_policy_attachment" "cloudwatch_access_policy_attachment" 
 }
 
 resource "aws_iam_role_policy_attachment" "cloudwatch_read_access_policy_attachment" {
-  policy_arn = "arn:aws:iam::aws:policy/service-role/CloudWatchReadOnlyAccess"
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchReadOnlyAccess"
   role       = aws_iam_role.cloudwatch_read_role.name
 }
 
