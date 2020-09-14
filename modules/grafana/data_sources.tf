@@ -10,8 +10,7 @@ resource "grafana_data_source" "cloudwatch_data_source" {
 
   json_data {
     default_region  = var.aws_region
-    auth_type       = "arn"
-    assume_role_arn = aws_iam_role.cloudwatch_read_role.arn
+    auth_type       = "credentials"
   }
 
   depends_on = [

@@ -15,6 +15,7 @@ resource "aws_ecs_task_definition" "grafana" {
   cpu                      = "${var.fargate_cpu}"
   memory                   = "${var.fargate_memory}"
   execution_role_arn       = aws_iam_role.cloudwatch_role.arn
+  task_role_arn            = aws_iam_role.cloudwatch_read_role.arn
 
   volume {
     name      = "grafana_data"

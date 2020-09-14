@@ -61,11 +61,3 @@ variable "db_backup_retention_period" {
 variable "tags" {
   type = map(string)
 }
-
-variable "aws_cloudwatch_access_key" {
-  type = string
-}
-
-variable "aws_cloudwatch_secret" {
-  type = string
-}

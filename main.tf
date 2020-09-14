@@ -43,8 +43,6 @@ module "grafana" {
   db_password = var.grafana_db_password
   db_backup_retention_period = var.grafana_db_backup_retention_period
   tags = module.label.tags
-  aws_cloudwatch_access_key = var.aws_cloudwatch_access_key
-  aws_cloudwatch_secret = var.aws_cloudwatch_secret
 
   providers = {
     aws = aws.env
