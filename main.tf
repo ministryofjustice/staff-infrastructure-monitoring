@@ -44,6 +44,8 @@ module "grafana" {
   db_backup_retention_period = var.grafana_db_backup_retention_period
   tags = module.label.tags
 
+  app_count = 2
+
   providers = {
     aws = aws.env
   }
