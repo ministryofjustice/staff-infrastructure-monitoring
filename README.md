@@ -103,7 +103,7 @@ aws-vault exec moj-pttp-shared-services -- terraform workspace select <my-name>
 
 ## Usage
 
-### Running the code
+### Running the code for development
 
 To create an execution plan:
 
@@ -121,6 +121,14 @@ To minimise costs and keep the environment clean, regularly run teardown in your
 
 ```
 aws-vault exec moj-pttp-shared-services -- terraform destroy
+```
+
+To view your changes within the AWS Management Console:
+
+> Note: Login is into the Dev AWS account even though infrastructure execution is completed using `moj-pttp-shared-services` as it assumes the role of Dev.
+
+```
+aws-vault login moj-pttp-dev
 ```
 
 ## License
