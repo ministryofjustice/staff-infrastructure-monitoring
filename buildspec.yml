@@ -29,4 +29,4 @@ phases:
       - terraform init -no-color --backend-config="key=terraform.$ENV.state"
       - terraform workspace new $ENV || true
       - terraform workspace select $ENV
-      - if [$ENV -eq "development"]; then terraform apply --auto-approve -no-color; fi
+      - if [ $ENV -eq "development" ]; then terraform apply --auto-approve -no-color; fi
