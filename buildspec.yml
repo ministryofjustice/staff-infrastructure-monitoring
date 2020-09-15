@@ -13,7 +13,7 @@ env:
     TF_VAR_critical_notification_recipients: "/codebuild/pttp-ci-infrastructure-core-pipeline/$ENV/critical_notification_recipients"
     TF_VAR_grafana_admin_password: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_admin_password"
     TF_VAR_assume_role: "/codebuild/pttp-ci-ima-pipeline/$ENV/assume_role"
-    TF_VAR_grafana_db_username: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_db_username" 
+    TF_VAR_grafana_db_username: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_db_username"
     TF_VAR_grafana_db_password: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_db_password"
 
 phases:
@@ -29,4 +29,7 @@ phases:
       - terraform init -no-color --backend-config="key=terraform.$ENV.state"
       - terraform workspace new $ENV || true
       - terraform workspace select $ENV
-      - terraform apply --auto-approve -no-color
+      - if [$ENV -eq "development"]
+      - then
+      -   terraform apply --auto-approve -no-color
+      - fi
