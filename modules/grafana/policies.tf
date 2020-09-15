@@ -27,7 +27,7 @@ resource "aws_iam_role_policy_attachment" "cloudwatch_read_access_policy_attachm
 }
 
 resource "aws_iam_role" "rds_monitoring_role" {
-  name = "${var.prefix}-rds-monitoring-role"
+  name               = "${var.prefix}-rds-monitoring-role"
   assume_role_policy = file("${path.module}/policies/rds_monitoring_role.json")
 
   tags = var.tags

@@ -18,7 +18,7 @@ resource "aws_ecs_task_definition" "grafana" {
   task_role_arn            = aws_iam_role.cloudwatch_read_role.arn
 
   volume {
-    name      = "grafana_data"
+    name = "grafana_data"
   }
 
   container_definitions = <<DEFINITION

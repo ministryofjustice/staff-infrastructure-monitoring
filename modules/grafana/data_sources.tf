@@ -9,8 +9,8 @@ resource "grafana_data_source" "cloudwatch_data_source" {
   url  = "http://${aws_alb.main.dns_name}"
 
   json_data {
-    default_region  = var.aws_region
-    auth_type       = "credentials"
+    default_region = var.aws_region
+    auth_type      = "credentials"
   }
 
   depends_on = [

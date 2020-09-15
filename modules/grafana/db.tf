@@ -24,7 +24,7 @@ resource "aws_db_instance" "db" {
 }
 
 resource "aws_db_subnet_group" "db_subnet_group" {
-  name       = "${var.prefix}-db-subnet-group"
+  name = "${var.prefix}-db-subnet-group"
   subnet_ids = [
     aws_subnet.public[0].id,
     aws_subnet.public[1].id,
