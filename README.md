@@ -10,7 +10,7 @@
   - [Set a default region for your AWS profiles](#set-a-default-region-for-your-aws-profiles)
   - [Create a terraform.tfvars](#create-a-terraformtfvars)
 - [Usage](#usage)
-  - [Running the code](#running-the-code)
+  - [Running the code for development](#running-the-code-for-development)
 - [License](#license)
 
 ## Getting started
