@@ -9,7 +9,7 @@ resource "aws_ecs_cluster" "main" {
 }
 
 resource "aws_ecs_task_definition" "grafana" {
-  family                   = "grafana"
+  family                   = "${var.prefix}-grafana"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "${var.fargate_cpu}"
