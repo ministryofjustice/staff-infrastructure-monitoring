@@ -50,3 +50,14 @@ module "grafana" {
     aws = aws.env
   }
 }
+
+module "prometheus" {
+  source = "./modules/prometheus"
+
+  prefix                     = module.label.id
+  tags                       = module.label.tags
+
+  providers = {
+    aws = aws.env
+  }
+}
