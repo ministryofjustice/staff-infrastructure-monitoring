@@ -14,6 +14,6 @@ resource "grafana_data_source" "cloudwatch_data_source" {
   }
 
   depends_on = [
-    aws_alb.main
+    aws_alb.main,
   ]
 }

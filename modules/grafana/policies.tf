@@ -1,12 +1,12 @@
-resource "aws_iam_role" "cloudwatch_role" {
-  name               = "${var.prefix}-cloudwatch-role"
+resource "aws_iam_role" "grafana_execution_role" {
+  name               = "${var.prefix}-grafana-execution-role"
   assume_role_policy = data.template_file.cloudwatch_assume_role_policy.rendered
 
   tags = var.tags
 }
 
-resource "aws_iam_role" "cloudwatch_read_role" {
-  name               = "${var.prefix}-cloudwatch-read-role"
+resource "aws_iam_role" "grafana_task_role" {
+  name               = "${var.prefix}-grafana-task-role"
   assume_role_policy = data.template_file.cloudwatch_assume_role_policy.rendered
 
   tags = var.tags
@@ -18,12 +18,12 @@ data "template_file" "cloudwatch_assume_role_policy" {
 
 resource "aws_iam_role_policy_attachment" "cloudwatch_access_policy_attachment" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
-  role       = aws_iam_role.cloudwatch_role.name
+  role       = aws_iam_role.grafana_execution_role.name
 }
 
 resource "aws_iam_role_policy_attachment" "cloudwatch_read_access_policy_attachment" {
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchReadOnlyAccess"
-  role       = aws_iam_role.cloudwatch_read_role.name
+  role       = aws_iam_role.grafana_task_role.name
 }
 
 resource "aws_iam_role" "rds_monitoring_role" {
