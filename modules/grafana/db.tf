@@ -18,6 +18,7 @@ resource "aws_db_instance" "db" {
   skip_final_snapshot         = true
   storage_encrypted           = true
   storage_type                = "gp2"
+  vpc_security_group_ids      = [aws_security_group.db_in.id]
 
   tags = var.tags
 }
