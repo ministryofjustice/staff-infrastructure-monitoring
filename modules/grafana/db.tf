@@ -24,10 +24,7 @@ resource "aws_db_instance" "db" {
 
 resource "aws_db_subnet_group" "db_subnet_group" {
   name = "${var.prefix}-db-subnet-group"
-  subnet_ids = [
-    aws_subnet.private[0].id,
-    aws_subnet.private[1].id
-  ]
+  subnet_ids = [for subnet in aws_subnet.private : subnet.id]
 
   tags = var.tags
 }
