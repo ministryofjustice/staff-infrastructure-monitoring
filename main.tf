@@ -51,18 +51,6 @@ module "grafana" {
   }
 }
 
-module "grafana_config" {
-  source = "./modules/grafana_config"
-
-  grafana_url = "http://${module.grafana.hostname}"
-  grafana_admin_username = "pttp"
-  grafana_admin_password = var.grafana_admin_password
-
-  cloudwatch_data_source_name = "${module.label.id}-cloudwatch"
-
-  aws_region = "eu-west-2"
-}
-
 module "prometheus" {
   source = "./modules/prometheus"
 
