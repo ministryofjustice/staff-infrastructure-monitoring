@@ -61,3 +61,14 @@ module "prometheus" {
     aws = aws.env
   }
 }
+
+module "snmp_exporter" {
+  source = "./modules/snmp_exporter"
+
+  prefix                     = module.label.id
+  tags                       = module.label.tags
+
+  providers = {
+    aws = aws.env
+  }
+}
