@@ -83,7 +83,7 @@ resource "aws_cloudwatch_log_group" "prometheus_cloudwatch_log_group" {
 }
 
 resource "aws_alb" "main_prometheus" {
-  name            = "${var.prefix}-prometheus-alb"
+  name            = "${var.prefix}-prom-alb"
   subnets         = aws_subnet.public.*.id
   security_groups = [aws_security_group.lb_prom.id]
 
