@@ -15,34 +15,30 @@ resource "aws_ecs_task_definition" "snmp_exporter_task_definition" {
   }
 
   container_definitions = <<DEFINITION
-  [
-    {
-      "name": "snmp_exporter",
-      "cpu": ${var.fargate_cpu},
-      "memory": ${var.fargate_memory},
-      "image": "${var.snmp_exporter_image}",
-      "environment": [
-      ],
-      "mountPoints": [
-        {
-          "sourceVolume": "snmp_exporter_data",
-          "containerPath": "/var/lib/snmp_exporter"
-        }
-      ],
-      "portMappings": [{
-        "hostPort": ${var.snmp_exporter_port},
-        "containerPort": ${var.snmp_exporter_port}
-      }],
-      "logConfiguration": {
-        "logDriver": "awslogs",
-        "options": {
-          "awslogs-region" : "${var.aws_region}",
-          "awslogs-stream-prefix": "${var.prefix}",
-          "awslogs-group" : "${aws_cloudwatch_log_group.snmp_exporter_cloudwatch_log_group.name}"
-        }
+  [{
+    "name": "snmp_exporter",
+    "cpu": ${var.fargate_cpu},
+    "memory": ${var.fargate_memory},
+    "image": "${var.snmp_exporter_image}",
+    "environment": [
+    ],
+    "portMappings": [{
+      "hostPort": ${var.snmp_exporter_port},
+      "containerPort": ${var.snmp_exporter_port}
+    }],
+    "mountPoints": [{
+      "sourceVolume": "snmp_exporter_data",
+      "containerPath": "/var/lib/snmp_exporter"
+    }],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-region" : "${var.aws_region}",
+        "awslogs-stream-prefix": "${var.prefix}",
+        "awslogs-group" : "${aws_cloudwatch_log_group.snmp_exporter_cloudwatch_log_group.name}"
       }
     }
-  ]
+  }]
   DEFINITION
 }
 

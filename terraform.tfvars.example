@@ -1,6 +1,7 @@
-grafana_admin_password = ""
-grafana_db_username = "pttp_db"
-grafana_db_password = ""
-aws_cloudwatch_access_key = ""
-aws_cloudwatch_secret = ""
+is-production = "false"
 assume_role = ""
+
+grafana_db_username = ""
+grafana_db_password = ""
+grafana_admin_username = ""
+grafana_admin_password = ""

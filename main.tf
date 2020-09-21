@@ -9,8 +9,10 @@ terraform {
 }
 
 provider "aws" {
-  version = "~> 2.68"
   alias   = "env"
+  version = "~> 2.68"
+  profile = terraform.workspace
+
   assume_role {
     role_arn = var.assume_role
   }
@@ -21,15 +23,16 @@ module "label" {
   source  = "cloudposse/label/null"
 
   delimiter = "-"
-  namespace = "pttp"
   name      = "IMA"
+  namespace = "pttp"
   stage     = terraform.workspace
 
   tags = {
     "business-unit"    = "MoJO"
-    "application"      = "Infrastructure Monitoring and Alerting"
-    "owner"            = var.owner-email
     "environment-name" = "global"
+    "owner"            = var.owner-email
+    "is-production"    = var.is-production
+    "application"      = "Infrastructure Monitoring and Alerting"
     "source-code"      = "https://github.com/ministryofjustice/staff-infrastructure-monitoring"
   }
 }

@@ -37,6 +37,13 @@ resource "aws_security_group" "ecs_tasks" {
 
   ingress {
     protocol        = "tcp"
+    from_port       = var.prometheus_port
+    to_port         = var.prometheus_port
+    security_groups = ["${aws_security_group.lb.id}"]
+  }
+
+  ingress {
+    protocol        = "tcp"
     from_port       = var.snmp_exporter_port
     to_port         = var.snmp_exporter_port
     security_groups = ["${aws_security_group.lb.id}"]

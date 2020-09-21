@@ -1,10 +1,15 @@
-variable "assume_role" {
-  type = string
-}
-
 variable "owner-email" {
   type    = string
   default = "pttp@justice.gov.uk"
+}
+
+variable "is-production" {
+  type = string
+  default = "true"
+}
+
+variable "assume_role" {
+  type = string
 }
 
 variable "grafana_admin_username" {
