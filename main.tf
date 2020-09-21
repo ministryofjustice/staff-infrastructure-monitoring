@@ -37,8 +37,8 @@ module "label" {
 module "monitoring_platform" {
   source = "./modules/monitoring_platform"
 
-  prefix                     = module.label.id
-  tags                       = module.label.tags
+  prefix = module.label.id
+  tags   = module.label.tags
 
   db_username                = var.grafana_db_username
   db_password                = var.grafana_db_password
@@ -54,8 +54,8 @@ module "monitoring_platform" {
 module "prometheus" {
   source = "./modules/prometheus"
 
-  prefix                     = module.label.id
-  tags                       = module.label.tags
+  prefix = module.label.id
+  tags   = module.label.tags
 
   providers = {
     aws = aws.env
@@ -65,8 +65,8 @@ module "prometheus" {
 module "snmp_exporter" {
   source = "./modules/snmp_exporter"
 
-  prefix                     = module.label.id
-  tags                       = module.label.tags
+  prefix = module.label.id
+  tags   = module.label.tags
 
   providers = {
     aws = aws.env

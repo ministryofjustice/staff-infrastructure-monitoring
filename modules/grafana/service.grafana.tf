@@ -1,14 +1,14 @@
 resource "aws_ecs_task_definition" "grafana_task_definition" {
-  family                   = "${var.prefix}-grafana-task"
+  family = "${var.prefix}-grafana-task"
 
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
 
-  cpu                      = var.fargate_cpu
-  memory                   = var.fargate_memory
-  task_role_arn            = aws_iam_role.cloudwatch_task_role.arn
-  execution_role_arn       = aws_iam_role.cloudwatch_execution_role.arn
-  tags                     = var.tags
+  cpu                = var.fargate_cpu
+  memory             = var.fargate_memory
+  task_role_arn      = aws_iam_role.cloudwatch_task_role.arn
+  execution_role_arn = aws_iam_role.cloudwatch_execution_role.arn
+  tags               = var.tags
 
   volume {
     name = "grafana_data"
@@ -55,7 +55,7 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
 }
 
 resource "aws_ecs_service" "grafana_ecs_service" {
-  name            = "${var.prefix}-grafana-ecs-service"
+  name = "${var.prefix}-grafana-ecs-service"
 
   launch_type     = "FARGATE"
   desired_count   = var.fargate_count
@@ -86,5 +86,5 @@ resource "aws_cloudwatch_log_group" "grafana_cloudwatch_log_group" {
   name              = "${var.prefix}-grafana-cloudwatch-log-group"
   retention_in_days = 7
 
-  tags              = var.tags
+  tags = var.tags
 }

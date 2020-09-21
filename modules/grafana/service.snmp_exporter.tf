@@ -1,14 +1,14 @@
 resource "aws_ecs_task_definition" "snmp_exporter_task_definition" {
-  family                   = "${var.prefix}-snmp_exporter-task"
+  family = "${var.prefix}-snmp_exporter-task"
 
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
 
-  cpu                      = var.fargate_cpu
-  memory                   = var.fargate_memory
-  task_role_arn            = aws_iam_role.cloudwatch_task_role.arn
-  execution_role_arn       = aws_iam_role.cloudwatch_execution_role.arn
-  tags                     = var.tags
+  cpu                = var.fargate_cpu
+  memory             = var.fargate_memory
+  task_role_arn      = aws_iam_role.cloudwatch_task_role.arn
+  execution_role_arn = aws_iam_role.cloudwatch_execution_role.arn
+  tags               = var.tags
 
   volume {
     name = "snmp_exporter_data"
@@ -47,7 +47,7 @@ resource "aws_ecs_task_definition" "snmp_exporter_task_definition" {
 }
 
 resource "aws_ecs_service" "snmp_exporter_ecs_service" {
-  name            = "${var.prefix}-snmp_exporter-ecs-service"
+  name = "${var.prefix}-snmp_exporter-ecs-service"
 
   launch_type     = "FARGATE"
   desired_count   = var.fargate_count
@@ -64,7 +64,7 @@ resource "aws_ecs_service" "snmp_exporter_ecs_service" {
     container_port   = var.snmp_exporter_port
     target_group_arn = aws_alb_target_group.snmp_exporter.id
   }
-  
+
   lifecycle {
     ignore_changes = [desired_count]
   }
