@@ -34,17 +34,17 @@ module "label" {
   }
 }
 
-module "grafana" {
-  source = "./modules/grafana"
+module "monitoring_platform" {
+  source = "./modules/monitoring_platform"
 
   prefix                     = module.label.id
-  admin_password             = var.grafana_admin_password
-  db_username                = var.grafana_db_username
-  db_password                = var.grafana_db_password
-  db_backup_retention_period = var.grafana_db_backup_retention_period
   tags                       = module.label.tags
 
-  app_count = 2
+  db_username                = var.grafana_db_username
+  db_password                = var.grafana_db_password
+  admin_username             = var.grafana_admin_username
+  admin_password             = var.grafana_admin_password
+  db_backup_retention_period = var.grafana_db_backup_retention_period
 
   providers = {
     aws = aws.env
