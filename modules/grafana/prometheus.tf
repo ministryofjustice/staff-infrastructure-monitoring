@@ -91,7 +91,7 @@ resource "aws_alb" "main_prometheus" {
 }
 
 resource "aws_alb_target_group" "app_prometheus" {
-  name        = "${var.prefix}-prometheus-tg"
+  name        = "${var.prefix}-prom-tg"
   port        = 9090
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main.id
