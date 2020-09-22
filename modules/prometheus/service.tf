@@ -12,8 +12,6 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     name = "prometheus_data"
   }
 
-
-  #todo paramaterize image name?
   container_definitions = <<DEFINITION
   [{
     "name": "prometheus",
