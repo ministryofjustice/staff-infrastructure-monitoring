@@ -29,13 +29,22 @@ variable "private_subnet_ids" {
 }
 
 #################### Fargate ####################
+variable "task_role_arn" {
+  type = string
+}
+
 variable "execution_role_arn" {
   type = string
 }
 
+variable "fargate_image" {
+  description = "Docker image to run in the ECS cluster"
+  default     = "grafana/grafana:6.5.0"
+}
+
 variable "fargate_port" {
   description = "Port exposed by the docker image to redirect traffic to"
-  default     = 9090
+  default     = 3000
 }
 
 variable "fargate_cpu" {
@@ -51,4 +60,35 @@ variable "fargate_memory" {
 variable "fargate_count" {
   description = "Number of docker containers to run"
   default     = "1"
+}
+
+#################### Database ####################
+variable "db_port" {
+  default = 5432
+}
+
+variable "db_username" {
+  type = string
+}
+
+variable "db_password" {
+  type = string
+}
+
+variable "db_backup_retention_period" {
+  type        = number
+  description = "The days to retain Grafana database backups for"
+}
+
+variable "rds_monitoring_role_arn" {
+  type = string
+}
+
+#################### User details ####################
+variable "admin_username" {
+  type = string
+}
+
+variable "admin_password" {
+  type = string
 }
