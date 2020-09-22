@@ -1,3 +1,4 @@
+#################### General ####################
 variable "prefix" {
   type = string
 }
@@ -10,6 +11,20 @@ variable "vpc" {
   type = string
 }
 
+variable "cluster_id" {
+  type = string
+}
+
+#################### Networking ####################
+variable "public_subnet_ids" {
+  type = list
+}
+
+variable "private_subnet_ids" {
+  type = list
+}
+
+#################### Fargate ####################
 variable "execution_role_arn" {
   type = string
 }
@@ -24,14 +39,7 @@ variable "fargate_memory" {
   default     = "512"
 }
 
-variable "public_subnet_ids" {
-  type = list
-}
-
-variable "private_subnet_ids" {
-  type = list
-}
-
-variable "cluster_id" {
-  type = string
+variable "fargate_count" {
+  description = "Number of docker containers to run"
+  default     = "1"
 }

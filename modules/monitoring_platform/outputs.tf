@@ -10,6 +10,10 @@ output "vpc_id" {
   value = aws_vpc.main.id
 }
 
+output "task_role_arn" {
+  value = aws_iam_role.cloudwatch_task_role.arn
+}
+
 output "execution_role_arn" {
   value = aws_iam_role.cloudwatch_execution_role.arn
 }

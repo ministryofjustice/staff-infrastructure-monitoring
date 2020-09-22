@@ -3,9 +3,16 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
 
+<<<<<<< HEAD
   cpu                = var.fargate_cpu
   memory             = var.fargate_memory
   execution_role_arn = var.execution_role_arn
+=======
+  cpu                      = var.fargate_cpu
+  memory                   = var.fargate_memory
+  execution_role_arn       = var.execution_role_arn
+  tags = var.tags
+>>>>>>> Refactor SNMP exporter into SNMP exporter module
 
   volume {
     name = "prometheus_data"
@@ -14,12 +21,11 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
 
   #todo paramaterize image name?
   container_definitions = <<DEFINITION
-[
-  {
+  [{
     "name": "prometheus",
     "cpu": ${var.fargate_cpu},
-    "image": "${aws_ecr_repository.prometheus.repository_url}",
     "memory": ${var.fargate_memory},
+    "image": "${aws_ecr_repository.prometheus.repository_url}",
     "environment": [],
     "portMappings": [{
       "hostPort": 9090,
@@ -39,29 +45,25 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
       "logDriver": "awslogs",
       "options": {
         "awslogs-region" : "eu-west-2",
-        "awslogs-group" : "${aws_cloudwatch_log_group.prometheus_cloudwatch_log_group.name}",
         "awslogs-stream-prefix": "${var.prefix}-prom"
+        "awslogs-group" : "${aws_cloudwatch_log_group.prometheus_cloudwatch_log_group.name}",
       }
     }
-  }
-]
-DEFINITION
-
-  tags = var.tags
+  }]
+  DEFINITION
 }
 
 resource "aws_ecs_service" "prometheus_ecs_service" {
   name = "${var.prefix}-prom-ecs-service"
 
+  launch_type     = "FARGATE"
+  desired_count   = var.fargate_count
   cluster         = var.cluster_id
   task_definition = aws_ecs_task_definition.prometheus_task_definition.arn
-  desired_count   = 1
-
-  launch_type = "FARGATE"
 
   network_configuration {
-    security_groups = ["${aws_security_group.ecs_prometheus_tasks.id}"]
     subnets         = var.private_subnet_ids
+    security_groups = ["${aws_security_group.ecs_prometheus_tasks.id}"]
   }
 
   load_balancer {
