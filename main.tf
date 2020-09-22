@@ -9,8 +9,10 @@ terraform {
 }
 
 provider "aws" {
-  version = "~> 2.68"
   alias   = "env"
+  version = "~> 2.68"
+  profile = terraform.workspace
+
   assume_role {
     role_arn = var.assume_role
   }
@@ -21,30 +23,31 @@ module "label" {
   source  = "cloudposse/label/null"
 
   delimiter = "-"
-  namespace = "pttp"
   name      = "IMA"
+  namespace = "pttp"
   stage     = terraform.workspace
 
   tags = {
     "business-unit"    = "MoJO"
-    "application"      = "Infrastructure Monitoring and Alerting"
-    "owner"            = var.owner-email
     "environment-name" = "global"
+    "owner"            = var.owner-email
+    "is-production"    = var.is-production
+    "application"      = "Infrastructure Monitoring and Alerting"
     "source-code"      = "https://github.com/ministryofjustice/staff-infrastructure-monitoring"
   }
 }
 
-module "grafana" {
-  source = "./modules/grafana"
+module "monitoring_platform" {
+  source = "./modules/monitoring_platform"
 
-  prefix                     = module.label.id
-  admin_password             = var.grafana_admin_password
+  prefix = module.label.id
+  tags   = module.label.tags
+
   db_username                = var.grafana_db_username
   db_password                = var.grafana_db_password
+  admin_username             = var.grafana_admin_username
+  admin_password             = var.grafana_admin_password
   db_backup_retention_period = var.grafana_db_backup_retention_period
-  tags                       = module.label.tags
-
-  app_count = 2
 
   providers = {
     aws = aws.env
@@ -54,8 +57,8 @@ module "grafana" {
 module "prometheus" {
   source = "./modules/prometheus"
 
-  prefix                     = module.label.id
-  tags                       = module.label.tags
+  prefix = module.label.id
+  tags   = module.label.tags
 
   providers = {
     aws = aws.env
@@ -65,8 +68,8 @@ module "prometheus" {
 module "snmp_exporter" {
   source = "./modules/snmp_exporter"
 
-  prefix                     = module.label.id
-  tags                       = module.label.tags
+  prefix = module.label.id
+  tags   = module.label.tags
 
   providers = {
     aws = aws.env

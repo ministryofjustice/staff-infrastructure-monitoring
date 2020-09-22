@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "snmp_exporter" {
-  name                 = "${var.prefix}-snmp-exporter"
+  name                 = "${var.prefix}-snmp_exporter"
   image_tag_mutability = "MUTABLE"
 }
 
