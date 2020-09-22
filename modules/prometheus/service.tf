@@ -3,16 +3,10 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
 
-<<<<<<< HEAD
-  cpu                = var.fargate_cpu
-  memory             = var.fargate_memory
-  execution_role_arn = var.execution_role_arn
-=======
   cpu                      = var.fargate_cpu
   memory                   = var.fargate_memory
   execution_role_arn       = var.execution_role_arn
   tags = var.tags
->>>>>>> Refactor SNMP exporter into SNMP exporter module
 
   volume {
     name = "prometheus_data"
@@ -28,8 +22,8 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     "image": "${aws_ecr_repository.prometheus.repository_url}",
     "environment": [],
     "portMappings": [{
-      "hostPort": 9090,
-      "containerPort": 9090
+      "hostPort": "${var.fargate_port}",
+      "containerPort": "${var.fargate_port}"
     }],
     "command": [
       "--storage.tsdb.path=/prometheus",
@@ -69,7 +63,7 @@ resource "aws_ecs_service" "prometheus_ecs_service" {
   load_balancer {
     target_group_arn = aws_alb_target_group.app_prometheus.id
     container_name   = "prometheus"
-    container_port   = 9090
+    container_port   = var.fargate_port
   }
 
   depends_on = [

@@ -29,6 +29,11 @@ variable "execution_role_arn" {
   type = string
 }
 
+variable "fargate_port" {
+  description = "Port exposed by the docker image to redirect traffic to"
+  default     = 9090
+}
+
 variable "fargate_cpu" {
   description = "Fargate instance CPU units to provision (1 vCPU = 1024 CPU units)"
   default     = "256"
