@@ -4,7 +4,7 @@ variable "owner-email" {
 }
 
 variable "is-production" {
-  type = string
+  type    = string
   default = "true"
 }
 

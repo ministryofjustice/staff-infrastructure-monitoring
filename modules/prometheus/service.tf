@@ -3,16 +3,16 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
 
-  cpu                      = var.fargate_cpu
-  memory                   = var.fargate_memory
-  execution_role_arn       = var.execution_role_arn
+  cpu                = var.fargate_cpu
+  memory             = var.fargate_memory
+  execution_role_arn = var.execution_role_arn
 
   volume {
     name = "prometheus_data"
   }
 
 
-#todo paramaterize image name?
+  #todo paramaterize image name?
   container_definitions = <<DEFINITION
 [
   {
@@ -51,13 +51,13 @@ DEFINITION
 }
 
 resource "aws_ecs_service" "prometheus_ecs_service" {
-  name            = "${var.prefix}-prom-ecs-service"
+  name = "${var.prefix}-prom-ecs-service"
 
   cluster         = var.cluster_id
   task_definition = aws_ecs_task_definition.prometheus_task_definition.arn
   desired_count   = 1
 
-  launch_type     = "FARGATE"
+  launch_type = "FARGATE"
 
   network_configuration {
     security_groups = ["${aws_security_group.ecs_prometheus_tasks.id}"]
