@@ -73,7 +73,7 @@ resource "aws_alb_listener" "prometheus" {
 #################### SNMP Exporter ####################
 
 resource "aws_alb" "snmp_exporter" {
-  name            = "${var.prefix}-snmp-exporter"
+  name            = "${var.prefix}-snmp"
   subnets         = aws_subnet.public.*.id
   security_groups = [aws_security_group.lb.id]
 
@@ -81,7 +81,7 @@ resource "aws_alb" "snmp_exporter" {
 }
 
 resource "aws_alb_target_group" "snmp_exporter" {
-  name        = "${var.prefix}-snmp-exporter"
+  name        = "${var.prefix}-snmp"
   vpc_id      = aws_vpc.main.id
   protocol    = "HTTP"
   target_type = "ip"
