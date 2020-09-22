@@ -12,7 +12,7 @@ resource "aws_db_instance" "db" {
   identifier                  = "${var.prefix}-db"
   instance_class              = "db.t2.medium"
   monitoring_interval         = 60
-  monitoring_role_arn         = aws_iam_role.rds_monitoring_role.arn
+  monitoring_role_arn         = var.rds_monitoring_role_arn
   multi_az                    = true
   name                        = replace(var.prefix, "-", "")
   skip_final_snapshot         = true
@@ -25,7 +25,7 @@ resource "aws_db_instance" "db" {
 
 resource "aws_db_subnet_group" "db_subnet_group" {
   name       = "${var.prefix}-db-subnet-group"
-  subnet_ids = [for subnet in aws_subnet.private : subnet.id]
+  subnet_ids = var.private_subnet_ids
 
   tags = var.tags
 }

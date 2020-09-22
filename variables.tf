@@ -1,3 +1,8 @@
+variable "aws_region" {
+  description = "The AWS region to create things in"
+  default     = "eu-west-2"
+}
+
 variable "owner-email" {
   type    = string
   default = "pttp@justice.gov.uk"

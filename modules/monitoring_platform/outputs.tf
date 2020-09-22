@@ -1,11 +1,3 @@
-output "grafana_hostname" {
-  value = aws_alb.grafana.dns_name
-}
-
-output "snmp_exporter_hostname" {
-  value = aws_alb.snmp_exporter.dns_name
-}
-
 output "vpc_id" {
   value = aws_vpc.main.id
 }
@@ -16,6 +8,10 @@ output "task_role_arn" {
 
 output "execution_role_arn" {
   value = aws_iam_role.cloudwatch_execution_role.arn
+}
+
+output "rds_monitoring_role_arn" {
+  value = aws_iam_role.rds_monitoring_role.arn
 }
 
 output "public_subnet_ids" {

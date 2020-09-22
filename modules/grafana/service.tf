@@ -1,13 +1,12 @@
 resource "aws_ecs_task_definition" "grafana_task_definition" {
-  family = "${var.prefix}-grafana-task"
-
+  family                   = "${var.prefix}-grafana"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
 
   cpu                = var.fargate_cpu
   memory             = var.fargate_memory
-  task_role_arn      = aws_iam_role.cloudwatch_task_role.arn
-  execution_role_arn = aws_iam_role.cloudwatch_execution_role.arn
+  task_role_arn      = var.task_role_arn
+  execution_role_arn = var.execution_role_arn
   tags               = var.tags
 
   volume {
@@ -19,7 +18,7 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
     "name": "grafana",
     "cpu": ${var.fargate_cpu},
     "memory": ${var.fargate_memory},
-    "image": "${var.grafana_image}",
+    "image": "${var.fargate_image}",
     "environment": [
       {"name": "GF_DATABASE_TYPE", "value": "postgres"},
       {"name": "GF_USERS_ALLOW_SIGN_UP", "value": "false"},
@@ -31,8 +30,8 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
       {"name": "GF_SECURITY_ADMIN_PASSWORD", "value": "${var.admin_password}"}
     ],
     "portMappings": [{
-      "hostPort": ${var.grafana_port},
-      "containerPort": ${var.grafana_port}
+      "hostPort": "${var.fargate_port}",
+      "containerPort": "${var.fargate_port}"
     }],
     "mountPoints": [{
       "sourceVolume": "grafana_data",
@@ -42,8 +41,8 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
       "logDriver": "awslogs",
       "options": {
         "awslogs-region" : "${var.aws_region}",
-        "awslogs-stream-prefix": "${var.prefix}",
-        "awslogs-group" : "${aws_cloudwatch_log_group.grafana_cloudwatch_log_group.name}"
+        "awslogs-stream-prefix": "${var.prefix}-grafana"
+        "awslogs-group" : "${aws_cloudwatch_log_group.grafana_cloudwatch_log_group.name}",
       }
     }
   }]
@@ -55,26 +54,22 @@ resource "aws_ecs_service" "grafana_ecs_service" {
 
   launch_type     = "FARGATE"
   desired_count   = var.fargate_count
-  cluster         = aws_ecs_cluster.main.id
+  cluster         = var.cluster_id
   task_definition = aws_ecs_task_definition.grafana_task_definition.arn
 
   network_configuration {
-    subnets         = aws_subnet.private.*.id
-    security_groups = ["${aws_security_group.ecs_tasks.id}"]
+    subnets         = var.private_subnet_ids
+    security_groups = ["${aws_security_group.ecs_grafana_tasks.id}"]
   }
 
   load_balancer {
+    target_group_arn = aws_alb_target_group.app_grafana.id
     container_name   = "grafana"
-    container_port   = var.grafana_port
-    target_group_arn = aws_alb_target_group.grafana.id
-  }
-
-  lifecycle {
-    ignore_changes = [desired_count]
+    container_port   = var.fargate_port
   }
 
   depends_on = [
-    aws_alb_listener.grafana
+    aws_alb_listener.front_end_grafana
   ]
 }
 

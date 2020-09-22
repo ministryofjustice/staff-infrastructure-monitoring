@@ -36,7 +36,7 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
-        "awslogs-region" : "eu-west-2",
+        "awslogs-region" : "${var.aws_region}",
         "awslogs-stream-prefix": "${var.prefix}-prom"
         "awslogs-group" : "${aws_cloudwatch_log_group.prometheus_cloudwatch_log_group.name}",
       }
