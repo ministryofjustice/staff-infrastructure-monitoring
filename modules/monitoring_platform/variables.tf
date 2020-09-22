@@ -68,16 +68,6 @@ variable "grafana_port" {
   default     = 3000
 }
 
-variable "prometheus_image" {
-  description = "Docker image to run in the ECS cluster"
-  default     = "068084030754.dkr.ecr.eu-west-2.amazonaws.com/pttp-development-ima-prometheus"
-}
-
-variable "prometheus_port" {
-  description = "Port exposed by the docker image to redirect traffic to"
-  default     = 9090
-}
-
 variable "snmp_exporter_image" {
   description = "Docker image to run in the ECS cluster"
   default     = "068084030754.dkr.ecr.eu-west-2.amazonaws.com/pttp-development-ima-snmp-exporter"
