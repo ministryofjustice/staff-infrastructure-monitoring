@@ -57,13 +57,13 @@ module "monitoring_platform" {
 module "prometheus" {
   source = "./modules/prometheus"
 
-  prefix                     = module.label.id
-  tags                       = module.label.tags
-  vpc                       = module.monitoring_platform.vpc_id
-  execution_role_arn        = module.monitoring_platform.execution_role_arn
-  public_subnet_ids         = module.monitoring_platform.public_subnet_ids
-  private_subnet_ids        = module.monitoring_platform.private_subnet_ids
-  cluster_id                = module.monitoring_platform.cluster_id
+  prefix             = module.label.id
+  tags               = module.label.tags
+  vpc                = module.monitoring_platform.vpc_id
+  execution_role_arn = module.monitoring_platform.execution_role_arn
+  public_subnet_ids  = module.monitoring_platform.public_subnet_ids
+  private_subnet_ids = module.monitoring_platform.private_subnet_ids
+  cluster_id         = module.monitoring_platform.cluster_id
 
   providers = {
     aws = aws.env
