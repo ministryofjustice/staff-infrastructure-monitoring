@@ -3,10 +3,10 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
 
-  cpu                      = var.fargate_cpu
-  memory                   = var.fargate_memory
-  execution_role_arn       = var.execution_role_arn
-  tags = var.tags
+  cpu                = var.fargate_cpu
+  memory             = var.fargate_memory
+  execution_role_arn = var.execution_role_arn
+  tags               = var.tags
 
   volume {
     name = "prometheus_data"
