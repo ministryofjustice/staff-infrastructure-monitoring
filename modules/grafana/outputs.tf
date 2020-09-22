@@ -1,9 +1,5 @@
-output "grafana_hostname" {
-  value = aws_alb.grafana.dns_name
-}
-
-output "snmp_exporter_hostname" {
-  value = aws_alb.snmp_exporter.dns_name
+output "hostname" {
+  value = aws_alb.main.dns_name
 }
 
 output "vpc_id" {
@@ -11,7 +7,7 @@ output "vpc_id" {
 }
 
 output "execution_role_arn" {
-  value = aws_iam_role.cloudwatch_execution_role.arn
+  value = aws_iam_role.grafana_execution_role.arn
 }
 
 output "public_subnet_ids" {
@@ -23,5 +19,5 @@ output "private_subnet_ids" {
 }
 
 output "cluster_id" {
-  value = aws_ecs_cluster.main.id
+  value = aws_ecs_cluster.grafana_ecs_cluster.id
 }

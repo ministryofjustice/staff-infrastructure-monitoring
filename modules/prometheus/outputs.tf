@@ -4,3 +4,7 @@ output "ecr" {
     registry_id = aws_ecr_repository.prometheus.registry_id
   }
 }
+
+output "hostname" {
+  value = aws_alb.main_prometheus.dns_name
+}

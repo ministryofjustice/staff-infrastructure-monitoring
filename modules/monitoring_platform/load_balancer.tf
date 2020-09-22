@@ -34,42 +34,6 @@ resource "aws_alb_listener" "grafana" {
   }
 }
 
-#################### Prometheus ####################
-
-resource "aws_alb" "prometheus" {
-  name            = "${var.prefix}-prometheus"
-  subnets         = aws_subnet.public.*.id
-  security_groups = [aws_security_group.lb.id]
-
-  tags = var.tags
-}
-
-resource "aws_alb_target_group" "prometheus" {
-  name        = "${var.prefix}-prometheus"
-  vpc_id      = aws_vpc.main.id
-  protocol    = "HTTP"
-  target_type = "ip"
-  port        = 80
-
-  health_check {
-    path = "/graph"
-  }
-
-  tags = var.tags
-}
-
-# Redirect all traffic from the ALB to the target group
-resource "aws_alb_listener" "prometheus" {
-  load_balancer_arn = aws_alb.prometheus.id
-  protocol          = "HTTP"
-  port              = "80"
-
-  default_action {
-    target_group_arn = aws_alb_target_group.prometheus.id
-    type             = "forward"
-  }
-}
-
 #################### SNMP Exporter ####################
 
 resource "aws_alb" "snmp_exporter" {

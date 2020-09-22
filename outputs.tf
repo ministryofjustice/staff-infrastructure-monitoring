@@ -3,7 +3,7 @@ output "grafana_hostname" {
 }
 
 output "prometheus_hostname" {
-  value = module.monitoring_platform.prometheus_hostname
+  value = module.prometheus.hostname
 }
 
 output "snmp_exporter_hostname" {
