@@ -51,16 +51,16 @@ module "monitoring_platform" {
 module "grafana" {
   source = "./modules/grafana"
 
-  aws_region = var.aws_region
-  prefix             = module.label.id
-  tags               = module.label.tags
-  vpc                = module.monitoring_platform.vpc_id
-  task_role_arn      = module.monitoring_platform.task_role_arn
-  execution_role_arn = module.monitoring_platform.execution_role_arn
-  rds_monitoring_role_arn = module.monitoring_platform.rds_monitoring_role_arn
-  public_subnet_ids  = module.monitoring_platform.public_subnet_ids
-  private_subnet_ids = module.monitoring_platform.private_subnet_ids
-  cluster_id         = module.monitoring_platform.cluster_id
+  aws_region                 = var.aws_region
+  prefix                     = module.label.id
+  tags                       = module.label.tags
+  vpc                        = module.monitoring_platform.vpc_id
+  task_role_arn              = module.monitoring_platform.task_role_arn
+  execution_role_arn         = module.monitoring_platform.execution_role_arn
+  rds_monitoring_role_arn    = module.monitoring_platform.rds_monitoring_role_arn
+  public_subnet_ids          = module.monitoring_platform.public_subnet_ids
+  private_subnet_ids         = module.monitoring_platform.private_subnet_ids
+  cluster_id                 = module.monitoring_platform.cluster_id
   db_username                = var.grafana_db_username
   db_password                = var.grafana_db_password
   admin_username             = var.grafana_admin_username
@@ -75,7 +75,7 @@ module "grafana" {
 module "prometheus" {
   source = "./modules/prometheus"
 
-  aws_region = var.aws_region
+  aws_region         = var.aws_region
   prefix             = module.label.id
   tags               = module.label.tags
   vpc                = module.monitoring_platform.vpc_id
@@ -92,7 +92,7 @@ module "prometheus" {
 module "snmp_exporter" {
   source = "./modules/snmp_exporter"
 
-  aws_region = var.aws_region
+  aws_region         = var.aws_region
   prefix             = module.label.id
   tags               = module.label.tags
   vpc                = module.monitoring_platform.vpc_id
