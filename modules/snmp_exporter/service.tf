@@ -6,8 +6,8 @@ resource "aws_ecs_task_definition" "snmp_exporter_task_definition" {
 
   cpu                = var.fargate_cpu
   memory             = var.fargate_memory
-  task_role_arn      = aws_iam_role.cloudwatch_task_role.arn
-  execution_role_arn = aws_iam_role.cloudwatch_execution_role.arn
+  task_role_arn      = var.task_role_arn
+  execution_role_arn = var.execution_role_arn
   tags               = var.tags
 
   volume {
@@ -19,12 +19,12 @@ resource "aws_ecs_task_definition" "snmp_exporter_task_definition" {
     "name": "snmp_exporter",
     "cpu": ${var.fargate_cpu},
     "memory": ${var.fargate_memory},
-    "image": "${var.snmp_exporter_image}",
+    "image": "${aws_ecr_repository.snmp_exporter.repository_url}",
     "environment": [
     ],
     "portMappings": [{
-      "hostPort": ${var.snmp_exporter_port},
-      "containerPort": ${var.snmp_exporter_port}
+      "hostPort": ${var.fargate_port},
+      "containerPort": ${var.fargate_port}
     }],
     "mountPoints": [{
       "sourceVolume": "snmp_exporter_data",
@@ -34,7 +34,7 @@ resource "aws_ecs_task_definition" "snmp_exporter_task_definition" {
       "logDriver": "awslogs",
       "options": {
         "awslogs-region" : "${var.aws_region}",
-        "awslogs-stream-prefix": "${var.prefix}",
+        "awslogs-stream-prefix": "${var.prefix}-snmp",
         "awslogs-group" : "${aws_cloudwatch_log_group.snmp_exporter_cloudwatch_log_group.name}"
       }
     }
@@ -47,18 +47,18 @@ resource "aws_ecs_service" "snmp_exporter_ecs_service" {
 
   launch_type     = "FARGATE"
   desired_count   = var.fargate_count
-  cluster         = aws_ecs_cluster.main.id
+  cluster         = var.cluster_id
   task_definition = aws_ecs_task_definition.snmp_exporter_task_definition.arn
 
   network_configuration {
-    subnets         = aws_subnet.private.*.id
-    security_groups = ["${aws_security_group.ecs_tasks.id}"]
+    subnets         = var.private_subnet_ids
+    security_groups = ["${aws_security_group.ecs_snmp_exporter_tasks.id}"]
   }
 
   load_balancer {
     container_name   = "snmp_exporter"
-    container_port   = var.snmp_exporter_port
-    target_group_arn = aws_alb_target_group.snmp_exporter.id
+    container_port   = var.fargate_port
+    target_group_arn = aws_alb_target_group.app_snmp_exporter.id
   }
 
   lifecycle {
@@ -66,7 +66,7 @@ resource "aws_ecs_service" "snmp_exporter_ecs_service" {
   }
 
   depends_on = [
-    aws_alb_listener.snmp_exporter
+    aws_alb_listener.front_end_snmp_exporter
   ]
 }
 

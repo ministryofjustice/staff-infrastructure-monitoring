@@ -4,3 +4,7 @@ output "ecr" {
     registry_id    = aws_ecr_repository.snmp_exporter.registry_id
   }
 }
+
+output "hostname" {
+  value = aws_alb.main_snmp_exporter.dns_name
+}
