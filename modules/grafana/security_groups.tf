@@ -5,8 +5,8 @@ resource "aws_security_group" "ecs_grafana_tasks" {
 
   ingress {
     protocol        = "tcp"
-    from_port       = var.fargate_port
-    to_port         = var.fargate_port
+    from_port       = var.container_port
+    to_port         = var.container_port
     security_groups = ["${aws_security_group.lb_grafana.id}"]
   }
 
@@ -27,8 +27,8 @@ resource "aws_security_group" "lb_grafana" {
 
   ingress {
     protocol    = "tcp"
-    from_port   = var.fargate_port
-    to_port     = var.fargate_port
+    from_port   = var.host_port
+    to_port     = var.container_port
     cidr_blocks = ["0.0.0.0/0"]
   }
 

@@ -42,7 +42,12 @@ variable "fargate_image" {
   default     = "grafana/grafana:6.5.0"
 }
 
-variable "fargate_port" {
+variable "host_port" {
+  description = "Port exposed by the load balancer for the service"
+  default     = 80
+}
+
+variable "container_port" {
   description = "Port exposed by the docker image to redirect traffic to"
   default     = 3000
 }

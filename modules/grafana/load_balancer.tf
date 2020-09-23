@@ -8,7 +8,7 @@ resource "aws_alb" "main_grafana" {
 
 resource "aws_alb_target_group" "app_grafana" {
   name        = "${var.prefix}-grafana-tg"
-  port        = var.fargate_port
+  port        = var.container_port
   protocol    = "HTTP"
   vpc_id      = var.vpc
   target_type = "ip"
@@ -23,7 +23,7 @@ resource "aws_alb_target_group" "app_grafana" {
 # Redirect all traffic from the ALB to the target group
 resource "aws_alb_listener" "front_end_grafana" {
   load_balancer_arn = aws_alb.main_grafana.id
-  port              = var.fargate_port
+  port              = var.host_port
   protocol          = "HTTP"
 
   default_action {
