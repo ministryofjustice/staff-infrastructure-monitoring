@@ -30,8 +30,8 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
       {"name": "GF_SECURITY_ADMIN_PASSWORD", "value": "${var.admin_password}"}
     ],
     "portMappings": [{
-      "hostPort": "${var.fargate_port}",
-      "containerPort": "${var.fargate_port}"
+      "hostPort": ${var.container_port},
+      "containerPort": ${var.container_port}
     }],
     "mountPoints": [{
       "sourceVolume": "grafana_data",
@@ -41,8 +41,8 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
       "logDriver": "awslogs",
       "options": {
         "awslogs-region" : "${var.aws_region}",
-        "awslogs-stream-prefix": "${var.prefix}-grafana"
-        "awslogs-group" : "${aws_cloudwatch_log_group.grafana_cloudwatch_log_group.name}",
+        "awslogs-stream-prefix": "${var.prefix}-grafana",
+        "awslogs-group" : "${aws_cloudwatch_log_group.grafana_cloudwatch_log_group.name}"
       }
     }
   }]
@@ -65,7 +65,7 @@ resource "aws_ecs_service" "grafana_ecs_service" {
   load_balancer {
     target_group_arn = aws_alb_target_group.app_grafana.id
     container_name   = "grafana"
-    container_port   = var.fargate_port
+    container_port   = var.container_port
   }
 
   depends_on = [
