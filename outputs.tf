@@ -10,16 +10,16 @@ output "snmp_exporter_hostname" {
   value = module.snmp_exporter.hostname
 }
 
-output "prometheus_ecr" {
+output "prometheus_repository" {
   value = {
-    registry_id    = module.prometheus.ecr.registry_id
-    repository_url = module.prometheus.ecr.repository_url
+    registry_id    = module.prometheus.repository.registry_id
+    repository_url = module.prometheus.repository.repository_url
   }
 }
 
-output "snmp_exporter_ecr" {
+output "snmp_exporter_repository" {
   value = {
-    registry_id    = module.snmp_exporter.ecr.registry_id
-    repository_url = module.snmp_exporter.ecr.repository_url
+    registry_id    = module.snmp_exporter.repository.registry_id
+    repository_url = module.snmp_exporter.repository.repository_url
   }
 }

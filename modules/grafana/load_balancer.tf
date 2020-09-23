@@ -1,5 +1,7 @@
 resource "aws_alb" "main_grafana" {
   name            = "${var.prefix}-grafana-alb"
+
+  internal        = false
   subnets         = var.public_subnet_ids
   security_groups = [aws_security_group.lb_grafana.id]
 
@@ -9,15 +11,15 @@ resource "aws_alb" "main_grafana" {
 resource "aws_alb_target_group" "app_grafana" {
   name        = "${var.prefix}-grafana-tg"
   port        = var.container_port
-  protocol    = "HTTP"
   vpc_id      = var.vpc
+  protocol    = "HTTP"
   target_type = "ip"
+
+  tags = var.tags
 
   health_check {
     path = "/login"
   }
-
-  tags = var.tags
 }
 
 # Redirect all traffic from the ALB to the target group
