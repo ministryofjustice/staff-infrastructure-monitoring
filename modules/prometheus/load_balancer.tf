@@ -1,7 +1,8 @@
 resource "aws_alb" "main_prometheus" {
   name            = "${var.prefix}-prom-alb"
-  subnets         = var.public_subnet_ids
+  subnets         = var.private_subnet_ids
   security_groups = [aws_security_group.lb_prom.id]
+  internal = true
 
   tags = var.tags
 }
