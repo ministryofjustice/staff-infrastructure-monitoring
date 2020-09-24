@@ -1,6 +1,6 @@
 resource "aws_route53_record" "grafana" {
   zone_id        = var.vpn_hosted_zone_id
-  name           = "staff-infrastructure-${var.short_prefix}-monitoring.${var.vpn_hosted_zone_domain}"
+  name           = "staff-infra-${var.short_prefix}-monitoring.${var.vpn_hosted_zone_domain}"
   type           = "A"
   set_identifier = var.aws_region
 
