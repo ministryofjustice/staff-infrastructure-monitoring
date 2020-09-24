@@ -7,11 +7,23 @@ variable "prefix" {
   type = string
 }
 
+variable "short_prefix" {
+  type = string
+}
+
 variable "tags" {
   type = map(string)
 }
 
 variable "vpc" {
+  type = string
+}
+
+variable "vpn_hosted_zone_domain" {
+  type = string
+}
+
+variable "vpn_hosted_zone_id" {
   type = string
 }
 
@@ -38,7 +50,7 @@ variable "execution_role_arn" {
 }
 variable "host_port" {
   description = "Port exposed by the load balancer for the service"
-  default     = 80
+  default     = 443
 }
 
 variable "container_port" {

@@ -1,7 +1,7 @@
 ####################################### Hostnames #################################################
 
 output "grafana_hostname" {
-  value = module.grafana.hostname
+  value = module.grafana.domain
 }
 
 output "prometheus_hostname" {
