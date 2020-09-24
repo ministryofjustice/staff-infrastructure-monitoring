@@ -53,13 +53,15 @@ module "grafana" {
 
   aws_region                 = var.aws_region
   prefix                     = module.label.id
-  short_prefix               = module.label.stage
   tags                       = module.label.tags
+  short_prefix               = module.label.stage
+
   vpc                        = module.monitoring_platform.vpc_id
   cluster_id                 = module.monitoring_platform.cluster_id
-  task_role_arn              = module.monitoring_platform.task_role_arn
   public_subnet_ids          = module.monitoring_platform.public_subnet_ids
   private_subnet_ids         = module.monitoring_platform.private_subnet_ids
+
+  task_role_arn              = module.monitoring_platform.task_role_arn
   execution_role_arn         = module.monitoring_platform.execution_role_arn
   rds_monitoring_role_arn    = module.monitoring_platform.rds_monitoring_role_arn
 
@@ -67,7 +69,6 @@ module "grafana" {
   db_password                = var.grafana_db_password
   admin_username             = var.grafana_admin_username
   admin_password             = var.grafana_admin_password
-  db_backup_retention_period = var.grafana_db_backup_retention_period
 
   vpn_hosted_zone_id         = var.vpn_hosted_zone_id
   vpn_hosted_zone_domain     = var.vpn_hosted_zone_domain
@@ -83,10 +84,12 @@ module "prometheus" {
   aws_region         = var.aws_region
   prefix             = module.label.id
   tags               = module.label.tags
+
   vpc                = module.monitoring_platform.vpc_id
   cluster_id         = module.monitoring_platform.cluster_id
   public_subnet_ids  = module.monitoring_platform.public_subnet_ids
   private_subnet_ids = module.monitoring_platform.private_subnet_ids
+
   execution_role_arn = module.monitoring_platform.execution_role_arn
 
   providers = {
@@ -100,11 +103,12 @@ module "snmp_exporter" {
   aws_region         = var.aws_region
   prefix             = module.label.id
   tags               = module.label.tags
+
   vpc                = module.monitoring_platform.vpc_id
   cluster_id         = module.monitoring_platform.cluster_id
-  task_role_arn      = module.monitoring_platform.task_role_arn
   public_subnet_ids  = module.monitoring_platform.public_subnet_ids
   private_subnet_ids = module.monitoring_platform.private_subnet_ids
+
   execution_role_arn = module.monitoring_platform.execution_role_arn
 
   providers = {
@@ -118,11 +122,12 @@ module "blackbox_exporter" {
   aws_region         = var.aws_region
   prefix             = module.label.id
   tags               = module.label.tags
+
   vpc                = module.monitoring_platform.vpc_id
   cluster_id         = module.monitoring_platform.cluster_id
-  task_role_arn      = module.monitoring_platform.task_role_arn
   public_subnet_ids  = module.monitoring_platform.public_subnet_ids
   private_subnet_ids = module.monitoring_platform.private_subnet_ids
+
   execution_role_arn = module.monitoring_platform.execution_role_arn
 
   providers = {

@@ -26,6 +26,7 @@ resource "aws_alb_listener" "front_end_grafana" {
   load_balancer_arn = aws_alb.main_grafana.id
   port              = var.host_port
   protocol          = "HTTPS"
+  
   ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
   certificate_arn   = aws_acm_certificate.grafana.arn
 

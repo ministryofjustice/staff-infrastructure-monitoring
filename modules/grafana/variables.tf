@@ -48,6 +48,7 @@ variable "task_role_arn" {
 variable "execution_role_arn" {
   type = string
 }
+
 variable "host_port" {
   description = "Port exposed by the load balancer for the service"
   default     = 443
