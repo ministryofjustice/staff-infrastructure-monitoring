@@ -5,3 +5,6 @@ grafana_db_username = ""
 grafana_db_password = ""
 grafana_admin_username = ""
 grafana_admin_password = ""
+
+vpn_hosted_zone_domain = ""
+vpn_hosted_zone_id = ""

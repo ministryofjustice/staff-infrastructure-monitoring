@@ -7,11 +7,23 @@ variable "prefix" {
   type = string
 }
 
+variable "short_prefix" {
+  type = string
+}
+
 variable "tags" {
   type = map(string)
 }
 
 variable "vpc" {
+  type = string
+}
+
+variable "vpn_hosted_zone_domain" {
+  type = string
+}
+
+variable "vpn_hosted_zone_id" {
   type = string
 }
 

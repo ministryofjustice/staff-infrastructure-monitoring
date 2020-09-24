@@ -1,5 +1,5 @@
 resource "aws_alb" "main_grafana" {
-  name            = "${var.prefix}-grafana-alb"
+  name = "${var.prefix}-grafana-alb"
 
   internal        = false
   subnets         = var.public_subnet_ids

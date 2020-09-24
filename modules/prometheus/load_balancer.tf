@@ -1,5 +1,5 @@
 resource "aws_alb" "main_prometheus" {
-  name            = "${var.prefix}-prom-alb"
+  name = "${var.prefix}-prom-alb"
 
   internal        = true
   subnets         = var.private_subnet_ids

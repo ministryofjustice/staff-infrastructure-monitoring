@@ -1,5 +1,5 @@
 resource "aws_alb" "main_snmp_exporter" {
-  name            = "${var.prefix}-snmp-alb"
+  name = "${var.prefix}-snmp-alb"
 
   internal        = true
   subnets         = var.private_subnet_ids

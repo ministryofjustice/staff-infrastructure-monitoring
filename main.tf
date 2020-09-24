@@ -53,6 +53,7 @@ module "grafana" {
 
   aws_region                 = var.aws_region
   prefix                     = module.label.id
+  short_prefix               = module.label.stage
   tags                       = module.label.tags
   vpc                        = module.monitoring_platform.vpc_id
   task_role_arn              = module.monitoring_platform.task_role_arn
@@ -66,6 +67,8 @@ module "grafana" {
   admin_username             = var.grafana_admin_username
   admin_password             = var.grafana_admin_password
   db_backup_retention_period = var.grafana_db_backup_retention_period
+  vpn_hosted_zone_domain     = var.vpn_hosted_zone_domain
+  vpn_hosted_zone_id         = var.vpn_hosted_zone_id
 
   providers = {
     aws = aws.env
