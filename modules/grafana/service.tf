@@ -10,6 +10,10 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
   execution_role_arn = var.execution_role_arn
   tags               = var.tags
 
+  volume {
+    name = "grafana_data"
+  }
+
   container_definitions = <<DEFINITION
   [{
     "name": "grafana",
@@ -29,6 +33,10 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
     "portMappings": [{
       "hostPort": ${var.container_port},
       "containerPort": ${var.container_port}
+    }],
+    "mountPoints": [{
+      "sourceVolume": "grafana_data",
+      "containerPath": "/var/lib/grafana"
     }],
     "logConfiguration": {
       "logDriver": "awslogs",
