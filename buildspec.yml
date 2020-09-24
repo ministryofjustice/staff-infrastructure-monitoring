@@ -15,6 +15,9 @@ env:
     TF_VAR_grafana_db_password: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_db_password"
     TF_VAR_grafana_admin_username: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_admin_username"
     TF_VAR_grafana_admin_password: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_admin_password"
+    TF_VAR_grafana_admin_username: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_admin_username"
+    TF_VAR_vpn_hosted_zone_domain: "/codebuild/pttp-ci-ima-pipeline/$ENV/vpn_hosted_zone_domain"
+    TF_VAR_vpn_hosted_zone_id: "/codebuild/pttp-ci-ima-pipeline/$ENV/vpn_hosted_zone_id"
     TF_VAR_critical_notification_recipients: "/codebuild/pttp-ci-infrastructure-core-pipeline/$ENV/critical_notification_recipients"
 
 phases:
