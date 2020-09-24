@@ -14,3 +14,12 @@ resource "aws_route53_record" "grafana" {
     weight = "100"
   }
 }
+
+resource "aws_route53_record" "grafana_verification" {
+  zone_id = var.vpn_hosted_zone_id
+  ttl     = 3600
+
+  name    = tolist(aws_acm_certificate.grafana.domain_validation_options)[0].resource_record_name
+  records = [tolist(aws_acm_certificate.grafana.domain_validation_options)[0].resource_record_value]
+  type    = tolist(aws_acm_certificate.grafana.domain_validation_options)[0].resource_record_type
+}

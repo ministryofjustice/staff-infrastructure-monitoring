@@ -56,7 +56,7 @@ variable "fargate_image" {
 
 variable "host_port" {
   description = "Port exposed by the load balancer for the service"
-  default     = 80
+  default     = 443
 }
 
 variable "container_port" {
