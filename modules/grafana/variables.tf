@@ -39,7 +39,7 @@ variable "execution_role_arn" {
 
 variable "fargate_image" {
   description = "Docker image to run in the ECS cluster"
-  default     = "grafana/grafana:6.5.0"
+  default     = "grafana/grafana:7.2.0"
 }
 
 variable "host_port" {
