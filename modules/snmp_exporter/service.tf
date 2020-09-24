@@ -10,25 +10,15 @@ resource "aws_ecs_task_definition" "snmp_exporter_task_definition" {
   execution_role_arn = var.execution_role_arn
   tags               = var.tags
 
-  volume {
-    name = "snmp_exporter_data"
-  }
-
   container_definitions = <<DEFINITION
   [{
     "name": "snmp_exporter",
     "cpu": ${var.fargate_cpu},
     "memory": ${var.fargate_memory},
     "image": "${aws_ecr_repository.snmp_exporter.repository_url}",
-    "environment": [
-    ],
     "portMappings": [{
       "hostPort": ${var.fargate_port},
       "containerPort": ${var.fargate_port}
-    }],
-    "mountPoints": [{
-      "sourceVolume": "snmp_exporter_data",
-      "containerPath": "/var/lib/snmp_exporter"
     }],
     "logConfiguration": {
       "logDriver": "awslogs",

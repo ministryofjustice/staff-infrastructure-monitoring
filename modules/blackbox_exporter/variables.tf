@@ -36,19 +36,10 @@ variable "task_role_arn" {
 variable "execution_role_arn" {
   type = string
 }
-variable "host_port" {
-  description = "Port exposed by the load balancer for the service"
-  default     = 80
-}
 
-variable "container_port" {
+variable "fargate_port" {
   description = "Port exposed by the docker image to redirect traffic to"
-  default     = 3000
-}
-
-variable "fargate_image" {
-  description = "Docker image to run in the ECS cluster"
-  default     = "grafana/grafana:7.2.0"
+  default     = 9115
 }
 
 variable "fargate_cpu" {
@@ -63,36 +54,5 @@ variable "fargate_memory" {
 
 variable "fargate_count" {
   description = "Number of docker containers to run"
-  default     = "2"
-}
-
-#################### Database ####################
-variable "db_port" {
-  default = 5432
-}
-
-variable "db_username" {
-  type = string
-}
-
-variable "db_password" {
-  type = string
-}
-
-variable "db_backup_retention_period" {
-  description = "The days to retain database backups for"
-  default     = 7
-}
-
-variable "rds_monitoring_role_arn" {
-  type = string
-}
-
-#################### User details ####################
-variable "admin_username" {
-  type = string
-}
-
-variable "admin_password" {
-  type = string
+  default     = "1"
 }

@@ -1,5 +1,6 @@
 resource "aws_ecs_task_definition" "grafana_task_definition" {
   family                   = "${var.prefix}-grafana"
+  
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
 
@@ -8,10 +9,6 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
   task_role_arn      = var.task_role_arn
   execution_role_arn = var.execution_role_arn
   tags               = var.tags
-
-  volume {
-    name = "grafana_data"
-  }
 
   container_definitions = <<DEFINITION
   [{
@@ -32,10 +29,6 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
     "portMappings": [{
       "hostPort": ${var.container_port},
       "containerPort": ${var.container_port}
-    }],
-    "mountPoints": [{
-      "sourceVolume": "grafana_data",
-      "containerPath": "/var/lib/grafana"
     }],
     "logConfiguration": {
       "logDriver": "awslogs",

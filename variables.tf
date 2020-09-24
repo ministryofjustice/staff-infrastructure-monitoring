@@ -32,8 +32,3 @@ variable "grafana_db_username" {
 variable "grafana_db_password" {
   type = string
 }
-
-variable "grafana_db_backup_retention_period" {
-  type    = number
-  default = 7
-}

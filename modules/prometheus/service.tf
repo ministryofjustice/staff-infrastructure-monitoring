@@ -1,5 +1,6 @@
 resource "aws_ecs_task_definition" "prometheus_task_definition" {
   family                   = "${var.prefix}-prometheus"
+  
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
 
@@ -18,7 +19,6 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     "cpu": ${var.fargate_cpu},
     "memory": ${var.fargate_memory},
     "image": "${aws_ecr_repository.prometheus.repository_url}",
-    "environment": [],
     "portMappings": [{
       "hostPort": ${var.fargate_port},
       "containerPort": ${var.fargate_port}
@@ -27,12 +27,10 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
       "--storage.tsdb.path=/prometheus",
       "--config.file=/etc/prometheus/prometheus.yml"
     ],
-    "mountPoints": [
-      {
-        "sourceVolume": "prometheus_data",
-        "containerPath": "/prometheus"
-      }
-    ],
+    "mountPoints": [{
+      "containerPath": "/prometheus",
+      "sourceVolume": "prometheus_data"
+    }],
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {

@@ -1,8 +1,8 @@
 resource "aws_db_instance" "db" {
-  deletion_protection         = true
   allocated_storage           = 20
   monitoring_interval         = 60
   engine_version              = "12"
+  deletion_protection         = true
   apply_immediately           = true
   auto_minor_version_upgrade  = true
   multi_az                    = true
