@@ -2,12 +2,11 @@ version: 0.2
 
 env:
   variables:
-    TF_IN_AUTOMATION: true
     TF_INPUT: 0
-    TF_VAR_owner_email: pttp@justice.gov.uk
     TF_VAR_env: $ENV
+    TF_IN_AUTOMATION: true
+    TF_VAR_owner_email: pttp@justice.gov.uk
     TF_VAR_enable_critical_notifications: true
-    TF_VAR_grafana_db_backup_retention_period: 7
   parameter-store:
     TF_VAR_assume_role: "/codebuild/pttp-ci-ima-pipeline/$ENV/assume_role"
     TF_VAR_meta_data_url: "/codebuild/pttp-ci-infrastructure-core-pipeline/meta_data_url"
