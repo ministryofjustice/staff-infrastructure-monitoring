@@ -9,15 +9,12 @@ resource "aws_ecs_task_definition" "blackbox_exporter_task_definition" {
   execution_role_arn = var.execution_role_arn
   tags               = var.tags
 
-# TODO: CHANGE image to this when repository is setup
-    # "image": "${aws_ecr_repository.blackbox_exporter.repository_url}",
-
   container_definitions = <<DEFINITION
   [{
     "name": "blackbox_exporter",
     "cpu": ${var.fargate_cpu},
     "memory": ${var.fargate_memory},
-    "image": "devotox/blackbox_exporter",
+    "image": "${aws_ecr_repository.blackbox_exporter.repository_url}",
     "portMappings": [{
       "hostPort": ${var.fargate_port},
       "containerPort": ${var.fargate_port}

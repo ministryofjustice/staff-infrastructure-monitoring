@@ -23,13 +23,9 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
       "hostPort": ${var.fargate_port},
       "containerPort": ${var.fargate_port}
     }],
-    "command": [
-      "--storage.tsdb.path=/prometheus",
-      "--config.file=/etc/prometheus/prometheus.yml"
-    ],
     "mountPoints": [{
-      "containerPath": "/prometheus",
-      "sourceVolume": "prometheus_data"
+      "sourceVolume": "prometheus_data",
+      "containerPath": "/var/lib/prometheus"
     }],
     "logConfiguration": {
       "logDriver": "awslogs",
