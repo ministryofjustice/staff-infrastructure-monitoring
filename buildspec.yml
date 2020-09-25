@@ -16,6 +16,7 @@ env:
     TF_VAR_grafana_admin_password: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_admin_password"
     TF_VAR_vpn_hosted_zone_id: "/codebuild/pttp-ci-ima-pipeline/$ENV/vpn_hosted_zone_id"
     TF_VAR_vpn_hosted_zone_domain: "/codebuild/pttp-ci-ima-pipeline/$ENV/vpn_hosted_zone_domain"
+    TF_VAR_domain_prefix: "/codebuild/pttp-ci-ima-pipeline/$ENV/domain_prefix"
     TF_VAR_azure_ad_client_id: "/codebuild/pttp-ci-ima-pipeline/$ENV/azure_ad_client_id"
     TF_VAR_azure_ad_client_secret: "/codebuild/pttp-ci-ima-pipeline/$ENV/azure_ad_client_secret"
     TF_VAR_azure_ad_auth_url: "/codebuild/pttp-ci-ima-pipeline/$ENV/azure_ad_auth_url"

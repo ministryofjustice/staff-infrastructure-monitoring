@@ -72,6 +72,7 @@ module "grafana" {
 
   vpn_hosted_zone_id         = var.vpn_hosted_zone_id
   vpn_hosted_zone_domain     = var.vpn_hosted_zone_domain
+  domain_prefix              = var.domain_prefix
 
   azure_ad_client_id     = var.azure_ad_client_id
   azure_ad_client_secret = var.azure_ad_client_secret

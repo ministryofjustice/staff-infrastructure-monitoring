@@ -33,6 +33,10 @@ variable "grafana_db_password" {
   type = string
 }
 
+variable "domain_prefix" {
+  type = string
+}
+
 variable "vpn_hosted_zone_domain" {
   type = string
 }
