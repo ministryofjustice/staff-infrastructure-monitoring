@@ -73,6 +73,11 @@ module "grafana" {
   vpn_hosted_zone_id         = var.vpn_hosted_zone_id
   vpn_hosted_zone_domain     = var.vpn_hosted_zone_domain
 
+  azure_ad_client_id     = var.azure_ad_client_id
+  azure_ad_client_secret = var.azure_ad_client_secret
+  azure_ad_auth_url      = var.azure_ad_auth_url
+  azure_ad_token_url     = var.azure_ad_token_url
+
   providers = {
     aws = aws.env
   }

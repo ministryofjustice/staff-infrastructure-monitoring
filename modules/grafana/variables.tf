@@ -109,3 +109,20 @@ variable "admin_username" {
 variable "admin_password" {
   type = string
 }
+
+#################### Azure AD ####################
+variable "azure_ad_client_id" {
+  type = string
+}
+
+variable "azure_ad_client_secret" {
+  type = string
+}
+
+variable "azure_ad_auth_url" {
+  type = string
+}
+
+variable "azure_ad_token_url" {
+  type = string
+}

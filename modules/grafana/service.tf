@@ -1,6 +1,6 @@
 resource "aws_ecs_task_definition" "grafana_task_definition" {
   family                   = "${var.prefix}-grafana"
-  
+
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
 
@@ -28,7 +28,13 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
       {"name": "GF_DATABASE_NAME", "value": "${aws_db_instance.db.name}"},
       {"name": "GF_SECURITY_ADMIN_USER", "value": "${var.admin_username}"},
       {"name": "GF_DATABASE_HOST", "value": "${aws_db_instance.db.endpoint}"},
-      {"name": "GF_SECURITY_ADMIN_PASSWORD", "value": "${var.admin_password}"}
+      {"name": "GF_SECURITY_ADMIN_PASSWORD", "value": "${var.admin_password}"},
+      {"name": "GF_SERVER_ROOT_URL", "value": "https://${aws_route53_record.grafana.name}"},
+      {"name": "GF_AUTH_AZUREAD_ENABLED", "value": "true"},
+      {"name": "GF_AUTH_AZUREAD_CLIENT_ID", "value": "${var.azure_ad_client_id}"},
+      {"name": "GF_AUTH_AZUREAD_CLIENT_SECRET", "value": "${var.azure_ad_client_secret}"},
+      {"name": "GF_AUTH_AZUREAD_AUTH_URL", "value": "${var.azure_ad_auth_url}"},
+      {"name": "GF_AUTH_AZUREAD_TOKEN_URL", "value": "${var.azure_ad_token_url}"}
     ],
     "portMappings": [{
       "hostPort": ${var.container_port},

@@ -9,3 +9,8 @@ grafana_admin_password = ""
 
 vpn_hosted_zone_id = ""
 vpn_hosted_zone_domain = ""
+
+azure_ad_client_id = ""
+azure_ad_client_secret = ""
+azure_ad_auth_url = ""
+azure_ad_token_url = ""
