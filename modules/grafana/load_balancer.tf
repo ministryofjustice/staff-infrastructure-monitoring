@@ -1,5 +1,5 @@
 resource "aws_alb" "main_grafana" {
-  name = "${var.prefix}-grafana-alb"
+  name = "${var.prefix}-graf-alb"
 
   internal        = false
   subnets         = var.public_subnet_ids
@@ -9,7 +9,7 @@ resource "aws_alb" "main_grafana" {
 }
 
 resource "aws_alb_target_group" "app_grafana" {
-  name        = "${var.prefix}-grafana-tg"
+  name        = "${var.prefix}-graf-alb-tg"
   port        = var.container_port
   vpc_id      = var.vpc
   protocol    = "HTTP"
