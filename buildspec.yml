@@ -5,6 +5,7 @@ env:
     TF_INPUT: 0
     TF_VAR_env: $ENV
     TF_IN_AUTOMATION: true
+    TF_VAR_enable_transit_gateway: true
     TF_VAR_owner_email: pttp@justice.gov.uk
     TF_VAR_enable_critical_notifications: true
   parameter-store:
@@ -21,6 +22,9 @@ env:
     TF_VAR_azure_ad_client_secret: "/codebuild/pttp-ci-ima-pipeline/$ENV/azure_ad_client_secret"
     TF_VAR_azure_ad_auth_url: "/codebuild/pttp-ci-ima-pipeline/$ENV/azure_ad_auth_url"
     TF_VAR_azure_ad_token_url: "/codebuild/pttp-ci-ima-pipeline/$ENV/azure_ad_token_url"
+
+    TF_VAR_transit_gateway_id: "/codebuild/pttp-ci-ima-pipeline/$ENV/transit_gateway_id"
+    TF_VAR_transit_gateway_route_table_id: "/codebuild/pttp-ci-ima-pipeline/$ENV/transit_gateway_route_table_id"
     TF_VAR_critical_notification_recipients: "/codebuild/pttp-ci-infrastructure-core-pipeline/$ENV/critical_notification_recipients"
 
 phases:
@@ -36,8 +40,4 @@ phases:
       - terraform init -no-color --backend-config="key=terraform.$ENV.state"
       - terraform workspace new $ENV || true
       - terraform workspace select $ENV
-      - |
-          if [ "$ENV" = "development" ]
-          then
-            terraform apply --auto-approve -no-color
-          fi
+      - terraform apply --auto-approve -no-color

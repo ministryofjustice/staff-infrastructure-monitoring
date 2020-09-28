@@ -61,3 +61,17 @@ variable "azure_ad_auth_url" {
 variable "azure_ad_token_url" {
   type = string
 }
+
+#################### Transit Gateway ####################
+variable "enable_transit_gateway" {
+  type    = bool
+  default = false
+}
+
+variable "transit_gateway_id" {
+  type = string
+}
+
+variable "transit_gateway_route_table_id" {
+  type = string
+}

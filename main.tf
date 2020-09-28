@@ -43,6 +43,10 @@ module "monitoring_platform" {
   prefix = module.label.id
   tags   = module.label.tags
 
+  transit_gateway_id             = var.transit_gateway_id
+  enable_transit_gateway         = var.enable_transit_gateway
+  transit_gateway_route_table_id = var.transit_gateway_route_table_id
+
   providers = {
     aws = aws.env
   }
@@ -74,10 +78,10 @@ module "grafana" {
   vpn_hosted_zone_domain     = var.vpn_hosted_zone_domain
   domain_prefix              = var.domain_prefix
 
-  azure_ad_client_id     = var.azure_ad_client_id
-  azure_ad_client_secret = var.azure_ad_client_secret
-  azure_ad_auth_url      = var.azure_ad_auth_url
-  azure_ad_token_url     = var.azure_ad_token_url
+  azure_ad_auth_url          = var.azure_ad_auth_url
+  azure_ad_token_url         = var.azure_ad_token_url
+  azure_ad_client_id         = var.azure_ad_client_id
+  azure_ad_client_secret     = var.azure_ad_client_secret
 
   providers = {
     aws = aws.env
