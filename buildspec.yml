@@ -22,7 +22,6 @@ env:
     TF_VAR_azure_ad_client_secret: "/codebuild/pttp-ci-ima-pipeline/$ENV/azure_ad_client_secret"
     TF_VAR_azure_ad_auth_url: "/codebuild/pttp-ci-ima-pipeline/$ENV/azure_ad_auth_url"
     TF_VAR_azure_ad_token_url: "/codebuild/pttp-ci-ima-pipeline/$ENV/azure_ad_token_url"
-
     TF_VAR_transit_gateway_id: "/codebuild/pttp-ci-ima-pipeline/$ENV/transit_gateway_id"
     TF_VAR_transit_gateway_route_table_id: "/codebuild/pttp-ci-ima-pipeline/$ENV/transit_gateway_route_table_id"
     TF_VAR_critical_notification_recipients: "/codebuild/pttp-ci-infrastructure-core-pipeline/$ENV/critical_notification_recipients"
@@ -37,7 +36,15 @@ phases:
   build:
     commands:
       - export AWS_DEFAULT_REGION=eu-west-2
+      - terraform --version
       - terraform init -no-color --backend-config="key=terraform.$ENV.state"
+      - terraform providers
       - terraform workspace new $ENV || true
       - terraform workspace select $ENV
       - terraform apply --auto-approve -no-color
+      - ./scripts/publish_terraform_outputs
+      - TEMP_ROLE=`aws sts assume-role --role-arn $ROLE_ARN --role-session-name ci-build-$CODEBUILD_BUILD_NUMBER`
+      - export AWS_ACCESS_KEY_ID=$(echo "${TEMP_ROLE}" | jq -r '.Credentials.AccessKeyId')
+      - export AWS_SECRET_ACCESS_KEY=$(echo "${TEMP_ROLE}" | jq -r '.Credentials.SecretAccessKey')
+      - export AWS_SESSION_TOKEN=$(echo "${TEMP_ROLE}" | jq -r '.Credentials.SessionToken')
+      - ./scripts/ensure_cloudwatch_log_retention_policies
