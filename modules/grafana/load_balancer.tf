@@ -9,7 +9,7 @@ resource "aws_alb" "main_grafana" {
 }
 
 resource "aws_alb_target_group" "app_grafana" {
-  name        = "${var.prefix}-graf-alb-tg"
+  name        = "${var.prefix}-graf-tg"
   port        = var.container_port
   vpc_id      = var.vpc
   protocol    = "HTTP"
