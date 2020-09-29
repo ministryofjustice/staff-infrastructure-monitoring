@@ -2,12 +2,12 @@ resource "aws_db_instance" "db" {
   allocated_storage           = 20
   monitoring_interval         = 60
   engine_version              = "12"
-  deletion_protection         = true
   apply_immediately           = true
   auto_minor_version_upgrade  = true
   multi_az                    = true
   skip_final_snapshot         = true
   storage_encrypted           = true
+  deletion_protection         = false # Set to true after transit gateway is confirmed working
   allow_major_version_upgrade = false
   storage_type                = "gp2"
   engine                      = "postgres"

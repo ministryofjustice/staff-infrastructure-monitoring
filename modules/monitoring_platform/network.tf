@@ -1,27 +1,33 @@
 data "aws_availability_zones" "zones" {}
 
 resource "aws_vpc" "main" {
-  cidr_block = "172.17.0.0/16"
+  cidr_block = "10.180.88.0/21"
 
   tags = var.tags
 }
 
 # Create var.az_count private subnets, each in a different AZ
+# cidr_block = "10.180.88.0/24"
+# cidr_block = "10.180.89.0/24"
+# cidr_block = "10.180.90.0/24"
 resource "aws_subnet" "private" {
   count             = var.az_count
-  cidr_block        = cidrsubnet(aws_vpc.main.cidr_block, 8, count.index)
-  availability_zone = data.aws_availability_zones.zones.names[count.index]
   vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.180.${88 + count.index}.0/24"
+  availability_zone = data.aws_availability_zones.zones.names[count.index]
 
   tags = var.tags
 }
 
 # Create var.az_count public subnets, each in a different AZ
+# cidr_block = "10.180.91.0/24"
+# cidr_block = "10.180.92.0/24"
+# cidr_block = "10.180.93.0/24"
 resource "aws_subnet" "public" {
   count             = var.az_count
-  cidr_block        = cidrsubnet(aws_vpc.main.cidr_block, 8, var.az_count + count.index)
-  availability_zone = data.aws_availability_zones.zones.names[count.index]
   vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.180.${91 + count.index}.0/24"
+  availability_zone = data.aws_availability_zones.zones.names[count.index]
 
   map_public_ip_on_launch = true
 

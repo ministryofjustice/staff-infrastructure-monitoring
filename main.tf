@@ -145,8 +145,8 @@ module "blackbox_exporter" {
   }
 }
 
-module "corsham_test_bastion" {
-  source  = "./modules/corsham_test"
+module "corsham_bastion" {
+  source  = "./modules/corsham_bastion"
 
   prefix             = module.label.id
   tags               = module.label.tags
