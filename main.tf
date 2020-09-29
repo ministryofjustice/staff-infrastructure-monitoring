@@ -147,7 +147,9 @@ module "blackbox_exporter" {
 
 module "corsham_test_bastion" {
   source  = "./modules/corsham_test"
-  tags    = module.label.tags
+
+  prefix             = module.label.id
+  tags               = module.label.tags
 
   vpc                = module.monitoring_platform.vpc_id
   public_subnet_ids  = module.monitoring_platform.public_subnet_ids

@@ -1,3 +1,7 @@
+variable "prefix" {
+  type = string
+}
+
 variable "vpc" {
   type = string
 }

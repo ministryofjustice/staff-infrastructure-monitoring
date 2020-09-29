@@ -1,4 +1,4 @@
-resource "aws_instance" "corsham_testing_bastion" {
+resource "aws_instance" "corsham_test_bastion" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.nano"
 
@@ -13,9 +13,7 @@ resource "aws_instance" "corsham_testing_bastion" {
 
   instance_initiated_shutdown_behavior = "terminate"
 
-  tags = {
-    Name = "Corsham Test Bastion"
-  }
+  tags = var.tags
 }
 
 data "aws_ami" "ubuntu" {
