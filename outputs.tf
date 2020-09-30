@@ -38,12 +38,3 @@ output "blackbox_exporter_repository" {
     repository_url = module.blackbox_exporter.repository.repository_url
   }
 }
-
-####################################### Bastion #################################################
-
-output "corsham_bastion" {
-  value = {
-    public_ip   = module.corsham_bastion.hostname
-    private_key = module.corsham_bastion.private_key
-  }
-}
