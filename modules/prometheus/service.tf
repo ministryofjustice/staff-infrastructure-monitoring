@@ -1,11 +1,11 @@
 resource "aws_ecs_task_definition" "prometheus_task_definition" {
   family                   = "${var.prefix}-prometheus"
-  
+
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
 
-  cpu                = var.fargate_cpu
-  memory             = var.fargate_memory
+  cpu                = var.fargate_cpu * 2
+  memory             = var.fargate_memory * 2
   execution_role_arn = var.execution_role_arn
   tags               = var.tags
 
@@ -32,6 +32,25 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
       "options": {
         "awslogs-region" : "${var.aws_region}",
         "awslogs-stream-prefix": "${var.prefix}-prom",
+        "awslogs-group" : "${aws_cloudwatch_log_group.prometheus_cloudwatch_log_group.name}"
+      }
+    }
+  },
+  {
+    "name": "thanos-sidecar",
+    "cpu": ${var.fargate_cpu},
+    "memory": ${var.fargate_memory},
+    "image": "quay.io/thanos/thanos:v0.15.0",
+    "command": [
+      "sidecar",
+      "--prometheus.url=http://localhost:9090"
+    ],
+    "essential": false,
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-region" : "${var.aws_region}",
+        "awslogs-stream-prefix": "${var.prefix}-thsc",
         "awslogs-group" : "${aws_cloudwatch_log_group.prometheus_cloudwatch_log_group.name}"
       }
     }
