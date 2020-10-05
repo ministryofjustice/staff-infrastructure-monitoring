@@ -5,8 +5,8 @@ resource "aws_security_group" "ecs_prometheus_tasks" {
 
   ingress {
     protocol        = "tcp"
-    from_port       = var.fargate_port
-    to_port         = var.fargate_port
+    from_port       = 10902
+    to_port         = 10902
     security_groups = ["${aws_security_group.lb_prom.id}"]
   }
 
@@ -27,8 +27,8 @@ resource "aws_security_group" "lb_prom" {
 
   ingress {
     protocol    = "tcp"
-    from_port   = var.fargate_port
-    to_port     = var.fargate_port
+    from_port   = 10902
+    to_port     = 10902
     cidr_blocks = ["0.0.0.0/0"]
   }
 

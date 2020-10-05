@@ -10,7 +10,7 @@ resource "aws_alb" "main_prometheus" {
 
 resource "aws_alb_target_group" "app_prometheus" {
   name        = "${var.prefix}-prom-tg"
-  port        = var.fargate_port
+  port        = 10902
   vpc_id      = var.vpc
   protocol    = "HTTP"
   target_type = "ip"
@@ -25,7 +25,7 @@ resource "aws_alb_target_group" "app_prometheus" {
 # Redirect all traffic from the ALB to the target group
 resource "aws_alb_listener" "front_end_prometheus" {
   load_balancer_arn = aws_alb.main_prometheus.id
-  port              = var.fargate_port
+  port              = 10902
   protocol          = "HTTP"
 
   default_action {

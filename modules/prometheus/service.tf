@@ -4,8 +4,8 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
 
-  cpu                = var.fargate_cpu * 2
-  memory             = var.fargate_memory * 2
+  cpu                = 1024
+  memory             = 2048
   execution_role_arn = var.execution_role_arn
   tags               = var.tags
 
@@ -19,10 +19,6 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     "cpu": ${var.fargate_cpu},
     "memory": ${var.fargate_memory},
     "image": "${aws_ecr_repository.prometheus.repository_url}",
-    "portMappings": [{
-      "hostPort": ${var.fargate_port},
-      "containerPort": ${var.fargate_port}
-    }],
     "mountPoints": [{
       "sourceVolume": "prometheus_data",
       "containerPath": "/var/lib/prometheus"
@@ -43,14 +39,37 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     "image": "quay.io/thanos/thanos:v0.15.0",
     "command": [
       "sidecar",
-      "--prometheus.url=http://localhost:9090"
+      "--prometheus.url=http://localhost:9090",
+      "--grpc-address=0.0.0.0:10903",
+      "--http-address=0.0.0.0:10904"
     ],
-    "essential": false,
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
         "awslogs-region" : "${var.aws_region}",
         "awslogs-stream-prefix": "${var.prefix}-thsc",
+        "awslogs-group" : "${aws_cloudwatch_log_group.prometheus_cloudwatch_log_group.name}"
+      }
+    }
+  },
+  {
+    "name": "thanos-querier",
+    "cpu": ${var.fargate_cpu},
+    "memory": ${var.fargate_memory},
+    "image": "quay.io/thanos/thanos:v0.15.0",
+    "command": [
+      "query",
+      "--store=0.0.0.0:10903"
+    ],
+    "portMappings": [{
+      "hostPort": 10902,
+      "containerPort": 10902
+    }],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-region" : "${var.aws_region}",
+        "awslogs-stream-prefix": "${var.prefix}-thqr",
         "awslogs-group" : "${aws_cloudwatch_log_group.prometheus_cloudwatch_log_group.name}"
       }
     }
@@ -73,8 +92,8 @@ resource "aws_ecs_service" "prometheus_ecs_service" {
 
   load_balancer {
     target_group_arn = aws_alb_target_group.app_prometheus.id
-    container_name   = "prometheus"
-    container_port   = var.fargate_port
+    container_name   = "thanos-querier"
+    container_port   = 10902
   }
 
   depends_on = [
