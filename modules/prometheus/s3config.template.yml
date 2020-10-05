@@ -1,0 +1,1 @@
+type: S3\nconfig:\n  bucket: ${bucket_name}\n  endpoint: ${endpoint}\n  insecure: true
