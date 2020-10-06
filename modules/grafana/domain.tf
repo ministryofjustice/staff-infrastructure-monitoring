@@ -1,8 +1,7 @@
 resource "aws_route53_record" "grafana" {
-  type           = "A"
-  set_identifier = var.aws_region
-  zone_id        = var.vpn_hosted_zone_id
-  name           = "${var.domain_prefix}.${var.vpn_hosted_zone_domain}"
+  type    = "A"
+  zone_id = var.vpn_hosted_zone_id
+  name    = "${var.domain_prefix}.${var.vpn_hosted_zone_domain}"
 
   alias {
     name                   = aws_alb.main_grafana.dns_name
@@ -10,9 +9,6 @@ resource "aws_route53_record" "grafana" {
     evaluate_target_health = true
   }
 
-  weighted_routing_policy {
-    weight = "100"
-  }
 }
 
 resource "aws_route53_record" "grafana_verification" {

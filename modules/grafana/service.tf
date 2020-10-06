@@ -1,5 +1,5 @@
 resource "aws_ecs_task_definition" "grafana_task_definition" {
-  family                   = "${var.prefix}-grafana"
+  family = "${var.prefix}-grafana"
 
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
