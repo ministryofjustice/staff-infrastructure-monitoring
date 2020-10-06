@@ -1,7 +1,7 @@
 resource "aws_route53_record" "grafana" {
-  type           = "A"
-  zone_id        = var.vpn_hosted_zone_id
-  name           = "${var.domain_prefix}.${var.vpn_hosted_zone_domain}"
+  type    = "A"
+  zone_id = var.vpn_hosted_zone_id
+  name    = "${var.domain_prefix}.${var.vpn_hosted_zone_domain}"
 
   alias {
     name                   = aws_alb.main_grafana.dns_name
