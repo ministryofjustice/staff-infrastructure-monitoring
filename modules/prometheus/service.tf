@@ -20,9 +20,16 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     "cpu": ${var.fargate_cpu},
     "memory": ${var.fargate_memory},
     "image": "${aws_ecr_repository.prometheus.repository_url}",
+    "command": [
+      "--config.file=/etc/prometheus/prometheus.yml",
+      "--storage.tsdb.path=/prometheus",
+      "--web.enable-lifecycle",
+      "--storage.tsdb.min-block-duration=2h",
+      "--storage.tsdb.max-block-duration=2h"
+    ],
     "mountPoints": [{
       "sourceVolume": "prometheus_data",
-      "containerPath": "/var/lib/prometheus"
+      "containerPath": "/prometheus"
     }],
     "logConfiguration": {
       "logDriver": "awslogs",
@@ -41,9 +48,15 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     "command": [
       "sidecar",
       "--prometheus.url=http://localhost:9090",
+      "--tsdb.path=/prometheus",
       "--grpc-address=0.0.0.0:10903",
-      "--http-address=0.0.0.0:10904"
+      "--http-address=0.0.0.0:10904",
+      "--objstore.config=${data.template_file.storage_config.rendered}"
     ],
+    "mountPoints": [{
+      "sourceVolume": "prometheus_data",
+      "containerPath": "/prometheus"
+    }],
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
