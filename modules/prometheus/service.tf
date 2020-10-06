@@ -73,7 +73,8 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     "image": "quay.io/thanos/thanos:v0.15.0",
     "command": [
       "query",
-      "--store=0.0.0.0:10903"
+      "--store=0.0.0.0:10903",
+      "--store=0.0.0.0:20091"
     ],
     "portMappings": [{
       "hostPort": 10902,
