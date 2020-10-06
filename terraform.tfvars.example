@@ -1,5 +1,5 @@
 is-production = "false"
-assume_role = ""
+assume_role = "" # this should be the arn to the admin role set up on moj-pttp-dev
 
 grafana_db_username = ""
 grafana_db_password = ""
@@ -7,11 +7,17 @@ grafana_db_password = ""
 grafana_admin_username = ""
 grafana_admin_password = ""
 
-vpn_hosted_zone_id = ""
+vpn_hosted_zone_id = "" # the same for everyone in the team
+domain_prefix = "" # the same for everyone in the team
 vpn_hosted_zone_domain = ""
-domain_prefix = ""
 
 azure_ad_client_id = ""
 azure_ad_client_secret = ""
 azure_ad_auth_url = ""
 azure_ad_token_url = ""
+
+
+# these vars are only required for production env to connect to physical devices
+enable_transit_gateway = false
+transit_gateway_id = ""
+transit_gateway_route_table_id  = ""

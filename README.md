@@ -38,7 +38,7 @@ utilised.
 
 - [AWS Command Line Interface (CLI)](https://aws.amazon.com/cli/) - to manage AWS services
 - [AWS Vault](https://github.com/99designs/aws-vault) - to easily manage and switch between AWS account profiles on the command line
-- [tfenv](https://github.com/tfutils/tfenv) - to easily manage and switch [Terraform](https://www.terraform.io/) versions
+- [tfenv](https://github.com/tfutils/tfenv) - to easily manage and switch [Terraform](https://www.terraform.io/) versions (0.12.29 is preferred)
 
 You should also have AWS account access to at least the Dev and Shared Services AWS accounts.
 
@@ -89,6 +89,7 @@ You will need to do this for both your Dev and Shared Services AWS accounts.
 ```
 aws-vault exec moj-pttp-shared-services -- terraform init
 ```
+You will be asked to provited the path to the state file inside the bucket, dev convention is to use `terraform.development.state`
 
 2. Create your own personal workspace by replacing `<my-name>` with your name and running:
 
