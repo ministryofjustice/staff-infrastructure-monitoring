@@ -114,6 +114,15 @@ variable "admin_password" {
   type = string
 }
 
+#################### SMTP details ####################
+variable "smtp_user" {
+  type = string
+}
+
+variable "smtp_password" {
+  type = string
+}
+
 #################### Azure AD ####################
 variable "azure_ad_client_id" {
   type = string

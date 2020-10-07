@@ -34,7 +34,13 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
       {"name": "GF_AUTH_AZUREAD_CLIENT_ID", "value": "${var.azure_ad_client_id}"},
       {"name": "GF_AUTH_AZUREAD_CLIENT_SECRET", "value": "${var.azure_ad_client_secret}"},
       {"name": "GF_AUTH_AZUREAD_AUTH_URL", "value": "${var.azure_ad_auth_url}"},
-      {"name": "GF_AUTH_AZUREAD_TOKEN_URL", "value": "${var.azure_ad_token_url}"}
+      {"name": "GF_AUTH_AZUREAD_TOKEN_URL", "value": "${var.azure_ad_token_url}"},
+      {"name": "GF_SMTP_HOST", "value": "email-smtp.eu-west-2.amazonaws.com:465"},
+      {"name": "GF_SMTP_USER", "value": "${var.smtp_user}"},
+      {"name": "GF_SMTP_PASSWORD", "value": "${var.smtp_password}"},
+      {"name": "GF_SMTP_SKIP_VERIFY", "value": "true"},
+      {"name": "GF_SMTP_ENABLED", "value": "true"},
+      {"name": "GF_SMTP_FROM_ADDRESS", "value": "alerts@${aws_ses_domain_mail_from.grafana_email_from.mail_from_domain}"}
     ],
     "portMappings": [{
       "hostPort": ${var.container_port},

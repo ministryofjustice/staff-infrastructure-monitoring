@@ -75,3 +75,12 @@ variable "transit_gateway_id" {
 variable "transit_gateway_route_table_id" {
   type = string
 }
+
+#################### SMTP details ####################
+variable "smtp_user" {
+  type = string
+}
+
+variable "smtp_password" {
+  type = string
+}

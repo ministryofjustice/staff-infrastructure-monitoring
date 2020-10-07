@@ -83,6 +83,9 @@ module "grafana" {
   azure_ad_client_id         = var.azure_ad_client_id
   azure_ad_client_secret     = var.azure_ad_client_secret
 
+  smtp_user                  = var.smtp_user
+  smtp_password              = var.smtp_password
+
   providers = {
     aws = aws.env
   }

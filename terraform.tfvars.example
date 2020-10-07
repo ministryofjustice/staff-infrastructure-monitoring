@@ -16,6 +16,9 @@ azure_ad_client_secret = ""
 azure_ad_auth_url = ""
 azure_ad_token_url = ""
 
+# these vars can be generated from the aws console: https://console.aws.amazon.com/iam/home?#/s=SESHomeV4/eu-west-2
+smtp_user = ""
+smtp_password = ""
 
 # these vars are only required for production env to connect to physical devices
 enable_transit_gateway = false
