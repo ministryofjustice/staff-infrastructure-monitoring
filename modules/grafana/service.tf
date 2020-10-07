@@ -40,7 +40,7 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
       {"name": "GF_SMTP_PASSWORD", "value": "${var.smtp_password}"},
       {"name": "GF_SMTP_SKIP_VERIFY", "value": "true"},
       {"name": "GF_SMTP_ENABLED", "value": "true"},
-      {"name": "GF_SMTP_FROM_ADDRESS", "value": "alerts@${aws_ses_domain_mail_from.grafana_email_from.mail_from_domain}"}
+      {"name": "GF_SMTP_FROM_ADDRESS", "value": "no-reply@${aws_ses_domain_mail_from.grafana_email_from.mail_from_domain}"}
     ],
     "portMappings": [{
       "hostPort": ${var.container_port},

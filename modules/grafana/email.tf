@@ -1,5 +1,5 @@
 resource "aws_ses_domain_identity" "grafana_email" {
-  domain = var.vpn_hosted_zone_domain
+  domain = "${var.domain_prefix}.${var.vpn_hosted_zone_domain}"
 }
 
 resource "aws_route53_record" "grafana_email_amazonses_verification_record" {
@@ -18,7 +18,7 @@ resource "aws_ses_domain_identity_verification" "grafana_email_verification" {
 
 resource "aws_ses_domain_mail_from" "grafana_email_from" {
   domain           = aws_ses_domain_identity.grafana_email.domain
-  mail_from_domain = "${var.domain_prefix}.${aws_ses_domain_identity.grafana_email.domain}"
+  mail_from_domain = "alerts.${aws_ses_domain_identity.grafana_email.domain}"
 }
 
 resource "aws_route53_record" "grafana_email_ses_domain_mail_from_mx" {
