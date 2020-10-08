@@ -19,6 +19,7 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     "name": "prometheus",
     "cpu": ${var.fargate_cpu},
     "memory": ${var.fargate_memory},
+    "user": "root",
     "image": "${aws_ecr_repository.prometheus.repository_url}",
     "mountPoints": [{
       "sourceVolume": "prometheus_data",
