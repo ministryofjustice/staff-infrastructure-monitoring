@@ -6,7 +6,7 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
 
   cpu                = var.fargate_cpu
   memory             = var.fargate_memory
-  task_role_arn      = var.task_role_arn
+  task_role_arn      = aws_iam_role.task_role.arn
   execution_role_arn = var.execution_role_arn
   tags               = var.tags
 

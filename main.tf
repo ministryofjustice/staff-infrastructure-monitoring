@@ -65,7 +65,6 @@ module "grafana" {
   public_subnet_ids          = module.monitoring_platform.public_subnet_ids
   private_subnet_ids         = module.monitoring_platform.private_subnet_ids
 
-  task_role_arn              = module.monitoring_platform.task_role_arn
   execution_role_arn         = module.monitoring_platform.execution_role_arn
   rds_monitoring_role_arn    = module.monitoring_platform.rds_monitoring_role_arn
 
