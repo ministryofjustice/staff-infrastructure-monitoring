@@ -10,6 +10,7 @@
   - [Set up MFA on your AWS account](#set-up-mfa-on-your-aws-account)
   - [Set up your Terraform workspace](#set-up-your-terraform-workspace)
   - [Set a default region for your AWS profiles](#set-a-default-region-for-your-aws-profiles)
+  - [Verify your email address for receiving emails](#verify-your-email-address-for-receiving-emails)
   - [Create a terraform.tfvars](#create-a-terraformtfvars)
 - [Usage](#usage)
   - [Running the code for development](#running-the-code-for-development)
