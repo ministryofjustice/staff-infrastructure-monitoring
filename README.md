@@ -116,6 +116,18 @@ aws-vault exec moj-pttp-shared-services -- terraform workspace select <my-name>
 1. Open your AWS config file (usually found in `~/.aws/config`)
 2. Add `region=eu-west-2` for both the `profile moj-pttp-dev` and the `profile moj-pttp-shared-services` workspaces
 
+### Verify your email address for receiving emails
+
+1. Go to [AWS Simple Email Service's Email Addresses section](https://eu-west-2.console.aws.amazon.com/ses/home?region=eu-west-2#verified-senders-email:) under Identity Management
+2. Click on **Verify a New Email Address**
+3. Enter your email address and click **Verify This Email Address**
+
+You should then receive an **Email Address Verification Request** email.
+
+4. Click on the link provided in the email
+
+This should update your **Verification Status** to **Verified** AWS.
+
 ### Create a `terraform.tfvars`
 
 1. Duplicate `terraform.tfvars.example` and rename the file to `terraform.tfvars`
