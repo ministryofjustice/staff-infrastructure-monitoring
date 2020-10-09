@@ -4,8 +4,8 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
 
-  cpu                = var.fargate_cpu
-  memory             = var.fargate_memory
+  cpu                = var.fargate_cpu * 2
+  memory             = var.fargate_memory * 2
   task_role_arn      = aws_iam_role.task_role.arn
   execution_role_arn = var.execution_role_arn
   tags               = var.tags
@@ -40,7 +40,13 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
       {"name": "GF_SMTP_PASSWORD", "value": "${var.smtp_password}"},
       {"name": "GF_SMTP_SKIP_VERIFY", "value": "true"},
       {"name": "GF_SMTP_ENABLED", "value": "true"},
-      {"name": "GF_SMTP_FROM_ADDRESS", "value": "no-reply@${aws_ses_domain_mail_from.grafana_email_from.mail_from_domain}"}
+      {"name": "GF_SMTP_FROM_ADDRESS", "value": "no-reply@${aws_ses_domain_mail_from.grafana_email_from.mail_from_domain}"},
+      {"name": "GF_EXTERNAL_IMAGE_STORAGE_PROVIDER", "value": "s3"},
+      {"name": "GF_EXTERNAL_IMAGE_STORAGE_S3_ENDPOINT", "value": "s3.eu-west-2.amazonaws.com"},
+      {"name": "GF_EXTERNAL_IMAGE_STORAGE_S3_BUCKET", "value": "${aws_s3_bucket.external_image_storage.bucket}"},
+      {"name": "GF_EXTERNAL_IMAGE_STORAGE_S3_REGION", "value": "${var.aws_region}"},
+      {"name": "GF_RENDERING_SERVER_URL", "value": "http://localhost:8081/render"},
+      {"name": "GF_RENDERING_CALLBACK_URL", "value": "http://localhost:3000"}
     ],
     "portMappings": [{
       "hostPort": ${var.container_port},
@@ -55,6 +61,23 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
       "options": {
         "awslogs-region" : "${var.aws_region}",
         "awslogs-stream-prefix": "${var.prefix}-grafana",
+        "awslogs-group" : "${aws_cloudwatch_log_group.grafana_cloudwatch_log_group.name}"
+      }
+    }
+  },
+  {
+    "name": "grafana-image-renderer",
+    "cpu": ${var.fargate_cpu},
+    "memory": ${var.fargate_memory},
+    "image": "grafana/grafana-image-renderer:latest",
+    "environment": [
+      {"name": "LOG_LEVEL", "value": "debug"}
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-region" : "${var.aws_region}",
+        "awslogs-stream-prefix": "${var.prefix}-grafana-image-renderer",
         "awslogs-group" : "${aws_cloudwatch_log_group.grafana_cloudwatch_log_group.name}"
       }
     }
