@@ -21,6 +21,13 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     "memory": ${var.fargate_memory},
     "user": "root",
     "image": "${aws_ecr_repository.prometheus.repository_url}",
+    "command": [
+      "--config.file=/etc/prometheus/prometheus.yml",
+      "--storage.tsdb.min-block-duration=2h",
+      "--storage.tsdb.max-block-duration=2h",
+      "--storage.tsdb.path=/var/lib/prometheus",
+      "--web.enable-lifecycle"
+    ],
     "mountPoints": [{
       "sourceVolume": "prometheus_data",
       "containerPath": "/var/lib/prometheus"
@@ -42,9 +49,15 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     "command": [
       "sidecar",
       "--prometheus.url=http://localhost:9090",
+      "--tsdb.path=/var/lib/prometheus",
       "--grpc-address=0.0.0.0:10903",
-      "--http-address=0.0.0.0:10904"
+      "--http-address=0.0.0.0:10904",
+      "--objstore.config=${data.template_file.storage_config.rendered}"
     ],
+    "mountPoints": [{
+      "sourceVolume": "prometheus_data",
+      "containerPath": "/var/lib/prometheus"
+    }],
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
@@ -61,7 +74,8 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     "image": "quay.io/thanos/thanos:v0.15.0",
     "command": [
       "query",
-      "--store=0.0.0.0:10903"
+      "--store=0.0.0.0:10903",
+      "--store=0.0.0.0:20091"
     ],
     "portMappings": [{
       "hostPort": 10902,
