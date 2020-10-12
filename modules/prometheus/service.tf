@@ -156,6 +156,7 @@ data "template_file" "storage_config" {
   vars = {
     bucket_name = aws_s3_bucket.storage.bucket
     endpoint = "s3.eu-west-2.amazonaws.com"
+    kms_key_id = aws_kms_key.storage_key.key_id
   }
 }
 

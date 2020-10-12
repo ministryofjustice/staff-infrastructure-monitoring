@@ -1,1 +1,1 @@
-type: S3\nconfig:\n  bucket: ${bucket_name}\n  endpoint: ${endpoint}\n  insecure: true
+type: S3\nconfig:\n  bucket: ${bucket_name}\n  endpoint: ${endpoint}\n  insecure: false\n  signature_version2: false\n  sse_config:\n    type: SSE-KMS\n    kms_key_id: ${kms_key_id}
