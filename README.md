@@ -90,7 +90,8 @@ You will need to do this for both your Dev and Shared Services AWS accounts.
 ```
 aws-vault exec moj-pttp-shared-services -- terraform init
 ```
-You will be asked to provited the path to the state file inside the bucket, dev convention is to use `terraform.development.state`
+
+You will be asked to provide the path to the state file inside the bucket, for development use `terraform.development.state`.
 
 2. Create your own personal workspace by replacing `<my-name>` with your name and running:
 
