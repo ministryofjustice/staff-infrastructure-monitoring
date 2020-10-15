@@ -4,3 +4,8 @@ resource "aws_s3_bucket" "external_image_storage" {
 
   tags = var.tags
 }
+
+resource "aws_s3_bucket_metric" "external_image_storage" {
+  bucket = aws_s3_bucket.external_image_storage.bucket
+  name   = "EntireBucket"
+}
