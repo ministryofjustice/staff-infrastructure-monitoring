@@ -7,6 +7,10 @@ variable "prefix_pttp" {
   type = string
 }
 
+variable "prefix" {
+  type = string
+}
+
 variable "short_prefix" {
   type = string
 }

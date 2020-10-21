@@ -37,6 +37,25 @@ module "label_pttp" {
   }
 }
 
+module "label" {
+  version = "0.16.0"
+  source  = "cloudposse/label/null"
+
+  delimiter = "-"
+  name      = "IMA"
+  namespace = "pttp"
+  stage     = terraform.workspace
+
+  tags = {
+    "business-unit"    = "MoJO"
+    "environment-name" = "global"
+    "owner"            = var.owner-email
+    "is-production"    = var.is-production
+    "application"      = "Infrastructure Monitoring and Alerting"
+    "source-code"      = "https://github.com/ministryofjustice/staff-infrastructure-monitoring"
+  }
+}
+
 module "monitoring_platform" {
   source = "./modules/monitoring_platform"
 
@@ -57,6 +76,7 @@ module "grafana" {
 
   aws_region                 = var.aws_region
   prefix_pttp                = module.label_pttp.id
+  prefix                     = module.label.id
   tags                       = module.label_pttp.tags
   short_prefix               = module.label_pttp.stage
 

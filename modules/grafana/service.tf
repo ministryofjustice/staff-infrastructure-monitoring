@@ -110,7 +110,7 @@ resource "aws_ecs_service" "grafana_ecs_service" {
 }
 
 resource "aws_cloudwatch_log_group" "grafana_cloudwatch_log_group" {
-  name              = "${var.prefix_pttp}-grafana-cloudwatch-log-group"
+  name              = "${var.prefix}-grafana-cloudwatch-log-group"
   retention_in_days = 7
 
   tags = var.tags
