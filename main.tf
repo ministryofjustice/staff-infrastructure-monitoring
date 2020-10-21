@@ -18,7 +18,7 @@ provider "aws" {
   }
 }
 
-module "label" {
+module "label_pttp" {
   version = "0.16.0"
   source  = "cloudposse/label/null"
 
@@ -40,8 +40,8 @@ module "label" {
 module "monitoring_platform" {
   source = "./modules/monitoring_platform"
 
-  prefix = module.label.id
-  tags   = module.label.tags
+  prefix = module.label_pttp.id
+  tags   = module.label_pttp.tags
 
   transit_gateway_id             = var.transit_gateway_id
   enable_transit_gateway         = var.enable_transit_gateway
@@ -56,9 +56,9 @@ module "grafana" {
   source = "./modules/grafana"
 
   aws_region                 = var.aws_region
-  prefix                     = module.label.id
-  tags                       = module.label.tags
-  short_prefix               = module.label.stage
+  prefix                     = module.label_pttp.id
+  tags                       = module.label_pttp.tags
+  short_prefix               = module.label_pttp.stage
 
   vpc                        = module.monitoring_platform.vpc_id
   cluster_id                 = module.monitoring_platform.cluster_id
@@ -94,8 +94,8 @@ module "prometheus" {
   source = "./modules/prometheus"
 
   aws_region         = var.aws_region
-  prefix             = module.label.id
-  tags               = module.label.tags
+  prefix             = module.label_pttp.id
+  tags               = module.label_pttp.tags
 
   vpc                = module.monitoring_platform.vpc_id
   cluster_id         = module.monitoring_platform.cluster_id
@@ -113,8 +113,8 @@ module "snmp_exporter" {
   source = "./modules/snmp_exporter"
 
   aws_region         = var.aws_region
-  prefix             = module.label.id
-  tags               = module.label.tags
+  prefix             = module.label_pttp.id
+  tags               = module.label_pttp.tags
 
   vpc                = module.monitoring_platform.vpc_id
   cluster_id         = module.monitoring_platform.cluster_id
@@ -132,8 +132,8 @@ module "blackbox_exporter" {
   source = "./modules/blackbox_exporter"
 
   aws_region         = var.aws_region
-  prefix             = module.label.id
-  tags               = module.label.tags
+  prefix             = module.label_pttp.id
+  tags               = module.label_pttp.tags
 
   vpc                = module.monitoring_platform.vpc_id
   cluster_id         = module.monitoring_platform.cluster_id
@@ -150,8 +150,8 @@ module "blackbox_exporter" {
 module "corsham_bastion" {
   source  = "./modules/corsham_bastion"
 
-  prefix             = module.label.id
-  tags               = module.label.tags
+  prefix             = module.label_pttp.id
+  tags               = module.label_pttp.tags
 
   vpc                = module.monitoring_platform.vpc_id
   public_subnet_ids  = module.monitoring_platform.public_subnet_ids
