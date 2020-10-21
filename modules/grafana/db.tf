@@ -14,9 +14,9 @@ resource "aws_db_instance" "db" {
   instance_class              = "db.t2.medium"
   username                    = var.db_username
   password                    = var.db_password
-  identifier                  = "${var.prefix}-db"
+  identifier                  = "${var.prefix_pttp}-db"
   monitoring_role_arn         = var.rds_monitoring_role_arn
-  name                        = replace(var.prefix, "-", "")
+  name                        = replace(var.prefix_pttp, "-", "")
   vpc_security_group_ids      = [aws_security_group.db_in.id]
   backup_retention_period     = var.db_backup_retention_period
   db_subnet_group_name        = aws_db_subnet_group.db_subnet_group.name
@@ -25,7 +25,7 @@ resource "aws_db_instance" "db" {
 }
 
 resource "aws_db_subnet_group" "db_subnet_group" {
-  name       = "${var.prefix}-db-subnet-group"
+  name       = "${var.prefix_pttp}-db-subnet-group"
   subnet_ids = var.private_subnet_ids
 
   tags = var.tags

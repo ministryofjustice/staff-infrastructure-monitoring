@@ -56,7 +56,7 @@ module "grafana" {
   source = "./modules/grafana"
 
   aws_region                 = var.aws_region
-  prefix                     = module.label_pttp.id
+  prefix_pttp                = module.label_pttp.id
   tags                       = module.label_pttp.tags
   short_prefix               = module.label_pttp.stage
 

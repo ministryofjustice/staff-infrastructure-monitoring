@@ -1,5 +1,5 @@
 resource "aws_security_group" "ecs_grafana_tasks" {
-  name        = "${var.prefix}-ecs-grafana-tasks"
+  name        = "${var.prefix_pttp}-ecs-grafana-tasks"
   description = "allow inbound access from the ALB only"
   vpc_id      = var.vpc
 
@@ -21,7 +21,7 @@ resource "aws_security_group" "ecs_grafana_tasks" {
 }
 
 resource "aws_security_group" "lb_grafana" {
-  name        = "${var.prefix}-alb-grafana-sg"
+  name        = "${var.prefix_pttp}-alb-grafana-sg"
   description = "controls access to the ALB"
   vpc_id      = var.vpc
 
@@ -43,7 +43,7 @@ resource "aws_security_group" "lb_grafana" {
 }
 
 resource "aws_security_group" "db_in" {
-  name        = "${var.prefix}-db-in"
+  name        = "${var.prefix_pttp}-db-in"
   description = "allow connections to the DB"
   vpc_id      = var.vpc
 

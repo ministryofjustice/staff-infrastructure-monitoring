@@ -3,7 +3,7 @@ variable "aws_region" {
   type = string
 }
 
-variable "prefix" {
+variable "prefix_pttp" {
   type = string
 }
 
