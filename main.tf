@@ -43,7 +43,7 @@ module "label" {
 
   delimiter = "-"
   name      = "IMA"
-  namespace = "pttp"
+  namespace = "staff-infra"
   stage     = terraform.workspace
 
   tags = {
