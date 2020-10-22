@@ -1,12 +1,12 @@
 resource "aws_iam_role" "task_role" {
-  name               = "${var.prefix}-thanos-task-role"
+  name               = "${var.prefix_pttp}-thanos-task-role"
   assume_role_policy = file("${path.module}/policies/task_assume_role_policy.json")
 
   tags = var.tags
 }
 
 resource "aws_iam_policy" "s3_access_policy" {
-  name              = "${var.prefix}-thanos-task-policy"
+  name              = "${var.prefix_pttp}-thanos-task-policy"
 
   policy = data.template_file.s3_access_policy.rendered
 }
@@ -25,7 +25,7 @@ resource "aws_iam_role_policy_attachment" "s3_access_policy_attachment" {
 }
 
 resource "aws_iam_policy" "kms_access_policy" {
-  name = "${var.prefix}-thanos-kms-policy"
+  name = "${var.prefix_pttp}-thanos-kms-policy"
 
   policy = data.template_file.kms_access_policy.rendered
 }

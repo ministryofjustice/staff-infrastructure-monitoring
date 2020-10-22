@@ -1,5 +1,5 @@
 resource "aws_alb" "main_prometheus" {
-  name = "${var.prefix}-prom-alb"
+  name = "${var.prefix_pttp}-prom-alb"
 
   internal        = true
   subnets         = var.private_subnet_ids
@@ -9,7 +9,7 @@ resource "aws_alb" "main_prometheus" {
 }
 
 resource "aws_alb_target_group" "app_prometheus" {
-  name        = "${var.prefix}-prom-tg"
+  name        = "${var.prefix_pttp}-prom-tg"
   port        = 10902
   vpc_id      = var.vpc
   protocol    = "HTTP"

@@ -114,7 +114,7 @@ module "prometheus" {
   source = "./modules/prometheus"
 
   aws_region         = var.aws_region
-  prefix             = module.label_pttp.id
+  prefix_pttp             = module.label_pttp.id
   tags               = module.label_pttp.tags
 
   vpc                = module.monitoring_platform.vpc_id

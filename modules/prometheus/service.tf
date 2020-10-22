@@ -1,5 +1,5 @@
 resource "aws_ecs_task_definition" "prometheus_task_definition" {
-  family                   = "${var.prefix}-prometheus"
+  family                   = "${var.prefix_pttp}-prometheus"
 
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
@@ -36,7 +36,7 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
       "logDriver": "awslogs",
       "options": {
         "awslogs-region" : "${var.aws_region}",
-        "awslogs-stream-prefix": "${var.prefix}-prom",
+        "awslogs-stream-prefix": "${var.prefix_pttp}-prom",
         "awslogs-group" : "${aws_cloudwatch_log_group.prometheus_cloudwatch_log_group.name}"
       }
     }
@@ -62,7 +62,7 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
       "logDriver": "awslogs",
       "options": {
         "awslogs-region" : "${var.aws_region}",
-        "awslogs-stream-prefix": "${var.prefix}-thsc",
+        "awslogs-stream-prefix": "${var.prefix_pttp}-thsc",
         "awslogs-group" : "${aws_cloudwatch_log_group.prometheus_cloudwatch_log_group.name}"
       }
     }
@@ -85,7 +85,7 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
       "logDriver": "awslogs",
       "options": {
         "awslogs-region" : "${var.aws_region}",
-        "awslogs-stream-prefix": "${var.prefix}-thqr",
+        "awslogs-stream-prefix": "${var.prefix_pttp}-thqr",
         "awslogs-group" : "${aws_cloudwatch_log_group.prometheus_cloudwatch_log_group.name}"
       }
     }
@@ -111,7 +111,7 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
       "logDriver": "awslogs",
       "options": {
         "awslogs-region" : "${var.aws_region}",
-        "awslogs-stream-prefix": "${var.prefix}-thqr",
+        "awslogs-stream-prefix": "${var.prefix_pttp}-thqr",
         "awslogs-group" : "${aws_cloudwatch_log_group.prometheus_cloudwatch_log_group.name}"
       }
     }
@@ -120,7 +120,7 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
 }
 
 resource "aws_ecs_service" "prometheus_ecs_service" {
-  name = "${var.prefix}-prom-ecs-service"
+  name = "${var.prefix_pttp}-prom-ecs-service"
 
   launch_type     = "FARGATE"
   desired_count   = var.fargate_count
@@ -144,7 +144,7 @@ resource "aws_ecs_service" "prometheus_ecs_service" {
 }
 
 resource "aws_cloudwatch_log_group" "prometheus_cloudwatch_log_group" {
-  name              = "${var.prefix}-prometheus-cloudwatch-log-group"
+  name              = "${var.prefix_pttp}-prometheus-cloudwatch-log-group"
   retention_in_days = 7
 
   tags = var.tags

@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "storage" {
-  bucket = "${var.prefix}-thanos-storage"
+  bucket = "${var.prefix_pttp}-thanos-storage"
   acl    = "private"
 
   tags = var.tags
@@ -20,5 +20,5 @@ resource "aws_s3_bucket_metric" "storage" {
 }
 
 resource "aws_kms_key" "storage_key" {
-  description             = "${var.prefix}-thanos-storage encryption key"
+  description             = "${var.prefix_pttp}-thanos-storage encryption key"
 }

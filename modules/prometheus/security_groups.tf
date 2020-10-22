@@ -1,5 +1,5 @@
 resource "aws_security_group" "ecs_prometheus_tasks" {
-  name        = "${var.prefix}-ecs-prom-tasks"
+  name        = "${var.prefix_pttp}-ecs-prom-tasks"
   description = "allow inbound access from the ALB only"
   vpc_id      = var.vpc
 
@@ -21,7 +21,7 @@ resource "aws_security_group" "ecs_prometheus_tasks" {
 }
 
 resource "aws_security_group" "lb_prom" {
-  name        = "${var.prefix}-alb-prom-sg"
+  name        = "${var.prefix_pttp}-alb-prom-sg"
   description = "controls access to the ALB"
   vpc_id      = var.vpc
 

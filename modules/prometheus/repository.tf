@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "prometheus" {
-  name                 = "${var.prefix}-prometheus"
+  name                 = "${var.prefix_pttp}-prometheus"
   image_tag_mutability = "MUTABLE"
 }
 
