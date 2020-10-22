@@ -144,7 +144,7 @@ resource "aws_ecs_service" "prometheus_ecs_service" {
 }
 
 resource "aws_cloudwatch_log_group" "prometheus_cloudwatch_log_group" {
-  name              = "${var.prefix_pttp}-prometheus-cloudwatch-log-group"
+  name              = "${var.prefix}-prometheus-cloudwatch-log-group"
   retention_in_days = 7
 
   tags = var.tags
