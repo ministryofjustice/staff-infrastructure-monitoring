@@ -30,7 +30,7 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
       {"name": "GF_DATABASE_HOST", "value": "${aws_db_instance.db.endpoint}"},
       {"name": "GF_SECURITY_ADMIN_PASSWORD", "value": "${var.admin_password}"},
       {"name": "GF_SERVER_ROOT_URL", "value": "https://${aws_route53_record.grafana.name}"},
-      {"name": "GF_AUTH_LOGIN_MAXIMUM_INACTIVE_LIFETIME_DURATION", "value": "15m"},
+      {"name": "GF_AUTH_LOGIN_MAXIMUM_INACTIVE_LIFETIME_DURATION", "value": "8h"},
       {"name": "GF_AUTH_LOGIN_MAXIMUM_LIFETIME_DURATION", "value": "12h"},
       {"name": "GF_AUTH_AZUREAD_ENABLED", "value": "true"},
       {"name": "GF_AUTH_AZUREAD_CLIENT_ID", "value": "${var.azure_ad_client_id}"},
