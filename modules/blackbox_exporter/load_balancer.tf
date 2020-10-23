@@ -1,5 +1,5 @@
 resource "aws_alb" "main_blackbox_exporter" {
-  name            = "${var.prefix}-bb-alb"
+  name            = "${var.prefix_pttp}-bb-alb"
 
   internal        = true
   subnets         = var.private_subnet_ids
@@ -9,7 +9,7 @@ resource "aws_alb" "main_blackbox_exporter" {
 }
 
 resource "aws_alb_target_group" "app_blackbox_exporter" {
-  name        = "${var.prefix}-bb-tg"
+  name        = "${var.prefix_pttp}-bb-tg"
   port        = var.fargate_port
   vpc_id      = var.vpc
   protocol    = "HTTP"

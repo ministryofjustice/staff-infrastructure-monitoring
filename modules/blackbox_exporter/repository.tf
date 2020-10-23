@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "blackbox_exporter" {
-  name                 = "${var.prefix}-blackbox-exporter"
+  name                 = "${var.prefix_pttp}-blackbox-exporter"
   image_tag_mutability = "MUTABLE"
 }
 

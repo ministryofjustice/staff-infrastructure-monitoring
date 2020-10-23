@@ -1,5 +1,5 @@
 resource "aws_security_group" "ecs_blackbox_exporter_tasks" {
-  name        = "${var.prefix}-ecs-blackbox-tasks"
+  name        = "${var.prefix_pttp}-ecs-blackbox-tasks"
   description = "allow inbound access from the ALB only"
   vpc_id      = var.vpc
 
@@ -21,7 +21,7 @@ resource "aws_security_group" "ecs_blackbox_exporter_tasks" {
 }
 
 resource "aws_security_group" "lb_blackbox_exporter" {
-  name        = "${var.prefix}-alb-blackbox-sg"
+  name        = "${var.prefix_pttp}-alb-blackbox-sg"
   description = "controls access to the ALB"
   vpc_id      = var.vpc
 

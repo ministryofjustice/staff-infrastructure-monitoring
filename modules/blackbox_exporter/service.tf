@@ -1,5 +1,5 @@
 resource "aws_ecs_task_definition" "blackbox_exporter_task_definition" {
-  family = "${var.prefix}-blackbox_exporter-task"
+  family = "${var.prefix_pttp}-blackbox_exporter-task"
 
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
@@ -23,7 +23,7 @@ resource "aws_ecs_task_definition" "blackbox_exporter_task_definition" {
       "logDriver": "awslogs",
       "options": {
         "awslogs-region" : "${var.aws_region}",
-        "awslogs-stream-prefix": "${var.prefix}-blackbox",
+        "awslogs-stream-prefix": "${var.prefix_pttp}-blackbox",
         "awslogs-group" : "${aws_cloudwatch_log_group.blackbox_exporter_cloudwatch_log_group.name}"
       }
     }
@@ -32,7 +32,7 @@ resource "aws_ecs_task_definition" "blackbox_exporter_task_definition" {
 }
 
 resource "aws_ecs_service" "blackbox_exporter_ecs_service" {
-  name = "${var.prefix}-blackbox_exporter-ecs-service"
+  name = "${var.prefix_pttp}-blackbox_exporter-ecs-service"
 
   launch_type     = "FARGATE"
   desired_count   = var.fargate_count
@@ -60,7 +60,7 @@ resource "aws_ecs_service" "blackbox_exporter_ecs_service" {
 }
 
 resource "aws_cloudwatch_log_group" "blackbox_exporter_cloudwatch_log_group" {
-  name              = "${var.prefix}-blackbox_exporter-cloudwatch-log-group"
+  name              = "${var.prefix_pttp}-blackbox_exporter-cloudwatch-log-group"
   retention_in_days = 7
 
   tags = var.tags
