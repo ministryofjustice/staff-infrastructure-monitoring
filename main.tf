@@ -135,6 +135,7 @@ module "snmp_exporter" {
 
   aws_region         = var.aws_region
   prefix_pttp        = module.label_pttp.id
+  prefix             = module.label.id
   tags               = module.label_pttp.tags
 
   vpc                = module.monitoring_platform.vpc_id
