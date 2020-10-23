@@ -1,5 +1,5 @@
 resource "aws_security_group" "ecs_snmp_exporter_tasks" {
-  name        = "${var.prefix}-ecs-snmp-tasks"
+  name        = "${var.prefix_pttp}-ecs-snmp-tasks"
   description = "allow inbound access from the ALB only"
   vpc_id      = var.vpc
 
@@ -21,7 +21,7 @@ resource "aws_security_group" "ecs_snmp_exporter_tasks" {
 }
 
 resource "aws_security_group" "lb_snmp_exporter" {
-  name        = "${var.prefix}-alb-snmp-sg"
+  name        = "${var.prefix_pttp}-alb-snmp-sg"
   description = "controls access to the ALB"
   vpc_id      = var.vpc
 

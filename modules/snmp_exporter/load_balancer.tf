@@ -1,5 +1,5 @@
 resource "aws_alb" "main_snmp_exporter" {
-  name = "${var.prefix}-snmp-alb"
+  name = "${var.prefix_pttp}-snmp-alb"
 
   internal        = true
   subnets         = var.private_subnet_ids
@@ -9,7 +9,7 @@ resource "aws_alb" "main_snmp_exporter" {
 }
 
 resource "aws_alb_target_group" "app_snmp_exporter" {
-  name        = "${var.prefix}-snmp-tg"
+  name        = "${var.prefix_pttp}-snmp-tg"
   port        = var.fargate_port
   vpc_id      = var.vpc
   protocol    = "HTTP"
