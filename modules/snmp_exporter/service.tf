@@ -60,7 +60,7 @@ resource "aws_ecs_service" "snmp_exporter_ecs_service" {
 }
 
 resource "aws_cloudwatch_log_group" "snmp_exporter_cloudwatch_log_group" {
-  name              = "${var.prefix}-snmp_exporter-cloudwatch-log-group"
+  name              = "${var.prefix}-snmp-exporter-cloudwatch-log-group"
   retention_in_days = 7
 
   tags = var.tags
