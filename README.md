@@ -31,6 +31,7 @@ utilised.
 - [SNMP Exporter](https://github.com/ministryofjustice/staff-infrastructure-monitoring-snmpexporter) - to scrape data from physical devices (Docker image)
 - [Blackbox Exporter](https://github.com/ministryofjustice/staff-infrastructure-monitoring-blackbox-exporter) - to probe endpoints over HTTP, HTTPS, DNS, TCP and ICMP.s (Docker image)
 - [Metric Aggregation Server](https://github.com/ministryofjustice/staff-infrastructure-metric-aggregation-server) - to pull data from the SNMP exporter (Docker image)
+- [Shared Services Infrastructure](https://github.com/ministryofjustice/pttp-shared-services-infrastructure) - to manage our CI/CD pipelines
 
 ## Getting started
 
