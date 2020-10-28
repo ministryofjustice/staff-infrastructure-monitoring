@@ -1,4 +1,4 @@
-# PTTP Infrastructure Monitoring and Alerting Platform
+# Infrastructure Monitoring and Alerting Platform
 
 ## Table of contents
 
@@ -19,15 +19,14 @@
 ## About the project
 
 The Infrastructure Monitoring and Alerting (IMA) Platform aims to allow service
-owners and support teams to monitor the health of the Prison Technology
-Transformation Programme (PTTP) infrastructure and identify failures as early as
+owners and support teams to monitor the health of the MoJ infrastructure and identify failures as early as
 possible ahead of the end users noticing and reporting them. Technologies such
 as [Grafana](https://grafana.com/) and [Prometheus](https://prometheus.io/) are
 utilised.
 
 ### Our repositories
 
-- [IMA Platform](https://github.com/ministryofjustice/staff-infrastructure-monitoring) - to monitor PTTP infrastructure and physical devices
+- [IMA Platform](https://github.com/ministryofjustice/staff-infrastructure-monitoring) - to monitor MoJ infrastructure and physical devices
 - [Data Source Configuration](https://github.com/ministryofjustice/staff-infrastructure-monitoring-datasource-config) - to provision data sources for the IMA Platform
 - [SNMP Exporter](https://github.com/ministryofjustice/staff-infrastructure-monitoring-snmpexporter) - to scrape data from physical devices (Docker image)
 - [Blackbox Exporter](https://github.com/ministryofjustice/staff-infrastructure-monitoring-blackbox-exporter) - to probe endpoints over HTTP, HTTPS, DNS, TCP and ICMP.s (Docker image)
