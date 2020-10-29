@@ -38,8 +38,9 @@ utilised.
 ### Prerequisites
 
 - [AWS Command Line Interface (CLI)](https://aws.amazon.com/cli/) - to manage AWS services
-- [AWS Vault](https://github.com/99designs/aws-vault) - to easily manage and switch between AWS account profiles on the command line
-- [tfenv](https://github.com/tfutils/tfenv) - to easily manage and switch [Terraform](https://www.terraform.io/) versions (0.12.29 is preferred)
+- [AWS Vault](https://github.com/99designs/aws-vault) (>= 6.0.0) - to easily manage and switch between AWS account profiles on the command line
+- [Terraform](https://www.terraform.io/) (0.12.29) - to manage infrastructure
+- [tfenv](https://github.com/tfutils/tfenv) - to easily manage and switch versions Terraform versions
 
 You should also have AWS account access to at least the Dev and Shared Services AWS accounts.
 
@@ -149,6 +150,12 @@ To execute changes:
 
 ```
 aws-vault exec moj-pttp-shared-services -- terraform apply
+```
+
+To execute changes that require a longer session e.g. creating a database:
+
+```
+aws-vault clear && aws-vault exec moj-pttp-shared-services --duration=2h -- terraform apply
 ```
 
 To minimise costs and keep the environment clean, regularly run teardown in your workspace using:
