@@ -5,7 +5,9 @@ resource "aws_db_instance" "db" {
   apply_immediately           = true
   auto_minor_version_upgrade  = true
   multi_az                    = true
-  skip_final_snapshot         = true
+  delete_automated_backups    = false
+  skip_final_snapshot         = false
+  final_snapshot_identifier   = "${var.prefix_pttp}-db-final-snapshot"
   storage_encrypted           = true
   deletion_protection         = false # Set to true after transit gateway is confirmed working
   allow_major_version_upgrade = false
