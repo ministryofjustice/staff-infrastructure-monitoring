@@ -1,6 +1,8 @@
 is-production = "false"
 assume_role = "" # this should be the arn to the admin role set up on moj-pttp-dev
 
+grafana_db_name = ""
+grafana_db_endpoint = ""
 grafana_db_username = ""
 grafana_db_password = ""
 

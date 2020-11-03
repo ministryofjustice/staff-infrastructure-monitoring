@@ -88,6 +88,14 @@ variable "db_port" {
   default = 5432
 }
 
+variable "db_name" {
+  type = string
+}
+
+variable "db_endpoint" {
+  type = string
+}
+
 variable "db_username" {
   type = string
 }

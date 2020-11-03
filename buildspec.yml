@@ -11,6 +11,8 @@ env:
   parameter-store:
     TF_VAR_assume_role: "/codebuild/pttp-ci-ima-pipeline/$ENV/assume_role"
     TF_VAR_meta_data_url: "/codebuild/pttp-ci-infrastructure-core-pipeline/meta_data_url"
+    TF_VAR_grafana_db_name: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_db_name"
+    TF_VAR_grafana_db_endpoint: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_db_endpoint"
     TF_VAR_grafana_db_username: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_db_username"
     TF_VAR_grafana_db_password: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_db_password"
     TF_VAR_grafana_admin_username: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_admin_username"
