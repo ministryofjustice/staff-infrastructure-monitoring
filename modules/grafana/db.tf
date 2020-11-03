@@ -32,3 +32,11 @@ resource "aws_db_subnet_group" "db_subnet_group" {
 
   tags = var.tags
 }
+
+output "db_name" {
+  value = aws_db_instance.db.name
+}
+
+output "db_endpoint" {
+  value = aws_db_instance.db.endpoint
+}
