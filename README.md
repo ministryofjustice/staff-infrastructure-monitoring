@@ -11,7 +11,6 @@
   - [Set up your Terraform workspace](#set-up-your-terraform-workspace)
   - [Set a default region for your AWS profiles](#set-a-default-region-for-your-aws-profiles)
   - [Verify your email address for receiving emails](#verify-your-email-address-for-receiving-emails)
-  - [Create a terraform.tfvars](#create-a-terraformtfvars)
   - [Set up your own development infrastructure](#set-up-your-own-development-infrastructure)
 - [Usage](#usage)
   - [Running the code for development](#running-the-code-for-development)
@@ -132,7 +131,7 @@ You should then receive an **Email Address Verification Request** email.
 
 This should update your **Verification Status** to **Verified** AWS.
 
-### Create a `terraform.tfvars`
+### Set up your own development infrastructure
 
 1. Duplicate `terraform.tfvars.example` and rename the file to `terraform.tfvars`
 
@@ -140,43 +139,41 @@ This should update your **Verification Status** to **Verified** AWS.
 cp terraform.tfvars.example terraform.tfvars
 ```
 
-2. Set values for all the variables with `grafana_db_name` and `grafana_db_endpoint` set this as `foo` for now. These values will be set after creating your own development infrastructure.
+1. Set values for all the variables with `grafana_db_name` and `grafana_db_endpoint` set to `foo` for now. These values will be set after creating your own infrastructure.
 
-### Set up your own development infrastructure
-
-1. Create your infrastructure by running:
+2. Create your infrastructure by running:
 
 ```
 aws-vault clear && aws-vault exec moj-pttp-shared-services --duration=2h -- terraform apply
 ```
 
-2. Move into the `database` directory and initialise Terraform using:
+4. Move into the `database` directory and initialise Terraform using:
 
 ```
 cd database/ && aws-vault exec moj-pttp-dev -- terraform init
 ```
 
-3. Duplicate `terraform.tfvars.example` and rename the file to `terraform.tfvars`
+5. Duplicate `terraform.tfvars.example` and rename the file to `terraform.tfvars`
 
 ```
 cp terraform.tfvars.example terraform.tfvars
 ```
 
-4. Set values for all the variables using the Terraform outputs from creating your infrastructure in Step 1
-5. Create your database by running:
+6. Set values for all the variables using the Terraform outputs from creating your infrastructure in Step 1
+7. Create your database by running:
 
 ```
 aws-vault exec moj-pttp-dev -- terraform apply
 ```
 
-6. Move back into the root directory
+8. Move back into the root directory
 
 ```
 cd ../
 ```
 
-7. Update your `terraform.tfvars` values for `grafana_db_name` and `grafana_db_endpoint` to what is outputted by Terraform at Step 5
-8. Apply your changes by running:
+9. Update your `terraform.tfvars` values for `grafana_db_name` and `grafana_db_endpoint` to what is outputted by Terraform at Step 5
+10. Apply your changes by running:
 
 ```
 aws-vault exec moj-pttp-shared-services -- terraform apply
