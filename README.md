@@ -134,7 +134,52 @@ This should update your **Verification Status** to **Verified** AWS.
 ### Create a `terraform.tfvars`
 
 1. Duplicate `terraform.tfvars.example` and rename the file to `terraform.tfvars`
-2. Set values for all the variables
+
+```
+cp terraform.tfvars.example terraform.tfvars
+```
+
+2. Set values for all the variables with `grafana_db_name` and `grafana_db_endpoint` set this as `foo` for now. These values will be set after creating your own development infrastructure.
+
+### Setting up your own development infrastructure
+
+1. Create your infrastructure by running:
+
+```
+aws-vault clear && aws-vault exec moj-pttp-shared-services --duration=2h -- terraform apply
+```
+
+2. Move into the `database` directory and initialise Terraform using:
+
+```
+cd database/ && aws-vault exec moj-pttp-dev -- terraform init
+```
+
+3. Duplicate `terraform.tfvars.example` and rename the file to `terraform.tfvars`
+
+```
+cp terraform.tfvars.example terraform.tfvars
+```
+
+4. Set values for all the variables using the Terraform outputs from creating your infrastructure in Step 1
+5. Create your database by running:
+
+```
+aws-vault exec moj-pttp-dev -- terraform apply
+```
+
+6. Move back into the root directory
+
+```
+cd ../
+```
+
+7. Update your `terraform.tfvars` values for `grafana_db_name` and `grafana_db_endpoint` to what is outputted by Terraform at Step 5
+8. Apply your changes by running:
+
+```
+aws-vault exec moj-pttp-shared-services -- terraform apply
+```
 
 ## Usage
 
