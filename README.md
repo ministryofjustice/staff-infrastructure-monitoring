@@ -12,6 +12,7 @@
   - [Set a default region for your AWS profiles](#set-a-default-region-for-your-aws-profiles)
   - [Verify your email address for receiving emails](#verify-your-email-address-for-receiving-emails)
   - [Create a terraform.tfvars](#create-a-terraformtfvars)
+  - [Set up your own development infrastructure](#set-up-your-own-development-infrastructure)
 - [Usage](#usage)
   - [Running the code for development](#running-the-code-for-development)
 - [License](#license)
@@ -141,7 +142,7 @@ cp terraform.tfvars.example terraform.tfvars
 
 2. Set values for all the variables with `grafana_db_name` and `grafana_db_endpoint` set this as `foo` for now. These values will be set after creating your own development infrastructure.
 
-### Setting up your own development infrastructure
+### Set up your own development infrastructure
 
 1. Create your infrastructure by running:
 
