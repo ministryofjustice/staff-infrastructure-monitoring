@@ -6,12 +6,12 @@
   - [Our repositories](#our-repositories)
 - [Getting started](#getting-started)
   - [Prerequisites](#prerequisites)
-  - [Set up AWS Vault](#set-up-aws-vault)
-  - [Set up MFA on your AWS account](#set-up-mfa-on-your-aws-account)
-  - [Set up your Terraform workspace](#set-up-your-terraform-workspace)
-  - [Set a default region for your AWS profiles](#set-a-default-region-for-your-aws-profiles)
-  - [Verify your email address for receiving emails](#verify-your-email-address-for-receiving-emails)
-  - [Set up your own development infrastructure](#set-up-your-own-development-infrastructure)
+  - [1. Set up AWS Vault](#1-set-up-aws-vault)
+  - [2. Set up MFA on your AWS account](#2-set-up-mfa-on-your-aws-account)
+  - [3. Set up your Terraform workspace](#3-set-up-your-terraform-workspace)
+  - [4. Set a default region for your AWS profiles](#4-set-a-default-region-for-your-aws-profiles)
+  - [5. Verify your email address for receiving emails](#5-verify-your-email-address-for-receiving-emails)
+  - [6. Set up your own development infrastructure](#6-set-up-your-own-development-infrastructure)
 - [Usage](#usage)
   - [Running the code for development](#running-the-code-for-development)
 - [License](#license)
@@ -44,7 +44,7 @@ utilised.
 
 You should also have AWS account access to at least the Dev and Shared Services AWS accounts.
 
-### Set up AWS Vault
+### 1. Set up AWS Vault
 
 1. Create a profile for the AWS Dev account
 
@@ -72,7 +72,7 @@ aws-vault login <aws-account-name>
 
 This will open up AWS Management Console in your web browser.
 
-### Set up MFA on your AWS account
+### 2. Set up MFA on your AWS account
 
 Multi-Factor Authentication (MFA) is required on AWS accounts in this project.
 You will need to do this for both your Dev and Shared Services AWS accounts.
@@ -84,7 +84,7 @@ You will need to do this for both your Dev and Shared Services AWS accounts.
 5. Select the **Security credentials** tab, then assign an MFA device using the **Virtual MFA device** option (follow the on-screen instructions for this step)
 6. Edit your local `~/.aws/config` file with the key value pair of `mfa_serial=<iam_role_from_mfa_device>` for each of your accounts. The value for `<iam_role_from_mfa_device>` can be found in the AWS console on your IAM user details page, under **Assigned MFA device**. Ensure that you remove the text "(Virtual)" from the end of key value pair's value when you edit this file.
 
-### Set up your Terraform workspace
+### 3. Set up your Terraform workspace
 
 1. Prepare your working directory for Terraform
 
@@ -114,12 +114,12 @@ The current workspace you're using is indicated by an asterisk (*) in the list.
 aws-vault exec moj-pttp-shared-services -- terraform workspace select <my-name>
 ```
 
-### Set a default region for your AWS profiles
+### 4. Set a default region for your AWS profiles
 
 1. Open your AWS config file (usually found in `~/.aws/config`)
 2. Add `region=eu-west-2` for both the `profile moj-pttp-dev` and the `profile moj-pttp-shared-services` workspaces
 
-### Verify your email address for receiving emails
+### 5. Verify your email address for receiving emails
 
 1. Go to [AWS Simple Email Service's Email Addresses section](https://eu-west-2.console.aws.amazon.com/ses/home?region=eu-west-2#verified-senders-email:) under Identity Management
 2. Click on **Verify a New Email Address**
@@ -131,7 +131,7 @@ You should then receive an **Email Address Verification Request** email.
 
 This should update your **Verification Status** to **Verified** AWS.
 
-### Set up your own development infrastructure
+### 6. Set up your own development infrastructure
 
 1. Duplicate `terraform.tfvars.example` and rename the file to `terraform.tfvars`
 
