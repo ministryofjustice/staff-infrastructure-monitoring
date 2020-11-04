@@ -38,11 +38,3 @@ output "blackbox_exporter_repository" {
     repository_url = module.blackbox_exporter.repository.repository_url
   }
 }
-
-output "grafana_db_name" {
-  value = module.grafana.db_name
-}
-
-output "grafana_db_endpoint" {
-  value = module.grafana.db_endpoint
-}
