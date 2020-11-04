@@ -1,0 +1,7 @@
+environment                     = ""
+assume_role                     = ""
+grafana_db_username             = ""
+grafana_db_password             = ""
+grafana_db_subnet_group_name    = ""
+grafana_db_in_security_group_id = ""
+rds_monitoring_role_arn         = ""
