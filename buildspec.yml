@@ -45,4 +45,5 @@ phases:
       - terraform providers
       - terraform workspace new $ENV || true
       - terraform workspace select $ENV
+      - terraform state rm 'module.grafana.aws_db_instance.db'
       - terraform apply --auto-approve -no-color
