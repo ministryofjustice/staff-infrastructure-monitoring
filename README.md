@@ -140,9 +140,9 @@ This should update your **Verification Status** to **Verified** AWS.
 cp terraform.tfvars.example terraform.tfvars
 ```
 
-1. Set values for all the variables with `grafana_db_name` and `grafana_db_endpoint` set to `foo` for now. These values will be set after creating your own infrastructure.
+2. Set values for all the variables with `grafana_db_name` and `grafana_db_endpoint` set to `foo` for now. These values will be set after creating your own infrastructure.
 
-2. Create your infrastructure by running:
+3. Create your infrastructure by running:
 
 ```
 aws-vault clear && aws-vault exec moj-pttp-shared-services --duration=2h -- terraform apply
