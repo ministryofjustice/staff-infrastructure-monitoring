@@ -14,6 +14,7 @@
   - [6. Set up your own development infrastructure](#6-set-up-your-own-development-infrastructure)
 - [Usage](#usage)
   - [Running the code for development](#running-the-code-for-development)
+- [Documentation](#documentation)
 - [License](#license)
 
 ## About the project
@@ -214,6 +215,10 @@ To view your changes within the AWS Management Console:
 ```
 aws-vault login moj-pttp-dev
 ```
+
+## Documentation
+
+- [How to restore a database](/docs/how-to-restore-a-database.md)
 
 ## License
 
