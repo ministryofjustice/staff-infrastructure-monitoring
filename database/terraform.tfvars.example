@@ -1,5 +1,4 @@
 environment                     = ""
-assume_role                     = ""
 grafana_db_username             = ""
 grafana_db_password             = ""
 grafana_db_subnet_group_name    = ""

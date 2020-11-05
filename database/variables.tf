@@ -12,10 +12,6 @@ variable "owner-email" {
   default = "pttp@justice.gov.uk"
 }
 
-variable "assume_role" {
-  type = string
-}
-
 variable "grafana_db_username" {
   type = string
 }
