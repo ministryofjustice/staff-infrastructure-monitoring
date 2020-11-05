@@ -1,7 +1,11 @@
 # Alerts for the IMA Platform
 
-Below are the alerts currently set for the IMA Platform. Those that are monitored
-by the IMA Platform are provisioned through the [Configuration GitHub repository](https://github.com/ministryofjustice/staff-infrastructure-monitoring-datasource-config) within the [Monitoring Platform integrations directory](https://github.com/ministryofjustice/staff-infrastructure-monitoring-datasource-config/tree/main/integrations/monitoring_platform).
+Below are the alerts currently set for the IMA Platform. They have been
+sectioned by the potential problem a user could have.
+
+Those that are monitored by the IMA Platform are provisioned through the
+[Configuration GitHub repository](https://github.com/ministryofjustice/staff-infrastructure-monitoring-datasource-config)
+within the [Monitoring Platform integrations directory](https://github.com/ministryofjustice/staff-infrastructure-monitoring-datasource-config/tree/main/integrations/monitoring_platform).
 
 ## IMA Platform i.e. Grafana is unreachable
 
