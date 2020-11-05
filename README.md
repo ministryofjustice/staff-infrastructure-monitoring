@@ -217,7 +217,7 @@ aws-vault login moj-pttp-dev
 
 ## Documentation
 
-For documentation, see our [docs](/docs/README.md).
+For documentation, see our [docs](/docs).
 
 ## License
 
