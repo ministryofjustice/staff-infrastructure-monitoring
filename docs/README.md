@@ -11,4 +11,4 @@ This documentation is to enable developers of the IMA Platform to run, improve a
 ## Table of contents
 
 - [Alerts for the IMA Platform](./alerts-for-the-ima-platform.md)
-- [Restoring the database](./restoring-a-database.md)
+- [Restoring a database](./restoring-a-database.md)
