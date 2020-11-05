@@ -20,10 +20,9 @@
 ## About the project
 
 The Infrastructure Monitoring and Alerting (IMA) Platform aims to allow service
-owners and support teams to monitor the health of the MoJ infrastructure and identify failures as early as
-possible ahead of the end users noticing and reporting them. Technologies such
-as [Grafana](https://grafana.com/) and [Prometheus](https://prometheus.io/) are
-utilised.
+owners and support teams to monitor the health of the MoJ infrastructure and
+identify failures as early as possible ahead of the end users noticing and
+reporting them.
 
 ### Our repositories
 
@@ -218,7 +217,7 @@ aws-vault login moj-pttp-dev
 
 ## Documentation
 
-- [How to restore a database](/docs/how-to-restore-a-database.md)
+For documentation, see our [docs](/docs/README.md).
 
 ## License
 

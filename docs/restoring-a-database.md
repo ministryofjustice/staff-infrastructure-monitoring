@@ -1,4 +1,4 @@
-# How to restore a database
+# Restoring a database
 
 > Warning: Doing this will lead to a potential data loss of 30 minutes if there are users using the platform as Grafana uses the database to store its sessions.
 
