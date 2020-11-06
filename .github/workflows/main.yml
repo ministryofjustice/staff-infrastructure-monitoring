@@ -1,4 +1,4 @@
-name: CI/CD
+name: CI
 
 on:
   pull_request:
@@ -6,15 +6,23 @@ on:
       - main
 
 jobs:
-  lint-and-format:
+  main:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1.2.1
+        with:
+          terraform_version: 0.12.29
       - name: Install TFLint
         uses: lablabs/setup-tflint@v1.0.2
         with:
           tflint_version: latest
+      - name: Run `terraform validate`
+        run: |
+          terraform init -backend=false
+          terraform validate
       - name: Run linter
         run: |
           tflint
