@@ -6,7 +6,16 @@ on:
       - main
 
 jobs:
-  main:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run formatter
+        uses: ministryofjustice/github-actions/code-formatter@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  validate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -15,14 +24,19 @@ jobs:
         uses: hashicorp/setup-terraform@v1.2.1
         with:
           terraform_version: 0.12.29
-      - name: Install TFLint
-        uses: lablabs/setup-tflint@v1.0.2
-        with:
-          tflint_version: latest
       - name: Run `terraform validate`
         run: |
           terraform init -backend=false
           terraform validate
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install TFLint
+        uses: lablabs/setup-tflint@v1.0.2
+        with:
+          tflint_version: latest
       - name: Run linter
         run: |
           tflint
@@ -32,7 +46,3 @@ jobs:
           tflint modules/monitoring_platform
           tflint modules/prometheus
           tflint modules/snmp_exporter
-      - name: Run formatter
-        uses: ministryofjustice/github-actions/code-formatter@main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
