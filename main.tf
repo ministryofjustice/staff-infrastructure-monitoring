@@ -9,6 +9,7 @@ terraform {
 }
 
 provider "aws" {
+  region  = var.aws_region
   alias   = "env"
   version = "~> 2.68"
   profile = terraform.workspace
@@ -74,38 +75,38 @@ module "monitoring_platform" {
 module "grafana" {
   source = "./modules/grafana"
 
-  aws_region                 = var.aws_region
-  prefix_pttp                = module.label_pttp.id
-  prefix                     = module.label.id
-  tags                       = module.label_pttp.tags
-  short_prefix               = module.label_pttp.stage
+  aws_region   = var.aws_region
+  prefix_pttp  = module.label_pttp.id
+  prefix       = module.label.id
+  tags         = module.label_pttp.tags
+  short_prefix = module.label_pttp.stage
 
-  vpc                        = module.monitoring_platform.vpc_id
-  cluster_id                 = module.monitoring_platform.cluster_id
-  public_subnet_ids          = module.monitoring_platform.public_subnet_ids
-  private_subnet_ids         = module.monitoring_platform.private_subnet_ids
+  vpc                = module.monitoring_platform.vpc_id
+  cluster_id         = module.monitoring_platform.cluster_id
+  public_subnet_ids  = module.monitoring_platform.public_subnet_ids
+  private_subnet_ids = module.monitoring_platform.private_subnet_ids
 
-  execution_role_arn         = module.monitoring_platform.execution_role_arn
-  rds_monitoring_role_arn    = module.monitoring_platform.rds_monitoring_role_arn
+  execution_role_arn      = module.monitoring_platform.execution_role_arn
+  rds_monitoring_role_arn = module.monitoring_platform.rds_monitoring_role_arn
 
-  db_name                    = var.grafana_db_name
-  db_endpoint                = var.grafana_db_endpoint
-  db_username                = var.grafana_db_username
-  db_password                = var.grafana_db_password
-  admin_username             = var.grafana_admin_username
-  admin_password             = var.grafana_admin_password
+  db_name        = var.grafana_db_name
+  db_endpoint    = var.grafana_db_endpoint
+  db_username    = var.grafana_db_username
+  db_password    = var.grafana_db_password
+  admin_username = var.grafana_admin_username
+  admin_password = var.grafana_admin_password
 
-  vpn_hosted_zone_id         = var.vpn_hosted_zone_id
-  vpn_hosted_zone_domain     = var.vpn_hosted_zone_domain
-  domain_prefix              = var.domain_prefix
+  vpn_hosted_zone_id     = var.vpn_hosted_zone_id
+  vpn_hosted_zone_domain = var.vpn_hosted_zone_domain
+  domain_prefix          = var.domain_prefix
 
-  azure_ad_auth_url          = var.azure_ad_auth_url
-  azure_ad_token_url         = var.azure_ad_token_url
-  azure_ad_client_id         = var.azure_ad_client_id
-  azure_ad_client_secret     = var.azure_ad_client_secret
+  azure_ad_auth_url      = var.azure_ad_auth_url
+  azure_ad_token_url     = var.azure_ad_token_url
+  azure_ad_client_id     = var.azure_ad_client_id
+  azure_ad_client_secret = var.azure_ad_client_secret
 
-  smtp_user                  = var.smtp_user
-  smtp_password              = var.smtp_password
+  smtp_user     = var.smtp_user
+  smtp_password = var.smtp_password
 
   providers = {
     aws = aws.env
@@ -115,10 +116,10 @@ module "grafana" {
 module "prometheus" {
   source = "./modules/prometheus"
 
-  aws_region         = var.aws_region
-  prefix_pttp        = module.label_pttp.id
-  prefix             = module.label.id
-  tags               = module.label_pttp.tags
+  aws_region  = var.aws_region
+  prefix_pttp = module.label_pttp.id
+  prefix      = module.label.id
+  tags        = module.label_pttp.tags
 
   vpc                = module.monitoring_platform.vpc_id
   cluster_id         = module.monitoring_platform.cluster_id
@@ -135,10 +136,10 @@ module "prometheus" {
 module "snmp_exporter" {
   source = "./modules/snmp_exporter"
 
-  aws_region         = var.aws_region
-  prefix_pttp        = module.label_pttp.id
-  prefix             = module.label.id
-  tags               = module.label_pttp.tags
+  aws_region  = var.aws_region
+  prefix_pttp = module.label_pttp.id
+  prefix      = module.label.id
+  tags        = module.label_pttp.tags
 
   vpc                = module.monitoring_platform.vpc_id
   cluster_id         = module.monitoring_platform.cluster_id
@@ -155,10 +156,10 @@ module "snmp_exporter" {
 module "blackbox_exporter" {
   source = "./modules/blackbox_exporter"
 
-  aws_region         = var.aws_region
-  prefix_pttp        = module.label_pttp.id
-  prefix             = module.label.id
-  tags               = module.label_pttp.tags
+  aws_region  = var.aws_region
+  prefix_pttp = module.label_pttp.id
+  prefix      = module.label.id
+  tags        = module.label_pttp.tags
 
   vpc                = module.monitoring_platform.vpc_id
   cluster_id         = module.monitoring_platform.cluster_id
@@ -173,13 +174,13 @@ module "blackbox_exporter" {
 }
 
 module "corsham_bastion" {
-  source  = "./modules/corsham_bastion"
+  source = "./modules/corsham_bastion"
 
-  prefix             = module.label_pttp.id
-  tags               = module.label_pttp.tags
+  prefix = module.label_pttp.id
+  tags   = module.label_pttp.tags
 
-  vpc                = module.monitoring_platform.vpc_id
-  public_subnet_ids  = module.monitoring_platform.public_subnet_ids
+  vpc               = module.monitoring_platform.vpc_id
+  public_subnet_ids = module.monitoring_platform.public_subnet_ids
 
   providers = {
     aws = aws.env
