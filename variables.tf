@@ -13,17 +13,7 @@ variable "is-production" {
   default = "true"
 }
 
-variable "assume_role" {
-  type = string
-}
 
-variable "grafana_admin_username" {
-  type = string
-}
-
-variable "grafana_admin_password" {
-  type = string
-}
 
 variable "grafana_db_name" {
   type = string
