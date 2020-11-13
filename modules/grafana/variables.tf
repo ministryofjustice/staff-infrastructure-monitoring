@@ -65,7 +65,7 @@ variable "container_port" {
 
 variable "fargate_image" {
   description = "Docker image to run in the ECS cluster"
-  default     = "grafana/grafana:7.3.2"
+  default     = "grafana/grafana:7.2.0"
 }
 
 variable "fargate_cpu" {
