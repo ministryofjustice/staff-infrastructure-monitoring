@@ -10,9 +10,9 @@ resource "aws_security_group" "efs" {
   vpc_id      = var.vpc
 
   ingress {
-    from_port = 2049
-    to_port   = 2049
-    protocol  = "tcp"
+    from_port       = 2049
+    to_port         = 2049
+    protocol        = "tcp"
     security_groups = []
 
   }
@@ -64,13 +64,13 @@ resource "aws_efs_mount_target" "mount_foobar" {
   subnet_id      = "${element(var.private_subnet_ids, count.index)}"
 
   security_groups = [
-      "${aws_security_group.efs.id}"
-    ]
+    "${aws_security_group.efs.id}"
+  ]
 }
 
 
 resource "aws_ecs_task_definition" "prometheus_task_definition" {
-  family                   = "${var.prefix_pttp}-prometheus"
+  family = "${var.prefix_pttp}-prometheus"
 
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
@@ -197,11 +197,11 @@ DEFINITION
 resource "aws_ecs_service" "prometheus_ecs_service" {
   name = "${var.prefix_pttp}-prom-ecs-service"
 
-  launch_type     = "FARGATE"
+  launch_type      = "FARGATE"
   platform_version = "1.4.0"
-  desired_count   = var.fargate_count
-  cluster         = var.cluster_id
-  task_definition = aws_ecs_task_definition.prometheus_task_definition.arn
+  desired_count    = var.fargate_count
+  cluster          = var.cluster_id
+  task_definition  = aws_ecs_task_definition.prometheus_task_definition.arn
 
   network_configuration {
     subnets         = var.private_subnet_ids
@@ -231,7 +231,7 @@ data "template_file" "storage_config" {
 
   vars = {
     bucket_name = aws_s3_bucket.storage.bucket
-    endpoint = "s3.eu-west-2.amazonaws.com"
-    kms_key_id = aws_kms_key.storage_key.key_id
+    endpoint    = "s3.eu-west-2.amazonaws.com"
+    kms_key_id  = aws_kms_key.storage_key.key_id
   }
 }

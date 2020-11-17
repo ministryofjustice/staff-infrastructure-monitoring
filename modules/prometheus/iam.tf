@@ -6,7 +6,7 @@ resource "aws_iam_role" "task_role" {
 }
 
 resource "aws_iam_policy" "s3_access_policy" {
-  name              = "${var.prefix_pttp}-thanos-task-policy"
+  name = "${var.prefix_pttp}-thanos-task-policy"
 
   policy = data.template_file.s3_access_policy.rendered
 }
