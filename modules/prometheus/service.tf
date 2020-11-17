@@ -1,3 +1,74 @@
+resource "aws_efs_file_system" "foobar" {
+  tags = {
+    Name = "${var.prefix_pttp}-ECS-EFS-FS"
+  }
+}
+
+resource "aws_security_group" "efs" {
+  name        = "efs-mnt"
+  description = "Allows NFS traffic from instances within the VPC."
+  vpc_id      = var.vpc
+
+  ingress {
+    from_port = 2049
+    to_port   = 2049
+    protocol  = "tcp"
+    security_groups = []
+
+  }
+
+  egress {
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"
+  }
+
+}
+
+
+resource "aws_efs_file_system_policy" "policy" {
+  file_system_id = aws_efs_file_system.foobar.id
+
+  policy = <<POLICY
+{
+    "Version": "2012-10-17",
+    "Id": "ExamplePolicy01",
+    "Statement": [
+        {
+            "Sid": "ExampleStatement01",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "*"
+            },
+            "Resource": "${aws_efs_file_system.foobar.arn}",
+            "Action": [
+                "elasticfilesystem:ClientMount",
+                "elasticfilesystem:ClientWrite",
+                "elasticfilesystem:ClientRootAccess"
+            ],
+            "Condition": {
+                "Bool": {
+                    "aws:SecureTransport": "true"
+                }
+            }
+        }
+    ]
+}
+POLICY
+}
+
+resource "aws_efs_mount_target" "mount_foobar" {
+  count = "${length(var.private_subnet_ids)}"
+
+  file_system_id = aws_efs_file_system.foobar.id
+  subnet_id      = "${element(var.private_subnet_ids, count.index)}"
+
+  security_groups = [
+      "${aws_security_group.efs.id}"
+    ]
+}
+
+
 resource "aws_ecs_task_definition" "prometheus_task_definition" {
   family                   = "${var.prefix_pttp}-prometheus"
 
@@ -12,6 +83,10 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
 
   volume {
     name = "prometheus_data"
+    efs_volume_configuration {
+      file_system_id = aws_efs_file_system.foobar.id
+      root_directory = "/"
+    }
   }
 
   container_definitions = <<DEFINITION
@@ -116,13 +191,14 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
       }
     }
   }]
-  DEFINITION
+DEFINITION
 }
 
 resource "aws_ecs_service" "prometheus_ecs_service" {
   name = "${var.prefix_pttp}-prom-ecs-service"
 
   launch_type     = "FARGATE"
+  platform_version = "1.4.0"
   desired_count   = var.fargate_count
   cluster         = var.cluster_id
   task_definition = aws_ecs_task_definition.prometheus_task_definition.arn

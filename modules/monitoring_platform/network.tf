@@ -2,6 +2,7 @@ data "aws_availability_zones" "zones" {}
 
 resource "aws_vpc" "main" {
   cidr_block = "10.180.88.0/21"
+  enable_dns_hostnames = true
 
   tags = var.tags
 }
