@@ -10,29 +10,29 @@ resource "aws_security_group" "efs" {
   vpc_id      = var.vpc
 
   egress {
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
-    cidr_blocks     = ["0.0.0.0/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
-    cidr_blocks     = ["0.0.0.0/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
 }
 
 resource "aws_security_group_rule" "ecs_loopback_rule" {
-  type                      = "ingress"
-  from_port                 = 0
-  to_port                   = 0
-  protocol                  = "-1"
-  self                      = true
-  description               = "Loopback"
-  security_group_id         = "${aws_security_group.efs.id}"
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  self              = true
+  description       = "Loopback"
+  security_group_id = "${aws_security_group.efs.id}"
 }
 
 
