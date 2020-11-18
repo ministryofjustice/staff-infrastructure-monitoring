@@ -115,7 +115,7 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     "cpu": ${var.fargate_cpu},
     "memory": ${var.fargate_memory},
     "user": "root",
-    "image": "prom/prometheus",
+    "image": "${aws_ecr_repository.prometheus.repository_url}",
     "command": [
       "--config.file=/etc/prometheus/prometheus.yml",
       "--storage.tsdb.min-block-duration=2h",
