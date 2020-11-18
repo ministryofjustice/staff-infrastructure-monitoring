@@ -98,12 +98,12 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
   volume {
     name = "prometheus_data"
     efs_volume_configuration {
-      file_system_id = aws_efs_file_system.foobar.id
-      root_directory = "/"
-      transit_encryption      = "ENABLED"
+      file_system_id     = aws_efs_file_system.foobar.id
+      root_directory     = "/"
+      transit_encryption = "ENABLED"
       authorization_config {
-              access_point_id = aws_efs_access_point.foobar_access.id
-            }
+        access_point_id = aws_efs_access_point.foobar_access.id
+      }
     }
 
   }
