@@ -4,6 +4,10 @@ resource "aws_efs_file_system" "foobar" {
   }
 }
 
+resource "aws_efs_access_point" "foobar_access" {
+  file_system_id = aws_efs_file_system.foobar.id
+}
+
 resource "aws_security_group" "efs" {
   name        = "efs-mnt"
   description = "Allows NFS traffic from instances within the VPC."
@@ -96,7 +100,12 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     efs_volume_configuration {
       file_system_id = aws_efs_file_system.foobar.id
       root_directory = "/"
+      transit_encryption      = "ENABLED"
+      authorization_config {
+              access_point_id = aws_efs_access_point.foobar_access.id
+            }
     }
+
   }
 
   //TODO: DON'T MERGE WITH THE DOCKER HUB PROMETHEUS IMAGE
