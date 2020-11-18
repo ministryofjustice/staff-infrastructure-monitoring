@@ -42,3 +42,8 @@ resource "aws_iam_role_policy_attachment" "kms_access_policy_attachment" {
   policy_arn = aws_iam_policy.kms_access_policy.arn
   role       = aws_iam_role.task_role.name
 }
+
+resource "aws_iam_role_policy_attachment" "efs_access" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonElasticFileSystemFullAccess"
+  role       = aws_iam_role.task_role.name
+}

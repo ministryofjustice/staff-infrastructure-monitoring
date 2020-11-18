@@ -9,20 +9,30 @@ resource "aws_security_group" "efs" {
   description = "Allows NFS traffic from instances within the VPC."
   vpc_id      = var.vpc
 
-  ingress {
-    from_port       = 2049
-    to_port         = 2049
-    protocol        = "tcp"
-    security_groups = []
-
-  }
-
   egress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1"
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    cidr_blocks     = ["0.0.0.0/0"]
   }
 
+  ingress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
+
+}
+
+resource "aws_security_group_rule" "ecs_loopback_rule" {
+  type                      = "ingress"
+  from_port                 = 0
+  to_port                   = 0
+  protocol                  = "-1"
+  self                      = true
+  description               = "Loopback"
+  security_group_id         = "${aws_security_group.efs.id}"
 }
 
 
@@ -89,13 +99,14 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     }
   }
 
+  //TODO: DON'T MERGE WITH THE DOCKER HUB PROMETHEUS IMAGE
   container_definitions = <<DEFINITION
   [{
     "name": "prometheus",
     "cpu": ${var.fargate_cpu},
     "memory": ${var.fargate_memory},
     "user": "root",
-    "image": "${aws_ecr_repository.prometheus.repository_url}",
+    "image": "prom/prometheus",
     "command": [
       "--config.file=/etc/prometheus/prometheus.yml",
       "--storage.tsdb.min-block-duration=2h",
@@ -205,7 +216,7 @@ resource "aws_ecs_service" "prometheus_ecs_service" {
 
   network_configuration {
     subnets         = var.private_subnet_ids
-    security_groups = ["${aws_security_group.ecs_prometheus_tasks.id}"]
+    security_groups = ["${aws_security_group.ecs_prometheus_tasks.id}", "${aws_security_group.efs.id}"]
   }
 
   load_balancer {

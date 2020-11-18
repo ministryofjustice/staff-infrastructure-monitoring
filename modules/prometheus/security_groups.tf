@@ -4,10 +4,10 @@ resource "aws_security_group" "ecs_prometheus_tasks" {
   vpc_id      = var.vpc
 
   ingress {
-    protocol        = "tcp"
-    from_port       = 10902
-    to_port         = 10902
-    security_groups = ["${aws_security_group.lb_prom.id}"]
+    protocol        = "-1"
+    from_port       = 0
+    to_port         = 0
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {

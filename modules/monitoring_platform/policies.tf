@@ -41,3 +41,10 @@ resource "aws_iam_role_policy_attachment" "rds_monitoring_policy_attachment" {
   role       = aws_iam_role.rds_monitoring_role.name
   policy_arn = data.aws_iam_policy.rds_monitoring_policy.arn
 }
+
+
+
+resource "aws_iam_role_policy_attachment" "efs_access" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonElasticFileSystemFullAccess"
+  role       = aws_iam_role.cloudwatch_execution_role.name
+}
