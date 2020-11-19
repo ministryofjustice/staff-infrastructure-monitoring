@@ -13,17 +13,10 @@ resource "aws_security_group" "efs" {
   description = "Allows NFS traffic from instances within the VPC."
   vpc_id      = var.vpc
 
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    from_port   = 2049
+    to_port     = 2049
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -108,7 +101,6 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
 
   }
 
-  //TODO: DON'T MERGE WITH THE DOCKER HUB PROMETHEUS IMAGE
   container_definitions = <<DEFINITION
   [{
     "name": "prometheus",
