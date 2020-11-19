@@ -20,5 +20,5 @@ resource "aws_s3_bucket_metric" "storage" {
 }
 
 resource "aws_kms_key" "storage_key" {
-  description             = "${var.prefix_pttp}-thanos-storage encryption key"
+  description = "${var.prefix_pttp}-thanos-storage encryption key"
 }

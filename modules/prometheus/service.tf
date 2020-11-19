@@ -1,5 +1,83 @@
+resource "aws_efs_file_system" "foobar" {
+  tags = {
+    Name = "${var.prefix_pttp}-ECS-EFS-FS"
+  }
+}
+
+resource "aws_efs_access_point" "foobar_access" {
+  file_system_id = aws_efs_file_system.foobar.id
+}
+
+resource "aws_security_group" "efs" {
+  name        = "efs-mnt"
+  description = "Allows NFS traffic from instances within the VPC."
+  vpc_id      = var.vpc
+
+  ingress {
+    from_port   = 2049
+    to_port     = 2049
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+}
+
+resource "aws_security_group_rule" "ecs_loopback_rule" {
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  self              = true
+  description       = "Loopback"
+  security_group_id = aws_security_group.efs.id
+}
+
+
+resource "aws_efs_file_system_policy" "policy" {
+  file_system_id = aws_efs_file_system.foobar.id
+
+  policy = <<POLICY
+{
+    "Version": "2012-10-17",
+    "Id": "ExamplePolicy01",
+    "Statement": [
+        {
+            "Sid": "ExampleStatement01",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "*"
+            },
+            "Resource": "${aws_efs_file_system.foobar.arn}",
+            "Action": [
+                "elasticfilesystem:ClientMount",
+                "elasticfilesystem:ClientWrite",
+                "elasticfilesystem:ClientRootAccess"
+            ],
+            "Condition": {
+                "Bool": {
+                    "aws:SecureTransport": "true"
+                }
+            }
+        }
+    ]
+}
+POLICY
+}
+
+resource "aws_efs_mount_target" "mount_foobar" {
+  count = length(var.private_subnet_ids)
+
+  file_system_id = aws_efs_file_system.foobar.id
+  subnet_id      = element(var.private_subnet_ids, count.index)
+
+  security_groups = [
+    "${aws_security_group.efs.id}"
+  ]
+}
+
+
 resource "aws_ecs_task_definition" "prometheus_task_definition" {
-  family                   = "${var.prefix_pttp}-prometheus"
+  family = "${var.prefix_pttp}-prometheus"
 
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
@@ -12,6 +90,15 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
 
   volume {
     name = "prometheus_data"
+    efs_volume_configuration {
+      file_system_id     = aws_efs_file_system.foobar.id
+      root_directory     = "/"
+      transit_encryption = "ENABLED"
+      authorization_config {
+        access_point_id = aws_efs_access_point.foobar_access.id
+      }
+    }
+
   }
 
   container_definitions = <<DEFINITION
@@ -116,20 +203,21 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
       }
     }
   }]
-  DEFINITION
+DEFINITION
 }
 
 resource "aws_ecs_service" "prometheus_ecs_service" {
   name = "${var.prefix_pttp}-prom-ecs-service"
 
-  launch_type     = "FARGATE"
-  desired_count   = var.fargate_count
-  cluster         = var.cluster_id
-  task_definition = aws_ecs_task_definition.prometheus_task_definition.arn
+  launch_type      = "FARGATE"
+  platform_version = "1.4.0"
+  desired_count    = var.fargate_count
+  cluster          = var.cluster_id
+  task_definition  = aws_ecs_task_definition.prometheus_task_definition.arn
 
   network_configuration {
     subnets         = var.private_subnet_ids
-    security_groups = ["${aws_security_group.ecs_prometheus_tasks.id}"]
+    security_groups = ["${aws_security_group.ecs_prometheus_tasks.id}", "${aws_security_group.efs.id}"]
   }
 
   load_balancer {
@@ -155,7 +243,7 @@ data "template_file" "storage_config" {
 
   vars = {
     bucket_name = aws_s3_bucket.storage.bucket
-    endpoint = "s3.eu-west-2.amazonaws.com"
-    kms_key_id = aws_kms_key.storage_key.key_id
+    endpoint    = "s3.eu-west-2.amazonaws.com"
+    kms_key_id  = aws_kms_key.storage_key.key_id
   }
 }
