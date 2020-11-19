@@ -158,6 +158,7 @@ cd database/ && aws-vault exec moj-pttp-dev -- terraform init
 ```
 cp terraform.tfvars.example terraform.tfvars
 ```
+You will find the values for these `tfvars` outputted in the console after running the command in step 3
 
 6. Set values for all the variables using the Terraform outputs from creating your infrastructure in Step 1
 7. Create your database by running:
