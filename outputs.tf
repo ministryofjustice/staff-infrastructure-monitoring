@@ -38,3 +38,13 @@ output "blackbox_exporter_repository" {
     repository_url = module.blackbox_exporter.repository.repository_url
   }
 }
+
+output "grafana_database_config" {
+  value = {
+    grafana_db_subnet_group_name    = module.grafana.grafana_db_subnet_group_name
+    grafana_db_in_security_group_id = module.grafana.db_in_security_group_id
+    rds_monitoring_role_arn         = module.monitoring_platform.rds_monitoring_role_arn
+
+  }
+}
+
