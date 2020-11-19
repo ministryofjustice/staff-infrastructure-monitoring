@@ -4,10 +4,10 @@ resource "aws_security_group" "ecs_prometheus_tasks" {
   vpc_id      = var.vpc
 
   ingress {
-    protocol    = "-1"
-    from_port   = 0
-    to_port     = 0
-    cidr_blocks = ["0.0.0.0/0"]
+    protocol        = "tcp"
+    from_port       = 10902
+    to_port         = 10902
+    security_groups = ["${aws_security_group.lb_prom.id}"]
   }
 
   egress {
@@ -19,6 +19,16 @@ resource "aws_security_group" "ecs_prometheus_tasks" {
 
   tags = var.tags
 }
+
+resource "aws_security_group_rule" "efs_ingres" {
+  type              = "ingress"
+  from_port         = 2049
+  to_port           = 2049
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.ecs_prometheus_tasks.id
+}
+
 
 resource "aws_security_group" "lb_prom" {
   name        = "${var.prefix_pttp}-alb-prom-sg"
