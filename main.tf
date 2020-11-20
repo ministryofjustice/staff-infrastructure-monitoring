@@ -108,6 +108,8 @@ module "grafana" {
   smtp_user     = var.smtp_user
   smtp_password = var.smtp_password
 
+  sns_subscribers        = split(",",var.sns_subscribers)
+
   providers = {
     aws = aws.env
   }

@@ -22,6 +22,9 @@ azure_ad_token_url = ""
 smtp_user = ""
 smtp_password = ""
 
+# comma separated string of emails
+sns_subscribers = ","
+
 # these vars are only required for production env to connect to physical devices
 enable_transit_gateway = false
 transit_gateway_id = ""

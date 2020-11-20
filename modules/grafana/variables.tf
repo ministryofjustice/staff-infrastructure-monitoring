@@ -147,3 +147,8 @@ variable "azure_ad_auth_url" {
 variable "azure_ad_token_url" {
   type = string
 }
+
+variable "sns_subscribers" {
+  type    = list
+  default = []
+}
