@@ -92,3 +92,7 @@ variable "smtp_user" {
 variable "smtp_password" {
   type = string
 }
+
+variable "sns_subscribers" {
+  type = string
+}

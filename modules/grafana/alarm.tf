@@ -8,7 +8,7 @@ resource "aws_cloudwatch_metric_alarm" "grafana" {
   statistic           = "Average"
   threshold           = "1"
   alarm_description   = "Number of healthy Grafana hosts"
-
+  alarm_actions       = [aws_sns_topic.grafana-alerts.id]
   dimensions = {
     LoadBalancer = aws_alb.main_grafana.arn_suffix
     TargetGroup  = aws_alb_target_group.app_grafana.arn_suffix
