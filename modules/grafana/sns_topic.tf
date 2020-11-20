@@ -27,7 +27,7 @@ data "template_file" "email_subscription" {
 }
 
 resource "aws_cloudformation_stack" "email" {
-  name  = "${aws_sns_topic.grafana-alerts.name}-subscriptions"
+  name = "${aws_sns_topic.grafana-alerts.name}-subscriptions"
 
   template_body = <<-STACK
   {
