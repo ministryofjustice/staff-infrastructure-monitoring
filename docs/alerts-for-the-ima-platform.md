@@ -9,9 +9,10 @@ within the [Monitoring Platform integrations directory](https://github.com/minis
 
 ## IMA Platform i.e. Grafana is unreachable
 
-| Possible cause                  | Monitored by    | Alert                              |
-|---------------------------------|-----------------|------------------------------------|
-| Grafana ECS task fails to start | IMA Platform    | Number of running tasks is below 1 |
+| Possible cause                  | Monitored by    | Alert                                             |
+|---------------------------------|-----------------|---------------------------------------------------|
+| Grafana ECS task fails to start | IMA Platform    | Number of running tasks is below 1                |
+| Grafana has no healthy hosts    | AWS CloudWatch  | Number of healthy Grafana hosts < 1 for 2 minutes |
 
 ## IMA Platform is slow
 
