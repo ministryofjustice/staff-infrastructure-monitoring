@@ -9,25 +9,25 @@ within the [Monitoring Platform integrations directory](https://github.com/minis
 
 ## IMA Platform i.e. Grafana is unreachable
 
-| Possible cause                  | Monitored by    | Alert                                             |
-|---------------------------------|-----------------|---------------------------------------------------|
-| Grafana ECS task fails to start | IMA Platform    | Number of running tasks is below 1                |
-| Grafana has no healthy hosts    | AWS CloudWatch  | Number of healthy Grafana hosts < 1 for 2 minutes |
+| Possible cause                  | Monitored by    | Alert                                             | Next step |
+|---------------------------------|-----------------|---------------------------------------------------|-----------|
+| Grafana ECS task fails to start | IMA Platform    | Number of running tasks is below 1                | Check the logs for the latest stopped task and decide whether to rollback (by reverting the latest changes) or roll forward (fix the issue). |
+| Grafana has no healthy hosts    | AWS CloudWatch  | Number of healthy Grafana hosts < 1 for 2 minutes | Check the logs for the latest stopped task and decide whether to rollback (by reverting the latest changes) or roll forward (fix the issue). |
 
 ## IMA Platform is slow
 
-| Possible cause                                       | Monitored by | Alert                                 |
-|------------------------------------------------------|--------------|---------------------------------------|
-| Grafana ECS service CPU utilisation is high          | IMA Platform | CPU utilisation is higher than 50%    |
-| Grafana ECS service memory utilisation is high       | IMA Platform | Memory utilisation is higher than 50% |
-| Grafana database is running out of available storage | IMA Platform | Available storage space is below 5 GB |
+| Possible cause                                       | Monitored by | Alert                                 | Next step |
+|------------------------------------------------------|--------------|---------------------------------------|-----------|
+| Grafana ECS service CPU utilisation is high          | IMA Platform | CPU utilisation is higher than 50%    | Increase the [Grafana Fargate CPU value in the task definition](https://github.com/ministryofjustice/staff-infrastructure-monitoring/blob/05145d0b1208226b1317026197e814bf8068ab24/modules/grafana/service.tf#L7). |
+| Grafana ECS service memory utilisation is high       | IMA Platform | Memory utilisation is higher than 50% | Increase the [Grafana Fargate CPU value in the task definition](https://github.com/ministryofjustice/staff-infrastructure-monitoring/blob/05145d0b1208226b1317026197e814bf8068ab24/modules/grafana/service.tf#L8). |
+| Grafana database is running out of available storage | IMA Platform | Available storage space is below 5 GB | [Increase the storage capacity for the RDS instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.StorageTypes.html#USER_PIOPS.ModifyingExisting). |
 
 ## No data retrieved from Prometheus
 
-| Possible cause                                    | Monitored by | Alert                                 |
-|---------------------------------------------------|--------------|---------------------------------------|
-| Prometheus ECS task fails to start                | IMA Platform | Number of running tasks is below 1    |
-| SNMP exporter ECS task fails to start             | IMA Platform | Number of running tasks is below 1    |
-| Blackbox ECS task fails to start                  | IMA Platform | Number of running tasks is below 1    |
-| Prometheus ECS service CPU utilisation is high    | IMA Platform | CPU utilisation is higher than 50%    |
-| Prometheus ECS service memory utilisation is high | IMA Platform | Memory utilisation is higher than 50% |
+| Possible cause                                    | Monitored by | Alert                                 | Next step |
+|---------------------------------------------------|--------------|---------------------------------------|-----------|
+| Prometheus ECS task fails to start                | IMA Platform | Number of running tasks is below 1    | Check the logs for the latest stopped task and decide whether to rollback (by reverting the latest changes) or roll forward (fix the issue). Check the [Docker image for Prometheus](https://github.com/ministryofjustice/staff-infrastructure-metric-aggregation-server) for the latest changes. |
+| SNMP exporter ECS task fails to start             | IMA Platform | Number of running tasks is below 1    | Check the logs for the latest stopped task and decide whether to rollback (by reverting the latest changes) or roll forward (fix the issue). Check the [Docker image for SNMP exporter](https://github.com/ministryofjustice/staff-infrastructure-monitoring-snmpexporter) for the latest changes. |
+| Blackbox ECS task fails to start                  | IMA Platform | Number of running tasks is below 1    | Check the logs for the latest stopped task and decide whether to rollback (by reverting the latest changes) or roll forward (fix the issue). Check the [Docker image for Blackbox exporter](https://github.com/ministryofjustice/staff-infrastructure-monitoring-blackbox-exporter) for the latest changes. |
+| Prometheus ECS service CPU utilisation is high    | IMA Platform | CPU utilisation is higher than 50%    | Increase the [Prometheus Fargate CPU value in the task definition](https://github.com/ministryofjustice/staff-infrastructure-monitoring/blob/05145d0b1208226b1317026197e814bf8068ab24/modules/prometheus/service.tf#L85). |
+| Prometheus ECS service memory utilisation is high | IMA Platform | Memory utilisation is higher than 50% | Increase the [Prometheus Fargate CPU value in the task definition](https://github.com/ministryofjustice/staff-infrastructure-monitoring/blob/05145d0b1208226b1317026197e814bf8068ab24/modules/prometheus/service.tf#L85). |
