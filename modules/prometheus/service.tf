@@ -90,15 +90,6 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
 
   volume {
     name = "prometheus_data"
-    efs_volume_configuration {
-      file_system_id     = aws_efs_file_system.foobar.id
-      root_directory     = "/"
-      transit_encryption = "ENABLED"
-      authorization_config {
-        access_point_id = aws_efs_access_point.foobar_access.id
-      }
-    }
-
   }
 
   container_definitions = <<DEFINITION
@@ -217,7 +208,7 @@ resource "aws_ecs_service" "prometheus_ecs_service" {
 
   network_configuration {
     subnets         = var.private_subnet_ids
-    security_groups = ["${aws_security_group.ecs_prometheus_tasks.id}", "${aws_security_group.efs.id}"]
+    security_groups = ["${aws_security_group.ecs_prometheus_tasks.id}"]
   }
 
   load_balancer {
