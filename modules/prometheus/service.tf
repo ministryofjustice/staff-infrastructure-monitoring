@@ -92,6 +92,10 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     name = "prometheus_data"
   }
 
+  volume {
+    name = "thanos_receiver_data"
+  }
+
   container_definitions = <<DEFINITION
   [{
     "name": "prometheus",
@@ -120,20 +124,19 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     }
   },
   {
-    "name": "thanos-sidecar",
+    "name": "thanos-receiver",
     "cpu": ${var.fargate_cpu},
     "memory": ${var.fargate_memory},
     "image": "quay.io/thanos/thanos:v0.15.0",
     "command": [
-      "sidecar",
-      "--prometheus.url=http://localhost:9090",
-      "--tsdb.path=/var/lib/prometheus",
+      "receive",
       "--grpc-address=0.0.0.0:10903",
       "--http-address=0.0.0.0:10904",
-      "--objstore.config=${data.template_file.storage_config.rendered}"
+      "--objstore.config=${data.template_file.storage_config.rendered}",
+      "--tsdb.path=/var/lib/prometheus"
     ],
     "mountPoints": [{
-      "sourceVolume": "prometheus_data",
+      "sourceVolume": "thanos_receiver_data",
       "containerPath": "/var/lib/prometheus"
     }],
     "logConfiguration": {
