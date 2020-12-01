@@ -133,7 +133,9 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
       "--grpc-address=0.0.0.0:10903",
       "--http-address=0.0.0.0:10904",
       "--objstore.config=${data.template_file.storage_config.rendered}",
-      "--tsdb.path=/var/lib/prometheus"
+      "--tsdb.path=/var/lib/prometheus",
+      "--receive.local-endpoint=127.0.0.1:10903",
+      "--remote-write.address=0.0.0.0:10908"
     ],
     "mountPoints": [{
       "sourceVolume": "thanos_receiver_data",
@@ -155,8 +157,8 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     "image": "quay.io/thanos/thanos:v0.15.0",
     "command": [
       "query",
-      "--store=0.0.0.0:10903",
-      "--store=0.0.0.0:20091"
+      "--store=localhost:10903",
+      "--store=localhost:20091"
     ],
     "portMappings": [{
       "hostPort": 10902,
