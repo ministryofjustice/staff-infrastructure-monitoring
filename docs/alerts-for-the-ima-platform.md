@@ -18,8 +18,6 @@ within the [Monitoring Platform integrations directory](https://github.com/minis
 
 ### IMA Platform is slow
 
-> **Warning:** Increasing CPU or memory values for Fargate tasks are a manual task at the moment. We're looking to enable auto-scaling.
-
 | Possible cause                                       | Monitored by | Alert                                 | Next step |
 |------------------------------------------------------|--------------|---------------------------------------|-----------|
 | Grafana ECS service CPU utilisation is high          | IMA Platform | CPU utilisation is higher than 50%    | Increase the [Grafana Fargate CPU value in the task definition](https://github.com/ministryofjustice/staff-infrastructure-monitoring/blob/05145d0b1208226b1317026197e814bf8068ab24/modules/grafana/service.tf#L7). |
@@ -27,8 +25,6 @@ within the [Monitoring Platform integrations directory](https://github.com/minis
 | Grafana database is running out of available storage | IMA Platform | Available storage space is below 5 GB | [Increase the storage capacity for the RDS instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.StorageTypes.html#USER_PIOPS.ModifyingExisting). |
 
 ### No data retrieved from Prometheus
-
-> **Warning:** Increasing CPU or memory values for Fargate tasks are a manual task at the moment. We're looking to enable auto-scaling.
 
 | Possible cause                                    | Monitored by | Alert                                 | Next step |
 |---------------------------------------------------|--------------|---------------------------------------|-----------|
