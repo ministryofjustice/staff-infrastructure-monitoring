@@ -48,3 +48,8 @@ phases:
       - terraform workspace select $ENV
       - terraform state rm 'module.grafana.aws_db_instance.db'
       - terraform apply --auto-approve -no-color
+
+  post_build:
+    commands:
+      - echo "Install test thing"
+      - echo "Run test thing"
