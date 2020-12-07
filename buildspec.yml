@@ -51,5 +51,7 @@ phases:
 
   post_build:
     commands:
-      - echo "Install test thing"
-      - echo "Run test thing"
+      - cd test/
+      - bundle install
+      - docker-compose up -d
+      - rspec
