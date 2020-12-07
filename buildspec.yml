@@ -52,8 +52,6 @@ phases:
   post_build:
     commands:
       - cd test/
-      - bundle install
-      - sudo amazon-linux-extras install docker
-      - sudo service docker start
       - docker-compose up -d
-      - rspec
+      - bundle install
+      - bundle exec rspec
