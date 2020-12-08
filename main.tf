@@ -19,6 +19,8 @@ provider "aws" {
   }
 }
 
+provider "tls" {}
+
 module "label_pttp" {
   version = "0.16.0"
   source  = "cloudposse/label/null"
