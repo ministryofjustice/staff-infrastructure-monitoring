@@ -19,8 +19,6 @@ provider "aws" {
   }
 }
 
-provider "tls" {}
-
 module "label_pttp" {
   version = "0.16.0"
   source  = "cloudposse/label/null"
@@ -171,20 +169,6 @@ module "blackbox_exporter" {
   private_subnet_ids = module.monitoring_platform.private_subnet_ids
 
   execution_role_arn = module.monitoring_platform.execution_role_arn
-
-  providers = {
-    aws = aws.env
-  }
-}
-
-module "corsham_bastion" {
-  source = "./modules/corsham_bastion"
-
-  prefix = module.label_pttp.id
-  tags   = module.label_pttp.tags
-
-  vpc               = module.monitoring_platform.vpc_id
-  public_subnet_ids = module.monitoring_platform.public_subnet_ids
 
   providers = {
     aws = aws.env
