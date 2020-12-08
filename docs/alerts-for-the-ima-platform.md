@@ -34,6 +34,12 @@ within the [Monitoring Platform integrations directory](https://github.com/minis
 | Prometheus ECS service CPU utilisation is high    | IMA Platform | CPU utilisation is higher than 50%    | Increase the [Prometheus Fargate CPU value in the task definition](https://github.com/ministryofjustice/staff-infrastructure-monitoring/blob/05145d0b1208226b1317026197e814bf8068ab24/modules/prometheus/service.tf#L85). |
 | Prometheus ECS service memory utilisation is high | IMA Platform | Memory utilisation is higher than 50% | Increase the [Prometheus Fargate Memory value in the task definition](https://github.com/ministryofjustice/staff-infrastructure-monitoring/blob/05145d0b1208226b1317026197e814bf8068ab24/modules/prometheus/service.tf#L86). |
 
+### Newly configured data not retrieved from Prometheus
+
+| Possible cause                                  | Monitored by | Alert                            | Next step |
+|-------------------------------------------------|--------------|----------------------------------|-----------|
+| Latest Prometheus ECS task fails to switch over | IMA Platform | Sum of running tasks is above 17 | Check the logs for the latest stopped task and decide whether to rollback (by reverting the latest changes) or roll forward (fix the issue). Check the [Docker image for Prometheus](https://github.com/ministryofjustice/staff-infrastructure-metric-aggregation-server) for the latest changes. |
+
 ## Resolving issues
 
 When deciding to roll back or roll forward, you should consider the complexity
