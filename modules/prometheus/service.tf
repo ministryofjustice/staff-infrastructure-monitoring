@@ -32,50 +32,6 @@ resource "aws_security_group_rule" "ecs_loopback_rule" {
   security_group_id = aws_security_group.efs.id
 }
 
-
-resource "aws_efs_file_system_policy" "policy" {
-  file_system_id = aws_efs_file_system.foobar.id
-
-  policy = <<POLICY
-{
-    "Version": "2012-10-17",
-    "Id": "ExamplePolicy01",
-    "Statement": [
-        {
-            "Sid": "ExampleStatement01",
-            "Effect": "Allow",
-            "Principal": {
-                "AWS": "*"
-            },
-            "Resource": "${aws_efs_file_system.foobar.arn}",
-            "Action": [
-                "elasticfilesystem:ClientMount",
-                "elasticfilesystem:ClientWrite",
-                "elasticfilesystem:ClientRootAccess"
-            ],
-            "Condition": {
-                "Bool": {
-                    "aws:SecureTransport": "true"
-                }
-            }
-        }
-    ]
-}
-POLICY
-}
-
-resource "aws_efs_mount_target" "mount_foobar" {
-  count = length(var.private_subnet_ids)
-
-  file_system_id = aws_efs_file_system.foobar.id
-  subnet_id      = element(var.private_subnet_ids, count.index)
-
-  security_groups = [
-    "${aws_security_group.efs.id}"
-  ]
-}
-
-
 resource "aws_ecs_task_definition" "prometheus_task_definition" {
   family = "${var.prefix_pttp}-prometheus"
 
