@@ -36,3 +36,6 @@ override.tf.json
 terraform.rc
 
 .vscode
+
+# Ignore test screenshots
+test/*.png

@@ -223,6 +223,7 @@ To view your changes within the AWS Management Console:
 ```
 aws-vault login moj-pttp-dev
 ```
+To run tests run `make test`
 
 ## Documentation
 
