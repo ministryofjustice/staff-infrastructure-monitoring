@@ -140,7 +140,6 @@ cp terraform.tfvars.example terraform.tfvars
 ```
 
 2. Set values for all the variables with `grafana_db_name` and `grafana_db_endpoint` set to `foo` for now. These values will be set after creating your own infrastructure.
-
 3. Create your infrastructure by running:
 
 ```
@@ -179,6 +178,15 @@ cd ../
 ```
 aws-vault exec moj-pttp-shared-services -- terraform apply
 ```
+
+This will enable you to use Grafana but not Prometheus, blackbox exporter and
+SNMP exporter. You'll need to push a Docker image to the corresponding AWS ECR
+repository that this repository created in order to utilise those components.
+To do so, see the README for each:
+
+- [SNMP Exporter](https://github.com/ministryofjustice/staff-infrastructure-monitoring-snmpexporter)
+- [Blackbox Exporter](https://github.com/ministryofjustice/staff-infrastructure-monitoring-blackbox-exporter)
+- [Metric Aggregation Server](https://github.com/ministryofjustice/staff-infrastructure-metric-aggregation-server) (Prometheus)
 
 ## Usage
 
