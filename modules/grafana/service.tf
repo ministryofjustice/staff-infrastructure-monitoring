@@ -48,7 +48,9 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
       {"name": "GF_EXTERNAL_IMAGE_STORAGE_S3_BUCKET", "value": "${aws_s3_bucket.external_image_storage.bucket}"},
       {"name": "GF_EXTERNAL_IMAGE_STORAGE_S3_REGION", "value": "${var.aws_region}"},
       {"name": "GF_RENDERING_SERVER_URL", "value": "http://localhost:8081/render"},
-      {"name": "GF_RENDERING_CALLBACK_URL", "value": "http://localhost:3000"}
+      {"name": "GF_RENDERING_CALLBACK_URL", "value": "http://localhost:3000"},
+      {"name": "GF_INSTALL_PLUGINS", "value": "alexanderzobnin-zabbix-app"},
+      {"name": "GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS", "value": "alexanderzobnin-zabbix-datasource"}
     ],
     "portMappings": [{
       "hostPort": ${var.container_port},
