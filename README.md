@@ -136,26 +136,26 @@ This should update your **Verification Status** to **Verified** AWS.
 1. Duplicate `terraform.tfvars.example` and rename the file to `terraform.tfvars`
 
 ```
-cp terraform.tfvars.example terraform.tfvars
+$ cp terraform.tfvars.example terraform.tfvars
 ```
 
 2. Set values for all the variables with `grafana_db_name` and `grafana_db_endpoint` set to `foo` for now. These values will be set after creating your own infrastructure.
 3. Create your infrastructure by running:
 
 ```
-aws-vault clear && aws-vault exec moj-pttp-shared-services --duration=2h -- terraform apply
+$ aws-vault clear && aws-vault exec moj-pttp-shared-services --duration=2h -- terraform apply
 ```
 
 4. Move into the `database` directory and initialise Terraform using:
 
 ```
-cd database/ && aws-vault exec moj-pttp-dev -- terraform init
+$ cd database/ && aws-vault exec moj-pttp-dev -- terraform init
 ```
 
 5. Duplicate `terraform.tfvars.example` and rename the file to `terraform.tfvars`
 
 ```
-cp terraform.tfvars.example terraform.tfvars
+$ cp terraform.tfvars.example terraform.tfvars
 ```
 You will find the values for these `tfvars` outputted in the console after running the command in step 3
 
@@ -163,20 +163,20 @@ You will find the values for these `tfvars` outputted in the console after runni
 7. Create your database by running:
 
 ```
-aws-vault exec moj-pttp-dev -- terraform apply
+$ aws-vault exec moj-pttp-dev -- terraform apply
 ```
 
 8. Move back into the root directory
 
 ```
-cd ../
+$ cd ../
 ```
 
 9. Update your `terraform.tfvars` values for `grafana_db_name` and `grafana_db_endpoint` to what is outputted by Terraform at Step 5
 10. Apply your changes by running:
 
 ```
-aws-vault exec moj-pttp-shared-services -- terraform apply
+$ aws-vault exec moj-pttp-shared-services -- terraform apply
 ```
 
 This will enable you to use Grafana but not Prometheus, blackbox exporter and
@@ -195,25 +195,25 @@ To do so, see the README for each:
 To create an execution plan:
 
 ```
-aws-vault exec moj-pttp-shared-services -- terraform plan
+$ aws-vault exec moj-pttp-shared-services -- terraform plan
 ```
 
 To execute changes:
 
 ```
-aws-vault exec moj-pttp-shared-services -- terraform apply
+$ aws-vault exec moj-pttp-shared-services -- terraform apply
 ```
 
 To execute changes that require a longer session e.g. creating a database:
 
 ```
-aws-vault clear && aws-vault exec moj-pttp-shared-services --duration=2h -- terraform apply
+$ aws-vault clear && aws-vault exec moj-pttp-shared-services --duration=2h -- terraform apply
 ```
 
 To minimise costs and keep the environment clean, regularly run teardown in your workspace using:
 
 ```
-aws-vault exec moj-pttp-shared-services -- terraform destroy
+$ aws-vault exec moj-pttp-shared-services -- terraform destroy
 ```
 
 To view your changes within the AWS Management Console:
@@ -221,9 +221,14 @@ To view your changes within the AWS Management Console:
 > Note: Login is into the Dev AWS account even though infrastructure execution is completed using `moj-pttp-shared-services` as it assumes the role of Dev.
 
 ```
-aws-vault login moj-pttp-dev
+$ aws-vault login moj-pttp-dev
 ```
-To run tests run `make test`
+
+To run Selenium tests, use:
+
+```
+$ make test
+```
 
 ## Documentation
 
