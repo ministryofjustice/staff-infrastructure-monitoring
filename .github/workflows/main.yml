@@ -38,11 +38,4 @@ jobs:
         with:
           tflint_version: latest
       - name: Run linter
-        run: |
-          tflint
-          tflint modules/blackbox_exporter
-          tflint modules/corsham_bastion
-          tflint modules/grafana
-          tflint modules/monitoring_platform
-          tflint modules/prometheus
-          tflint modules/snmp_exporter
+        run: ./scripts/lint_terraform.sh
