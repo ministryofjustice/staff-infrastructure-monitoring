@@ -9,9 +9,8 @@
   - [1. Set up AWS Vault](#1-set-up-aws-vault)
   - [2. Set up MFA on your AWS account](#2-set-up-mfa-on-your-aws-account)
   - [3. Set up your Terraform workspace](#3-set-up-your-terraform-workspace)
-  - [4. Set a default region for your AWS profiles](#4-set-a-default-region-for-your-aws-profiles)
-  - [5. Verify your email address for receiving emails](#5-verify-your-email-address-for-receiving-emails)
-  - [6. Set up your own development infrastructure](#6-set-up-your-own-development-infrastructure)
+  - [4. Verify your email address for receiving emails](#4-verify-your-email-address-for-receiving-emails)
+  - [5. Set up your own development infrastructure](#5-set-up-your-own-development-infrastructure)
 - [Usage](#usage)
   - [Running the code for development](#running-the-code-for-development)
 - [Documentation](#documentation)
@@ -72,6 +71,9 @@ aws-vault login <aws-account-name>
 
 This will open up AWS Management Console in your web browser.
 
+4. Open your AWS config file (usually found in `~/.aws/config`)
+5. Add `region=eu-west-2` for both the `profile moj-pttp-dev` and the `profile moj-pttp-shared-services` workspaces to set a default region for your AWS profiles
+
 ### 2. Set up MFA on your AWS account
 
 Multi-Factor Authentication (MFA) is required on AWS accounts in this project.
@@ -114,12 +116,7 @@ The current workspace you're using is indicated by an asterisk (*) in the list.
 aws-vault exec moj-pttp-shared-services -- terraform workspace select <my-name>
 ```
 
-### 4. Set a default region for your AWS profiles
-
-1. Open your AWS config file (usually found in `~/.aws/config`)
-2. Add `region=eu-west-2` for both the `profile moj-pttp-dev` and the `profile moj-pttp-shared-services` workspaces
-
-### 5. Verify your email address for receiving emails
+### 4. Verify your email address for receiving emails
 
 1. Go to [AWS Simple Email Service's Email Addresses section](https://eu-west-2.console.aws.amazon.com/ses/home?region=eu-west-2#verified-senders-email:) under Identity Management
 2. Click on **Verify a New Email Address**
@@ -131,7 +128,7 @@ You should then receive an **Email Address Verification Request** email.
 
 This should update your **Verification Status** to **Verified** AWS.
 
-### 6. Set up your own development infrastructure
+### 5. Set up your own development infrastructure
 
 1. Duplicate `terraform.tfvars.example` and rename the file to `terraform.tfvars`
 
