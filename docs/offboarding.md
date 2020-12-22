@@ -1,24 +1,6 @@
 # Offboarding
 
-## 1. Clear configuration for development environment
-
-In your `staff-infrastructure-monitoring-config` directory:
-
-1. On your Terraform workspace, destroy your resources using:
-
-```
-$ aws-vault exec moj-pttp-shared-services -- terraform workspace select <workspace-name>
-$ aws-vault exec moj-pttp-shared-services -- terraform destroy
-```
-
-2. Switch to another workspace and delete your workspace by:
-
-```
-$ aws-vault exec moj-pttp-shared-services -- terraform workspace select default
-$ aws-vault exec moj-pttp-shared-services -- terraform workspace delete <workspace-name>
-```
-
-## 2. Destroy your development environment
+## 1. Destroy your development environment
 
 1. [Using the AWS Console, empty your AWS S3 buckets](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/empty-bucket.html)
 
@@ -39,6 +21,17 @@ $ aws-vault clear && aws-vault exec moj-pttp-shared-services --duration=2h -- te
 ```
 
 4. Switch to another workspace and delete your workspace by:
+
+```
+$ aws-vault exec moj-pttp-shared-services -- terraform workspace select default
+$ aws-vault exec moj-pttp-shared-services -- terraform workspace delete <workspace-name>
+```
+
+## 2. Clear configuration for development environment
+
+In your `staff-infrastructure-monitoring-config` directory:
+
+1. Switch to another workspace and delete your workspace by:
 
 ```
 $ aws-vault exec moj-pttp-shared-services -- terraform workspace select default
