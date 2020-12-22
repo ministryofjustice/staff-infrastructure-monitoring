@@ -27,7 +27,7 @@ $ aws-vault exec moj-pttp-shared-services -- terraform workspace select default
 $ aws-vault exec moj-pttp-shared-services -- terraform workspace delete <workspace-name>
 ```
 
-## 2. Clear configuration for development environment
+## 2. Remove your Terraform workspace for the config repository
 
 In your `staff-infrastructure-monitoring-config` directory:
 
@@ -35,7 +35,7 @@ In your `staff-infrastructure-monitoring-config` directory:
 
 ```
 $ aws-vault exec moj-pttp-shared-services -- terraform workspace select default
-$ aws-vault exec moj-pttp-shared-services -- terraform workspace delete <workspace-name>
+$ aws-vault exec moj-pttp-shared-services -- terraform workspace delete -force <workspace-name>
 ```
 
 ## 3. Remove your access to services
