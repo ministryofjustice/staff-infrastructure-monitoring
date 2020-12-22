@@ -13,3 +13,4 @@ This documentation is to enable developers of the IMA Platform to run, improve a
 - [Alerts for the IMA Platform](./alerts-for-the-ima-platform.md)
 - [Restoring a database](./restoring-a-database.md)
 - [Offboarding](./offboarding.md)
+- [Restoring component connections](./restoring-component-connections.md)
