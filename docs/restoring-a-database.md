@@ -22,5 +22,5 @@ aws-vault exec moj-pttp-shared-services -- aws ssm put-parameter --name "/codebu
 --overwrite
 ```
 
-5. Redeploy the [pipeline in Shared Services](https://eu-west-2.console.aws.amazon.com/codesuite/codepipeline/pipelines/Staff-Infrastructure-Monitoring/view?region=eu-west-2) by clicking on **Release change**
-6. Once the redeployment is complete, ensure that ECS has succesfully started services with the new configuration
+4. Redeploy the [pipeline in Shared Services](https://eu-west-2.console.aws.amazon.com/codesuite/codepipeline/pipelines/Staff-Infrastructure-Monitoring/view?region=eu-west-2) by clicking on **Release change**
+5. Once the redeployment is complete, ensure that ECS has succesfully started services with the new configuration
