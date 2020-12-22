@@ -42,7 +42,7 @@ $ aws-vault exec moj-pttp-shared-services -- terraform workspace delete -force <
 
 Ask someone with rights to remove your access to:
 
-- [ ] AWS
+- [ ] AWS for Dev and Shared Services
 - [ ] GitHub repositories
 - [ ] Jira
 - [ ] Azure AD
