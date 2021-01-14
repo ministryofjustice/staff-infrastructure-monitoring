@@ -114,8 +114,8 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     }],
     "ulimits": [{
       "name": "nofile",
-      "softLimit": 12000000,
-      "hardLimit": 12000000
+      "softLimit": 409600,
+      "hardLimit": 409600
     }],
     "logConfiguration": {
       "logDriver": "awslogs",
