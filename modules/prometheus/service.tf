@@ -4,8 +4,8 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
 
-  cpu                = 1024
-  memory             = 2048
+  cpu                = 4096
+  memory             = 18432
   execution_role_arn = var.execution_role_arn
   task_role_arn      = aws_iam_role.task_role.arn
   tags               = var.tags
@@ -21,8 +21,8 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
   container_definitions = <<DEFINITION
   [{
     "name": "prometheus",
-    "cpu": ${var.fargate_cpu},
-    "memory": ${var.fargate_memory},
+    "cpu": 1024,
+    "memory": 512,
     "user": "root",
     "image": "${aws_ecr_repository.prometheus.repository_url}",
     "command": [
@@ -47,8 +47,8 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
   },
   {
     "name": "thanos-receiver",
-    "cpu": ${var.fargate_cpu},
-    "memory": ${var.fargate_memory},
+    "cpu": 1024,
+    "memory": 512,
     "image": "quay.io/thanos/thanos:v0.15.0",
     "command": [
       "receive",
@@ -74,8 +74,8 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
   },
   {
     "name": "thanos-querier",
-    "cpu": ${var.fargate_cpu},
-    "memory": ${var.fargate_memory},
+    "cpu": 1024,
+    "memory": 512,
     "image": "quay.io/thanos/thanos:v0.15.0",
     "command": [
       "query",
@@ -97,8 +97,8 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
   },
   {
     "name": "thanos-store",
-    "cpu": ${var.fargate_cpu},
-    "memory": ${var.fargate_memory},
+    "cpu": 1024,
+    "memory": 17408,
     "image": "quay.io/thanos/thanos:v0.15.0",
     "essential": false,
     "command": [
