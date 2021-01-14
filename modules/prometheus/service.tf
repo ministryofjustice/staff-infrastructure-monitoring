@@ -112,6 +112,11 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
       "hostPort": 20902,
       "containerPort": 20902
     }],
+    "ulimits": [{
+      "name": "nofile",
+      "softLimit": 12000000,
+      "hardLimit": 12000000
+    }],
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
