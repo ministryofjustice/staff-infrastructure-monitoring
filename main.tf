@@ -127,6 +127,7 @@ module "prometheus" {
   cluster_id         = module.monitoring_platform.cluster_id
   public_subnet_ids  = module.monitoring_platform.public_subnet_ids
   private_subnet_ids = module.monitoring_platform.private_subnet_ids
+  fargate_count      = 1
 
   execution_role_arn = module.monitoring_platform.execution_role_arn
 

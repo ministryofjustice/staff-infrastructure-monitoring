@@ -37,17 +37,6 @@ variable "execution_role_arn" {
   type = string
 }
 
-variable "fargate_cpu" {
-  description = "Fargate instance CPU units to provision (1 vCPU = 1024 CPU units)"
-  default     = "256"
-}
-
-variable "fargate_memory" {
-  description = "Fargate instance memory to provision (in MiB)"
-  default     = "512"
-}
-
 variable "fargate_count" {
   description = "Number of docker containers to run"
-  default     = "1"
 }
