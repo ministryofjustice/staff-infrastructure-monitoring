@@ -175,3 +175,23 @@ module "blackbox_exporter" {
     aws = aws.env
   }
 }
+
+#### Temporary for Pen Test ###
+module "bsi_test_vm" {
+  source                          = "./modules/bsi_pentest_vm"
+  subnets                         = module.monitoring_platform.public_subnet_ids
+  vpc_id                          = module.monitoring_platform.vpc_id
+  pentesting_vm_ami_id            = var.pentesting_vm_ami_id
+  pentesting_vm_ami_ingress_cidrs = var.pentesting_vm_ami_ingress_cidrs
+
+  depends_on = [
+    module.monitoring_platform
+  ]
+
+  providers = {
+    aws = aws.env
+  }
+
+  count = terraform.workspace == "production" ? 1 : 0
+}
+

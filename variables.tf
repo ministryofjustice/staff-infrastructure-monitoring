@@ -96,3 +96,12 @@ variable "smtp_password" {
 variable "sns_subscribers" {
   type = string
 }
+
+################### Temporary for Pen Test ###########
+variable "pentesting_vm_ami_id" {
+  type = string
+}
+
+variable "pentesting_vm_ami_ingress_cidrs" {
+  type = list(string)
+}
