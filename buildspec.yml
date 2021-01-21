@@ -30,6 +30,9 @@ env:
     TF_VAR_transit_gateway_route_table_id: "/codebuild/pttp-ci-ima-pipeline/$ENV/transit_gateway_route_table_id"
     TF_VAR_critical_notification_recipients: "/codebuild/pttp-ci-infrastructure-core-pipeline/$ENV/critical_notification_recipients"
     TF_VAR_sns_subscribers: "/codebuild/pttp-ci-ima-pipeline/$ENV/sns_subscribers"
+    
+    TF_VAR_pentesting_vm_ami_id: "/staff-device/bsi_testing/pentesting_vm_ami_id"                       # Temporary for pen test, created in paramter store.
+    TF_VAR_pentesting_vm_ami_ingress_cidrs: "/staff-device/bsi_testing/pentesting_vm_ami_ingress_cidrs" # Temporary for pen test, created in paramter store.
 
 phases:
   install:
