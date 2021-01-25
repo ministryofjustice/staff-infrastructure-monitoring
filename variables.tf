@@ -17,6 +17,10 @@ variable "assume_role" {
   type = string
 }
 
+variable "grafana_url" {
+  type = string
+}
+
 variable "grafana_admin_username" {
   type = string
 }

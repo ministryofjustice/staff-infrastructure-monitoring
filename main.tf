@@ -8,6 +8,8 @@ terraform {
   }
 }
 
+provider "random" {}
+
 provider "aws" {
   region  = var.aws_region
   alias   = "env"
@@ -17,6 +19,11 @@ provider "aws" {
   assume_role {
     role_arn = var.assume_role
   }
+}
+
+provider "grafana" {
+  url  = var.grafana_url
+  auth = "${var.grafana_admin_username}:${var.grafana_admin_password}"
 }
 
 module "label_pttp" {

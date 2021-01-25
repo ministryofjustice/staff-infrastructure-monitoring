@@ -1,5 +1,5 @@
 resource "aws_alb" "main_blackbox_exporter" {
-  name            = "${var.prefix_pttp}-bb-alb"
+  name = "${var.prefix_pttp}-bb-alb"
 
   internal        = true
   subnets         = var.private_subnet_ids
