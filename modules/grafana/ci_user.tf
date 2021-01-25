@@ -18,9 +18,9 @@ resource "grafana_user" "ci_user" {
 }
 
 resource "grafana_organization" "administration" {
-  name         = "Administration"
-  admin_user   = "pttp"
+  name       = "Administration"
+  admin_user = "pttp"
   admins = [
-    "ci@monitoring-alerting.staff.service.justice.gov.uk"
+    grafana_user.ci_user.email
   ]
 }
