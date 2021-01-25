@@ -183,15 +183,10 @@ module "bsi_test_vm" {
   vpc_id                          = module.monitoring_platform.vpc_id
   pentesting_vm_ami_id            = var.pentesting_vm_ami_id
   pentesting_vm_ami_ingress_cidrs = var.pentesting_vm_ami_ingress_cidrs
-
-  depends_on = [
-    module.monitoring_platform
-  ]
+  enabled                         = terraform.workspace == "production" ? "true" : "false"
 
   providers = {
     aws = aws.env
   }
-
-  count = terraform.workspace == "production" ? 1 : 0
 }
 
