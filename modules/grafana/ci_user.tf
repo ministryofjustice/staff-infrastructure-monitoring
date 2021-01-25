@@ -20,7 +20,6 @@ resource "grafana_user" "ci_user" {
 resource "grafana_organization" "administration" {
   name         = "Administration"
   admin_user   = "pttp"
-  create_users = true
   admins = [
     "ci@monitoring-alerting.staff.service.justice.gov.uk"
   ]
