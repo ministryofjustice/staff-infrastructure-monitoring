@@ -100,8 +100,6 @@ module "grafana" {
   db_password      = var.grafana_db_password
   admin_username   = var.grafana_admin_username
   admin_password   = var.grafana_admin_password
-  ci_user_login    = var.ci_user_login
-  ci_user_password = var.ci_user_password
 
   vpn_hosted_zone_id     = var.vpn_hosted_zone_id
   vpn_hosted_zone_domain = var.vpn_hosted_zone_domain

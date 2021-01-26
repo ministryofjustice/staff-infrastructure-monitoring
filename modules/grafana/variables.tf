@@ -122,13 +122,6 @@ variable "admin_password" {
   type = string
 }
 
-variable "ci_user_login" {
-  type = string
-}
-
-variable "ci_user_password" {
-  type = string
-}
 
 #################### SMTP details ####################
 variable "smtp_user" {
