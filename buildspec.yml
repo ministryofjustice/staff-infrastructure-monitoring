@@ -18,6 +18,8 @@ env:
     TF_VAR_grafana_url: "/codebuild/pttp-ci-datasource-config-pipeline/$ENV/grafana_url"
     TF_VAR_grafana_admin_username: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_admin_username"
     TF_VAR_grafana_admin_password: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_admin_password"
+    TF_VAR_ci_user_login: "/codebuild/pttp-ci-ima-pipeline/$ENV/ci_user_login"
+    TF_VAR_ci_user_password: "/codebuild/pttp-ci-ima-pipeline/$ENV/ci_user_password"
     TF_VAR_vpn_hosted_zone_id: "/codebuild/pttp-ci-ima-pipeline/$ENV/vpn_hosted_zone_id"
     TF_VAR_vpn_hosted_zone_domain: "/codebuild/pttp-ci-ima-pipeline/$ENV/vpn_hosted_zone_domain"
     TF_VAR_smtp_user: "/codebuild/pttp-ci-ima-pipeline/$ENV/smtp_user"

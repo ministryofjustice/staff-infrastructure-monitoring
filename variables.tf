@@ -29,6 +29,14 @@ variable "grafana_admin_password" {
   type = string
 }
 
+variable "ci_user_login" {
+  type = string
+}
+
+variable "ci_user_password" {
+  type = string
+}
+
 variable "grafana_db_name" {
   type = string
 }
