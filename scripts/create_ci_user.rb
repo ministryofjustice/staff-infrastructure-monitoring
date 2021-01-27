@@ -3,6 +3,12 @@
 
 require 'net/http'
 require 'json'
+## Variables from param store
+# grafana_url = "https://#{ENV['TF_VAR_domain_prefix']}.#{ENV['TF_VAR_vpn_hosted_zone_domain']}"
+# grafana_admin_username = ENV['TF_VAR_grafana_admin_username']
+# grafana_admin_password = ENV['TF_VAR_grafana_admin_password']
+# ci_user_login = ENV['TF_VAR_ci_user_login']
+# ci_user_password = ENV['TF_VAR_ci_user_password']
 
 grafana_url = "https://monitoring-alerting.dev.staff.service.justice.gov.uk/api"
 username = "test"
@@ -68,15 +74,18 @@ def assign_admin_permissions_to_ci_user(grafana_url, user_id)
     case res
     when Net::HTTPSuccess, Net::HTTPRedirection
       puts "Successfully updated user permissions"
-      puts res.body
     else
       res.value
     end
 end
 
+if check_for_user(grafana_url,username) == false then
+  puts "no user created, creating CI user"
+  user_id = create_ci_user(grafana_url)
+  assign_admin_permissions_to_ci_user(grafana_url, user_id)
 
-# user_id = create_ci_user(grafana_url)
-# puts user_id
-# assign_admin_permissions_to_ci_user(grafana_url, user_id)
+elsif check_for_user(grafana_url,username) == true then
+  puts "user already created, exiting..." 
+end
 
-puts check_for_user(grafana_url,username)
+  
