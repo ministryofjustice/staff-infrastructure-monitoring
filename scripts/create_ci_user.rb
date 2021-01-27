@@ -1,21 +1,15 @@
 #!/usr/bin/env ruby
-
-
 require 'net/http'
 require 'json'
-## Variables from param store
-# grafana_url = "https://#{ENV['TF_VAR_domain_prefix']}.#{ENV['TF_VAR_vpn_hosted_zone_domain']}"
-# grafana_admin_username = ENV['TF_VAR_grafana_admin_username']
-# grafana_admin_password = ENV['TF_VAR_grafana_admin_password']
-# ci_user_login = ENV['TF_VAR_ci_user_login']
-# ci_user_password = ENV['TF_VAR_ci_user_password']
+require 'dotenv'
+Dotenv.load
 
-grafana_url = "https://monitoring-alerting.dev.staff.service.justice.gov.uk/api"
-username = "test"
+## Variables from param store
+grafana_url = ENV['TF_VAR_grafana_url'] + '/api'
 
 def authenticate_request(req)
-  grafana_admin_username = "pttp"
-  grafana_admin_password = "Puu10rviYsBQSSsg0J7usr29Gs9Kn5LlEg3EYQDebvc="
+  grafana_admin_username = ENV['TF_VAR_grafana_admin_username']
+  grafana_admin_password = ENV['TF_VAR_grafana_admin_password']
 
   req.basic_auth grafana_admin_username, grafana_admin_password
 end
@@ -26,7 +20,8 @@ def make_request(req,uri)
   }
 end
 
-def check_for_user(grafana_url,username)
+def ci_user_exists?(grafana_url)
+  username = ENV['TF_VAR_ci_user_login']
   uri = URI("#{grafana_url}/users/lookup?loginOrEmail=#{username}")
 
   req = Net::HTTP::Get.new(uri)
@@ -40,13 +35,15 @@ end
 def create_ci_user(grafana_url)
   uri = URI("#{grafana_url}/admin/users")
   req = Net::HTTP::Post.new(uri)
+  ci_user_login = ENV['TF_VAR_ci_user_login']
+  ci_user_password = ENV['TF_VAR_ci_user_password']
   authenticate_request(req)
   
   req.set_form_data(
-    'name' => 'test-user',
-    'email' => 'emma_lc_123@hotmail.com',
-    'login' => 'test',
-    'password' => 'test123'
+    'name' => ci_user_login,
+    'email' => 'ci@staff.service.justice.gov.uk',
+    'login' => ci_user_login,
+    'password' => ci_user_password
   )
 
   res = make_request(req,uri)
@@ -79,13 +76,14 @@ def assign_admin_permissions_to_ci_user(grafana_url, user_id)
     end
 end
 
-if check_for_user(grafana_url,username) == false then
+if ci_user_exists?(grafana_url) == false then
   puts "no user created, creating CI user"
   user_id = create_ci_user(grafana_url)
   assign_admin_permissions_to_ci_user(grafana_url, user_id)
 
-elsif check_for_user(grafana_url,username) == true then
+else 
   puts "user already created, exiting..." 
+
 end
 
   
