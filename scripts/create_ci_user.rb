@@ -89,9 +89,6 @@ def make_server_admin(grafana_url, user_id)
   case res
   when Net::HTTPSuccess, Net::HTTPRedirection
     puts "Successfully granted Server Admin permission"
-    puts res.value
-    puts res.code
-    puts res.message
   else
     res.value
   end
@@ -105,9 +102,4 @@ if ci_user_exists?(grafana_url) == false then
 
 else 
   puts "user already created, exiting..." 
-
 end
-
-#make_server_admin(grafana_url,58)
-
-  
