@@ -8,6 +8,10 @@ module "monitoring_platform_temp" {
   enable_transit_gateway         = var.enable_transit_gateway
   transit_gateway_route_table_id = var.transit_gateway_route_table_id
 
+  vpc_cidr_block                 = "10.180.100.0/22"
+  private_subnet_cidr_blocks     = ["10.180.100.0/25", "10.180.100.128/25", "10.180.101.0/25"]
+  public_subnet_cidr_blocks      = ["10.180.102.0/25", "10.180.102.128/25", "10.180.103.0/25"]
+
   providers = {
     aws = aws.env
   }
