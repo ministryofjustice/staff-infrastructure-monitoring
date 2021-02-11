@@ -1,8 +1,27 @@
+module "label_mojo" {
+  version = "0.16.0"
+  source  = "cloudposse/label/null"
+
+  delimiter = "-"
+  name      = "IMA"
+  namespace = "mojo"
+  stage     = terraform.workspace
+
+  tags = {
+    "business-unit"    = "MoJO"
+    "environment-name" = "global"
+    "owner"            = var.owner-email
+    "is-production"    = var.is-production
+    "application"      = "Infrastructure Monitoring and Alerting"
+    "source-code"      = "https://github.com/ministryofjustice/staff-infrastructure-monitoring"
+  }
+}
+
 module "monitoring_platform" {
   source = "./modules/monitoring_platform"
 
-  prefix = module.label_pttp.id
-  tags   = module.label_pttp.tags
+  prefix = module.label_mojo.id
+  tags   = module.label_mojo.tags
 
   transit_gateway_id             = var.transit_gateway_id
   enable_transit_gateway         = var.enable_transit_gateway
@@ -21,10 +40,10 @@ module "grafana" {
   source = "./modules/grafana"
 
   aws_region   = var.aws_region
-  prefix_pttp  = module.label_pttp.id
+  prefix_pttp  = module.label_mojo.id
   prefix       = module.label.id
-  tags         = module.label_pttp.tags
-  short_prefix = module.label_pttp.stage
+  tags         = module.label_mojo.tags
+  short_prefix = module.label_mojo.stage
 
   vpc                = module.monitoring_platform.vpc_id
   cluster_id         = module.monitoring_platform.cluster_id
@@ -64,9 +83,9 @@ module "prometheus" {
   source = "./modules/prometheus"
 
   aws_region  = var.aws_region
-  prefix_pttp = module.label_pttp.id
+  prefix_pttp = module.label_mojo.id
   prefix      = module.label.id
-  tags        = module.label_pttp.tags
+  tags        = module.label_mojo.tags
 
   vpc                = module.monitoring_platform.vpc_id
   cluster_id         = module.monitoring_platform.cluster_id
@@ -85,9 +104,9 @@ module "snmp_exporter" {
   source = "./modules/snmp_exporter"
 
   aws_region  = var.aws_region
-  prefix_pttp = module.label_pttp.id
+  prefix_pttp = module.label_mojo.id
   prefix      = module.label.id
-  tags        = module.label_pttp.tags
+  tags        = module.label_mojo.tags
 
   vpc                = module.monitoring_platform.vpc_id
   cluster_id         = module.monitoring_platform.cluster_id
@@ -105,9 +124,9 @@ module "blackbox_exporter" {
   source = "./modules/blackbox_exporter"
 
   aws_region  = var.aws_region
-  prefix_pttp = module.label_pttp.id
+  prefix_pttp = module.label_mojo.id
   prefix      = module.label.id
-  tags        = module.label_pttp.tags
+  tags        = module.label_mojo.tags
 
   vpc                = module.monitoring_platform.vpc_id
   cluster_id         = module.monitoring_platform.cluster_id

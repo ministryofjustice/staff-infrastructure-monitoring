@@ -40,6 +40,8 @@ module "label_pttp" {
     "is-production"    = var.is-production
     "application"      = "Infrastructure Monitoring and Alerting"
     "source-code"      = "https://github.com/ministryofjustice/staff-infrastructure-monitoring"
+    "status"           = "legacy"
+    "notes"            = "To be removed post CIDR block change"
   }
 }
 
