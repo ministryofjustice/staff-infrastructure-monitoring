@@ -41,7 +41,7 @@ module "grafana" {
 
   aws_region   = var.aws_region
   prefix_pttp  = module.label_mojo.id
-  prefix       = module.label.id
+  prefix       = module.label_mojo.id
   tags         = module.label_mojo.tags
   short_prefix = module.label_mojo.stage
 
@@ -84,7 +84,7 @@ module "prometheus" {
 
   aws_region  = var.aws_region
   prefix_pttp = module.label_mojo.id
-  prefix      = module.label.id
+  prefix      = module.label_mojo.id
   tags        = module.label_mojo.tags
 
   vpc                = module.monitoring_platform.vpc_id
@@ -105,7 +105,7 @@ module "snmp_exporter" {
 
   aws_region  = var.aws_region
   prefix_pttp = module.label_mojo.id
-  prefix      = module.label.id
+  prefix      = module.label_mojo.id
   tags        = module.label_mojo.tags
 
   vpc                = module.monitoring_platform.vpc_id
@@ -125,7 +125,7 @@ module "blackbox_exporter" {
 
   aws_region  = var.aws_region
   prefix_pttp = module.label_mojo.id
-  prefix      = module.label.id
+  prefix      = module.label_mojo.id
   tags        = module.label_mojo.tags
 
   vpc                = module.monitoring_platform.vpc_id
