@@ -16,15 +16,15 @@ output "prometheus_hostname" {
 
 output "snmp_exporter_hostname" {
   value = {
-    old = module.snmp_old.hostname
-    new = module.snmp.hostname
+    old = module.snmp_exporter_old.hostname
+    new = module.snmp_exporter.hostname
   }
 }
 
 output "blackbox_exporter_hostname" {
   value = {
-    old = module.blackbox_old.hostname
-    new = module.blackbox.hostname
+    old = module.blackbox_exporter_old.hostname
+    new = module.blackbox_exporter.hostname
   }
 }
 
