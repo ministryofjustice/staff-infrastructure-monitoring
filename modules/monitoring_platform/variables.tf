@@ -23,3 +23,15 @@ variable "transit_gateway_id" {
 variable "transit_gateway_route_table_id" {
   type = string
 }
+
+variable "vpc_cidr_block" {
+  type = string
+}
+
+variable "private_subnet_cidr_blocks" {
+  type = list(string)
+}
+
+variable "public_subnet_cidr_blocks" {
+  type = list(string)
+}

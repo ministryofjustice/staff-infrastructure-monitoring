@@ -1,5 +1,8 @@
 .env
 
+## powershell scripts for testing
+*.ps1
+
 # Local .terraform directories
 **/.terraform/*
 
