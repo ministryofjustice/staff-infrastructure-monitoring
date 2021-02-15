@@ -40,8 +40,6 @@ module "label_pttp" {
     "is-production"    = var.is-production
     "application"      = "Infrastructure Monitoring and Alerting"
     "source-code"      = "https://github.com/ministryofjustice/staff-infrastructure-monitoring"
-    "status"           = "legacy"
-    "notes"            = "To be removed post CIDR block change"
   }
 }
 
@@ -64,7 +62,7 @@ module "label" {
   }
 }
 
-module "monitoring_platform_old" {
+module "monitoring_platform" {
   source = "./modules/monitoring_platform"
 
   prefix = module.label_pttp.id
@@ -74,16 +72,12 @@ module "monitoring_platform_old" {
   enable_transit_gateway         = var.enable_transit_gateway
   transit_gateway_route_table_id = var.transit_gateway_route_table_id
 
-  vpc_cidr_block             = "10.180.88.0/21"
-  private_subnet_cidr_blocks = ["10.180.88.0/24", "10.180.89.0/24", "10.180.90.0/24"]
-  public_subnet_cidr_blocks  = ["10.180.91.0/24", "10.180.92.0/24", "10.180.93.0/24"]
-
   providers = {
     aws = aws.env
   }
 }
 
-module "grafana_old" {
+module "grafana" {
   source = "./modules/grafana"
 
   aws_region   = var.aws_region
@@ -92,20 +86,20 @@ module "grafana_old" {
   tags         = module.label_pttp.tags
   short_prefix = module.label_pttp.stage
 
-  vpc                = module.monitoring_platform_old.vpc_id
-  cluster_id         = module.monitoring_platform_old.cluster_id
-  public_subnet_ids  = module.monitoring_platform_old.public_subnet_ids
-  private_subnet_ids = module.monitoring_platform_old.private_subnet_ids
+  vpc                = module.monitoring_platform.vpc_id
+  cluster_id         = module.monitoring_platform.cluster_id
+  public_subnet_ids  = module.monitoring_platform.public_subnet_ids
+  private_subnet_ids = module.monitoring_platform.private_subnet_ids
 
-  execution_role_arn      = module.monitoring_platform_old.execution_role_arn
-  rds_monitoring_role_arn = module.monitoring_platform_old.rds_monitoring_role_arn
+  execution_role_arn      = module.monitoring_platform.execution_role_arn
+  rds_monitoring_role_arn = module.monitoring_platform.rds_monitoring_role_arn
 
-  db_name        = var.grafana_db_name
-  db_endpoint    = var.grafana_db_endpoint
-  db_username    = var.grafana_db_username
-  db_password    = var.grafana_db_password
-  admin_username = var.grafana_admin_username
-  admin_password = var.grafana_admin_password
+  db_name          = var.grafana_db_name
+  db_endpoint      = var.grafana_db_endpoint
+  db_username      = var.grafana_db_username
+  db_password      = var.grafana_db_password
+  admin_username   = var.grafana_admin_username
+  admin_password   = var.grafana_admin_password
 
   vpn_hosted_zone_id     = var.vpn_hosted_zone_id
   vpn_hosted_zone_domain = var.vpn_hosted_zone_domain
@@ -126,7 +120,7 @@ module "grafana_old" {
   }
 }
 
-module "prometheus_old" {
+module "prometheus" {
   source = "./modules/prometheus"
 
   aws_region  = var.aws_region
@@ -134,20 +128,20 @@ module "prometheus_old" {
   prefix      = module.label.id
   tags        = module.label_pttp.tags
 
-  vpc                = module.monitoring_platform_old.vpc_id
-  cluster_id         = module.monitoring_platform_old.cluster_id
-  public_subnet_ids  = module.monitoring_platform_old.public_subnet_ids
-  private_subnet_ids = module.monitoring_platform_old.private_subnet_ids
+  vpc                = module.monitoring_platform.vpc_id
+  cluster_id         = module.monitoring_platform.cluster_id
+  public_subnet_ids  = module.monitoring_platform.public_subnet_ids
+  private_subnet_ids = module.monitoring_platform.private_subnet_ids
   fargate_count      = 1
 
-  execution_role_arn = module.monitoring_platform_old.execution_role_arn
+  execution_role_arn = module.monitoring_platform.execution_role_arn
 
   providers = {
     aws = aws.env
   }
 }
 
-module "snmp_exporter_old" {
+module "snmp_exporter" {
   source = "./modules/snmp_exporter"
 
   aws_region  = var.aws_region
@@ -155,19 +149,19 @@ module "snmp_exporter_old" {
   prefix      = module.label.id
   tags        = module.label_pttp.tags
 
-  vpc                = module.monitoring_platform_old.vpc_id
-  cluster_id         = module.monitoring_platform_old.cluster_id
-  public_subnet_ids  = module.monitoring_platform_old.public_subnet_ids
-  private_subnet_ids = module.monitoring_platform_old.private_subnet_ids
+  vpc                = module.monitoring_platform.vpc_id
+  cluster_id         = module.monitoring_platform.cluster_id
+  public_subnet_ids  = module.monitoring_platform.public_subnet_ids
+  private_subnet_ids = module.monitoring_platform.private_subnet_ids
 
-  execution_role_arn = module.monitoring_platform_old.execution_role_arn
+  execution_role_arn = module.monitoring_platform.execution_role_arn
 
   providers = {
     aws = aws.env
   }
 }
 
-module "blackbox_exporter_old" {
+module "blackbox_exporter" {
   source = "./modules/blackbox_exporter"
 
   aws_region  = var.aws_region
@@ -175,23 +169,23 @@ module "blackbox_exporter_old" {
   prefix      = module.label.id
   tags        = module.label_pttp.tags
 
-  vpc                = module.monitoring_platform_old.vpc_id
-  cluster_id         = module.monitoring_platform_old.cluster_id
-  public_subnet_ids  = module.monitoring_platform_old.public_subnet_ids
-  private_subnet_ids = module.monitoring_platform_old.private_subnet_ids
+  vpc                = module.monitoring_platform.vpc_id
+  cluster_id         = module.monitoring_platform.cluster_id
+  public_subnet_ids  = module.monitoring_platform.public_subnet_ids
+  private_subnet_ids = module.monitoring_platform.private_subnet_ids
 
-  execution_role_arn = module.monitoring_platform_old.execution_role_arn
+  execution_role_arn = module.monitoring_platform.execution_role_arn
 
   providers = {
     aws = aws.env
   }
 }
 
-### Temporary for Pen Test ###
+#### Temporary for Pen Test ###
 module "bsi_test_vm" {
   source                          = "./modules/bsi_pentest_vm"
-  subnets                         = module.monitoring_platform_old.public_subnet_ids
-  vpc_id                          = module.monitoring_platform_old.vpc_id
+  subnets                         = module.monitoring_platform.public_subnet_ids
+  vpc_id                          = module.monitoring_platform.vpc_id
   pentesting_vm_ami_id            = var.pentesting_vm_ami_id
   pentesting_vm_ami_ingress_cidrs = var.pentesting_vm_ami_ingress_cidrs
   enabled                         = terraform.workspace == "production" ? "true" : "false"
