@@ -94,12 +94,12 @@ module "grafana" {
   execution_role_arn      = module.monitoring_platform.execution_role_arn
   rds_monitoring_role_arn = module.monitoring_platform.rds_monitoring_role_arn
 
-  db_name          = var.grafana_db_name
-  db_endpoint      = var.grafana_db_endpoint
-  db_username      = var.grafana_db_username
-  db_password      = var.grafana_db_password
-  admin_username   = var.grafana_admin_username
-  admin_password   = var.grafana_admin_password
+  db_name        = var.grafana_db_name
+  db_endpoint    = var.grafana_db_endpoint
+  db_username    = var.grafana_db_username
+  db_password    = var.grafana_db_password
+  admin_username = var.grafana_admin_username
+  admin_password = var.grafana_admin_password
 
   vpn_hosted_zone_id     = var.vpn_hosted_zone_id
   vpn_hosted_zone_domain = var.vpn_hosted_zone_domain
