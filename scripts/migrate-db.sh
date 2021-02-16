@@ -1,10 +1,10 @@
 #!/bin/bash
 ## Create a new RDS db from a snapshot in moj-pttp-dev
 
-db_identifier="staff-infra-dw-v2-ima-db"
-snapshot_identifier="staff-infra-development-ima-temp-db"
-db_subnet_group="mojo-dw-ima-db-subnet-group"
-vpc_security_group_ids="sg-0d407275bbec42930"
+db_identifier=""
+snapshot_identifier=""
+db_subnet_group=""
+vpc_security_group_ids=""
 instance_size="db.t2.medium"
 
 
