@@ -40,6 +40,8 @@ module "label_pttp" {
     "is-production"    = var.is-production
     "application"      = "Infrastructure Monitoring and Alerting"
     "source-code"      = "https://github.com/ministryofjustice/staff-infrastructure-monitoring"
+    "status"           = "legacy"
+    "notes"            = "To be removed post CIDR block change"
   }
 }
 
@@ -71,6 +73,10 @@ module "monitoring_platform" {
   transit_gateway_id             = var.transit_gateway_id
   enable_transit_gateway         = var.enable_transit_gateway
   transit_gateway_route_table_id = var.transit_gateway_route_table_id
+  
+  vpc_cidr_block                 = "10.180.88.0/21"
+  private_subnet_cidr_blocks     = ["10.180.88.0/24", "10.180.89.0/24", "10.180.90.0/24"]
+  public_subnet_cidr_blocks      = ["10.180.91.0/24", "10.180.92.0/24", "10.180.93.0/24"]
 
   providers = {
     aws = aws.env
