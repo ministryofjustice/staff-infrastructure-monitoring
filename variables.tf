@@ -37,6 +37,10 @@ variable "grafana_db_endpoint" {
   type = string
 }
 
+variable "grafana_db_endpoint_v2" {
+  type = string
+}
+
 variable "grafana_db_username" {
   type = string
 }
