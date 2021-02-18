@@ -23,6 +23,23 @@ variable "cluster_id" {
   type = string
 }
 
+#################### Long-Term S3 Storage ####################
+
+variable "storage_bucket_arn" {
+  description = "ARN of the S3 Bucket to be used for long-term storage"
+  type = string
+}
+
+variable "storage_key_arn" {
+  description = "ARN of the long-term storage S3 Bucket KMS Key"
+  type = string
+} 
+
+variable "storage_key_id" {
+  description = "ID of the long-term storage S3 Bucket KMS Key"
+  type = string
+}
+
 #################### Networking ####################
 variable "public_subnet_ids" {
   type = list

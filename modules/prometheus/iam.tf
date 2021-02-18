@@ -15,7 +15,7 @@ data "template_file" "s3_access_policy" {
   template = file("${path.module}/policies/s3_access_policy.template.json")
 
   vars = {
-    bucket = aws_s3_bucket.storage.bucket
+    bucket = var.storage_bucket_arn
   }
 }
 
@@ -34,7 +34,7 @@ data "template_file" "kms_access_policy" {
   template = file("${path.module}/policies/kms_access_policy.template.json")
 
   vars = {
-    kms_key_arn = aws_kms_key.storage_key.arn
+    kms_key_arn = var.storage_key_arn
   }
 }
 

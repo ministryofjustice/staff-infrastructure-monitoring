@@ -106,10 +106,10 @@ variable "sns_subscribers" {
 }
 
 ################### Temporary for Pen Test ###########
-variable "pentesting_vm_ami_id" {
-  type = string
-}
+# variable "pentesting_vm_ami_id" {
+#   type = string
+# }
 
-variable "pentesting_vm_ami_ingress_cidrs" {
-  type = list(string)
-}
+# variable "pentesting_vm_ami_ingress_cidrs" {
+#   type = list(string)
+# }
