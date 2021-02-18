@@ -142,6 +142,10 @@ module "prometheus" {
 
   execution_role_arn = module.monitoring_platform.execution_role_arn
 
+  storage_bucket_arn = module.prometheus-thanos-storage.bucket_arn
+  storage_key_arn = module.prometheus-thanos-storage.kms_key_arn
+  storage_key_id = module.prometheus-thanos-storage.kms_key_id
+
   providers = {
     aws = aws.env
   }
@@ -186,3 +190,33 @@ module "blackbox_exporter" {
     aws = aws.env
   }
 }
+<<<<<<< HEAD
+=======
+
+module "prometheus-thanos-storage" {
+  source = "./modules/s3_bucket"
+
+  name = "thanos-storage"
+  prefix_pttp = module.label_pttp.id
+  tags = module.label_pttp.tags
+
+  providers = {
+    aws = aws.env
+  }
+}
+
+#### Temporary for Pen Test ###
+# module "bsi_test_vm" {
+#   source                          = "./modules/bsi_pentest_vm"
+#   subnets                         = module.monitoring_platform.public_subnet_ids
+#   vpc_id                          = module.monitoring_platform.vpc_id
+#   pentesting_vm_ami_id            = var.pentesting_vm_ami_id
+#   pentesting_vm_ami_ingress_cidrs = var.pentesting_vm_ami_ingress_cidrs
+#   enabled                         = terraform.workspace == "production" ? "true" : "false"
+
+#   providers = {
+#     aws = aws.env
+#   }
+# }
+
+>>>>>>> Standalone S3 bucket module

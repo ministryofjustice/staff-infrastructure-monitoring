@@ -165,8 +165,8 @@ data "template_file" "storage_config" {
   template = file("${path.module}/s3config.template.yml")
 
   vars = {
-    bucket_name = aws_s3_bucket.storage.bucket
+    bucket_name = var.storage_bucket_arn
     endpoint    = "s3.eu-west-2.amazonaws.com"
-    kms_key_id  = aws_kms_key.storage_key.key_id
+    kms_key_id  = var.storage_key_id
   }
 }
