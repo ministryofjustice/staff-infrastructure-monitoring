@@ -20,7 +20,7 @@ data "template_file" "s3_access_policy" {
   template = file("${path.module}/policies/s3_access_policy.template.json")
 
   vars = {
-    bucket = aws_s3_bucket.external_image_storage.bucket
+    bucket = var.storage_bucket_arn
   }
 }
 

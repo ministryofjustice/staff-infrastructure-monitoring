@@ -121,6 +121,8 @@ module "grafana" {
 
   sns_subscribers = split(",", var.sns_subscribers)
 
+  storage_bucket_arn = module.grafana-image-storage.bucket_arn
+
   providers = {
     aws = aws.env
   }
@@ -143,8 +145,8 @@ module "prometheus" {
   execution_role_arn = module.monitoring_platform.execution_role_arn
 
   storage_bucket_arn = module.prometheus-thanos-storage.bucket_arn
-  storage_key_arn = module.prometheus-thanos-storage.kms_key_arn
-  storage_key_id = module.prometheus-thanos-storage.kms_key_id
+  storage_key_arn    = module.prometheus-thanos-storage.kms_key_arn
+  storage_key_id     = module.prometheus-thanos-storage.kms_key_id
 
   providers = {
     aws = aws.env
@@ -196,9 +198,22 @@ module "blackbox_exporter" {
 module "prometheus-thanos-storage" {
   source = "./modules/s3_bucket"
 
-  name = "thanos-storage"
+  name               = "thanos-storage"
+  prefix_pttp        = module.label_pttp.id
+  tags               = module.label_pttp.tags
+
+  providers = {
+    aws = aws.env
+  }
+}
+
+module "grafana-image-storage" {
+  source = "./modules/s3_bucket"
+
+  name        = "grafana-image-storage"
   prefix_pttp = module.label_pttp.id
-  tags = module.label_pttp.tags
+  tags        = module.label_pttp.tags
+  encryption_enabled = false
 
   providers = {
     aws = aws.env
