@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "encrypted" {
-  count = var.encryption_enabled ? 1 : 0
+  count  = var.encryption_enabled ? 1 : 0
   bucket = "${var.prefix_pttp}-${var.name}"
   acl    = "private"
 
@@ -18,7 +18,7 @@ resource "aws_s3_bucket" "encrypted" {
 
 
 resource "aws_s3_bucket" "non-encrypted" {
-  count = var.encryption_enabled ? 0 : 1
+  count  = var.encryption_enabled ? 0 : 1
   bucket = "${var.prefix_pttp}-${var.name}"
   acl    = "private"
 
@@ -26,18 +26,18 @@ resource "aws_s3_bucket" "non-encrypted" {
 }
 
 resource "aws_s3_bucket_metric" "encrypted" {
-  count = var.encryption_enabled ? 1 : 0
+  count  = var.encryption_enabled ? 1 : 0
   bucket = aws_s3_bucket.encrypted[0].bucket
   name   = "EntireBucket"
 }
 
 resource "aws_s3_bucket_metric" "non-encrypted" {
-  count = var.encryption_enabled ? 0 : 1
+  count  = var.encryption_enabled ? 0 : 1
   bucket = aws_s3_bucket.non-encrypted[0].bucket
   name   = "EntireBucket"
 }
 
 resource "aws_kms_key" "this" {
-  count = var.encryption_enabled ? 1 : 0
+  count       = var.encryption_enabled ? 1 : 0
   description = "${var.prefix_pttp}-${var.name} encryption key"
 }
