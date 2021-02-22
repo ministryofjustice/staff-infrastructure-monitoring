@@ -196,9 +196,9 @@ module "blackbox_exporter" {
 module "prometheus-thanos-storage" {
   source = "./modules/s3_bucket"
 
-  name               = "thanos-storage"
-  prefix_pttp        = module.label_pttp.id
-  tags               = module.label_pttp.tags
+  name        = "thanos-storage"
+  prefix_pttp = module.label_pttp.id
+  tags        = module.label_pttp.tags
 
   providers = {
     aws = aws.env
@@ -208,9 +208,9 @@ module "prometheus-thanos-storage" {
 module "grafana-image-storage" {
   source = "./modules/s3_bucket"
 
-  name        = "grafana-image-storage"
-  prefix_pttp = module.label_pttp.id
-  tags        = module.label_pttp.tags
+  name               = "grafana-image-storage"
+  prefix_pttp        = module.label_pttp.id
+  tags               = module.label_pttp.tags
   encryption_enabled = false
 
   providers = {
