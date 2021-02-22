@@ -192,8 +192,6 @@ module "blackbox_exporter" {
     aws = aws.env
   }
 }
-<<<<<<< HEAD
-=======
 
 module "prometheus-thanos-storage" {
   source = "./modules/s3_bucket"
@@ -219,19 +217,3 @@ module "grafana-image-storage" {
     aws = aws.env
   }
 }
-
-#### Temporary for Pen Test ###
-# module "bsi_test_vm" {
-#   source                          = "./modules/bsi_pentest_vm"
-#   subnets                         = module.monitoring_platform.public_subnet_ids
-#   vpc_id                          = module.monitoring_platform.vpc_id
-#   pentesting_vm_ami_id            = var.pentesting_vm_ami_id
-#   pentesting_vm_ami_ingress_cidrs = var.pentesting_vm_ami_ingress_cidrs
-#   enabled                         = terraform.workspace == "production" ? "true" : "false"
-
-#   providers = {
-#     aws = aws.env
-#   }
-# }
-
->>>>>>> Standalone S3 bucket module
