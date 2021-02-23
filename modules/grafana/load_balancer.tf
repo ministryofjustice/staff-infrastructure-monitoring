@@ -37,3 +37,19 @@ resource "aws_alb_listener" "front_end_grafana" {
 
   depends_on = [aws_acm_certificate.grafana]
 }
+
+resource "aws_alb_listener" "redirect_http_to_https" {
+  load_balancer_arn = aws_alb.main_grafana.id
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
