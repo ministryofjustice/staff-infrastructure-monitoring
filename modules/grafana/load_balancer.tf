@@ -37,3 +37,21 @@ resource "aws_alb_listener" "front_end_grafana" {
 
   depends_on = [aws_acm_certificate.grafana]
 }
+resource "aws_lb_listener_rule" "redirect_http_to_https" {
+  listener_arn = aws_alb_listener.front_end_grafana.arn
+
+  action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+
+  condition {
+    field  = "host-header"
+    values = [aws_route53_record.grafana.name]
+  }
+}
