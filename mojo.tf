@@ -74,6 +74,8 @@ module "grafana_v2" {
 
   sns_subscribers = split(",", var.sns_subscribers)
 
+  storage_bucket_arn = module.grafana-image-storage.bucket_arn
+
   providers = {
     aws = aws.env
   }
@@ -94,6 +96,10 @@ module "prometheus_v2" {
   fargate_count      = 1
 
   execution_role_arn = module.monitoring_platform_v2.execution_role_arn
+
+  storage_bucket_arn = module.prometheus-thanos-storage.bucket_arn
+  storage_key_arn    = module.prometheus-thanos-storage.kms_key_arn
+  storage_key_id     = module.prometheus-thanos-storage.kms_key_id
 
   providers = {
     aws = aws.env
