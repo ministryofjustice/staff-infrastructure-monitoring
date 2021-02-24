@@ -130,7 +130,7 @@ This should update your **Verification Status** to **Verified** AWS.
 
 ### 5. Set up your own development infrastructure
 
-1. Duplicate `terraform.tfvars.example` and rename the file to `terraform.tfvars`
+1. Duplicate `terraform.tfvars.example` and rename the file to `terraform.tfvars`. This is also saved in the shared services aws accounts parameter store ([`/staff-infrastructure-monitoring/terraform.tfvars`](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/staff-infrastructure-monitoring/terraform.tfvars/description?region=eu-west-2&tab=Table)) with any shared values populated.
 
 ```
 $ cp terraform.tfvars.example terraform.tfvars
