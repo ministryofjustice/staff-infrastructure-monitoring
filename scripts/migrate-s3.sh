@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-if [ $ENV -neq "development" ]
+if [ $ENV != "development" ]
 then
 
 export TEMP_KMS_KEY_ID=$(terraform output prometheus_long_term_storage_kms_key_id | tr '\n' '\0')
