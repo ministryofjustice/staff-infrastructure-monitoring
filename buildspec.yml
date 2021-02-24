@@ -37,13 +37,11 @@ env:
     
 phases:
   install:
+    on-failure: CONTINUE
     commands:
       - wget --no-verbose -O terraform.zip https://releases.hashicorp.com/terraform/0.12.29/terraform_0.12.29_linux_amd64.zip
       - unzip terraform.zip
       - mv terraform /bin
-
-  build:
-    commands:
       - export AWS_DEFAULT_REGION=eu-west-2
       - terraform --version
       - terraform init -no-color --backend-config="key=terraform.$ENV.state"
@@ -64,6 +62,15 @@ phases:
       - terraform import module.prometheus-thanos-storage.aws_s3_bucket.encrypted[0] pttp-$ENV-ima-thanos-storage
       - terraform import module.grafana-image-storage.aws_s3_bucket.non-encrypted[0] pttp-$ENV-ima-grafana-image-storage
       - terraform import module.prometheus-thanos-storage.aws_kms_key.this $TEMP_KMS_KEY_ID
+
+  build:
+    commands:
+      - export AWS_DEFAULT_REGION=eu-west-2
+      - terraform --version
+      - terraform init -no-color --backend-config="key=terraform.$ENV.state"
+      - terraform providers
+      - terraform workspace new $ENV || true
+      - terraform workspace select $ENV
       - terraform apply --auto-approve -no-color
 
   post_build:
