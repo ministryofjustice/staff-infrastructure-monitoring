@@ -42,14 +42,6 @@ phases:
       - wget --no-verbose -O terraform.zip https://releases.hashicorp.com/terraform/0.12.29/terraform_0.12.29_linux_amd64.zip
       - unzip terraform.zip
       - mv terraform /bin
-      - export AWS_DEFAULT_REGION=eu-west-2
-      - terraform --version
-      - terraform init -no-color --backend-config="key=terraform.$ENV.state"
-      - terraform providers
-      - terraform workspace new $ENV || true
-      - terraform workspace select $ENV
-      - chmod +x ./scripts/migrate-s3.sh
-      - ./scripts/migrate-s3.sh
 
   build:
     commands:
