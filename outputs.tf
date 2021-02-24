@@ -48,8 +48,4 @@ output "grafana_database_config" {
   }
 }
 
-##################################### Misc ##########################################
 
-output "prometheus_long_term_storage_kms_key_id" {
-  value = module.prometheus.long_term_storage_key_id
-}
