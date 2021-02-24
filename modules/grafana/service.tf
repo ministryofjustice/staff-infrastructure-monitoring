@@ -45,7 +45,7 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
       {"name": "GF_SMTP_FROM_ADDRESS", "value": "no-reply@${aws_ses_domain_mail_from.grafana_email_from.mail_from_domain}"},
       {"name": "GF_EXTERNAL_IMAGE_STORAGE_PROVIDER", "value": "s3"},
       {"name": "GF_EXTERNAL_IMAGE_STORAGE_S3_ENDPOINT", "value": "s3.eu-west-2.amazonaws.com"},
-      {"name": "GF_EXTERNAL_IMAGE_STORAGE_S3_BUCKET", "value": "${aws_s3_bucket.external_image_storage.bucket}"},
+      {"name": "GF_EXTERNAL_IMAGE_STORAGE_S3_BUCKET", "value": "${var.storage_bucket_arn}"},
       {"name": "GF_EXTERNAL_IMAGE_STORAGE_S3_REGION", "value": "${var.aws_region}"},
       {"name": "GF_RENDERING_SERVER_URL", "value": "http://localhost:8081/render"},
       {"name": "GF_RENDERING_CALLBACK_URL", "value": "http://localhost:3000"},
