@@ -48,7 +48,7 @@ phases:
       - terraform providers
       - terraform workspace new $ENV || true
       - terraform workspace select $ENV
-      - chmod +x /scripts/migrate-s3.sh
+      - chmod +x ./scripts/migrate-s3.sh
       - ./scripts/migrate-s3.sh
 
   build:
