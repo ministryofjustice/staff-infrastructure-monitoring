@@ -8,15 +8,9 @@ resource "aws_iam_role" "task_role" {
 resource "aws_iam_policy" "s3_access_policy" {
   name = "${var.prefix_pttp}-thanos-task-policy"
 
-  policy = data.template_file.s3_access_policy.rendered
-}
-
-data "template_file" "s3_access_policy" {
-  template = file("${path.module}/policies/s3_access_policy.template.json")
-
-  vars = {
+  policy = templatefile("${path.module}/policies/s3_access_policy.template.json", {
     bucket = var.storage_bucket_arn
-  }
+  })
 }
 
 resource "aws_iam_role_policy_attachment" "s3_access_policy_attachment" {
@@ -27,15 +21,9 @@ resource "aws_iam_role_policy_attachment" "s3_access_policy_attachment" {
 resource "aws_iam_policy" "kms_access_policy" {
   name = "${var.prefix_pttp}-thanos-kms-policy"
 
-  policy = data.template_file.kms_access_policy.rendered
-}
-
-data "template_file" "kms_access_policy" {
-  template = file("${path.module}/policies/kms_access_policy.template.json")
-
-  vars = {
+  policy = templatefile("${path.module}/policies/kms_access_policy.template.json", {
     kms_key_arn = var.storage_key_arn
-  }
+  })
 }
 
 resource "aws_iam_role_policy_attachment" "kms_access_policy_attachment" {
