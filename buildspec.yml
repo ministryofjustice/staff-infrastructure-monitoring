@@ -52,6 +52,8 @@ phases:
       - terraform workspace new $ENV || true
       - terraform workspace select $ENV
       - terraform apply --auto-approve -no-color
+      - ./scripts/publish_terraform_outputs.sh
+
 
   post_build:
     commands:
