@@ -154,6 +154,66 @@ resource "aws_ecs_service" "prometheus_ecs_service" {
   ]
 }
 
+
+resource "aws_ecs_task_definition" "thanos_compactor_task_definition" {
+  family = "${var.prefix_pttp}-prometheus"
+
+  network_mode             = "awsvpc"
+  requires_compatibilities = ["FARGATE"]
+
+  cpu                = 512
+  memory             = 4096
+  execution_role_arn = var.execution_role_arn
+  task_role_arn      = aws_iam_role.task_role.arn
+  tags               = var.tags
+
+
+  container_definitions = <<DEFINITION
+  [{
+    "name": "thanos-compactor",
+    "cpu": 512,
+    "memory": 4096,
+    "image": "quay.io/thanos/thanos:v0.15.0",
+    "essential": true,
+    "command": [
+      "compact",
+      "--data-dir=/tmp/thanos-compact",
+      "--objstore.config=${data.template_file.storage_config.rendered}",
+      "--wait",
+      "--wait-interval=5m"
+    ],
+    "ulimits": [{
+      "name": "nofile",
+      "softLimit": 409600,
+      "hardLimit": 409600
+    }],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-region" : "${var.aws_region}",
+        "awslogs-stream-prefix": "${var.prefix_pttp}-thqr",
+        "awslogs-group" : "${aws_cloudwatch_log_group.prometheus_cloudwatch_log_group.name}"
+      }
+    }
+  }]
+DEFINITION
+}
+
+resource "aws_ecs_service" "thanos_compactor_ecs_service" {
+  name = "${var.prefix_pttp}-comp-ecs-service"
+
+  launch_type      = "FARGATE"
+  platform_version = "1.4.0"
+  desired_count    = var.fargate_count
+  cluster          = var.cluster_id
+  task_definition  = aws_ecs_task_definition.thanos_compactor_task_definition.arn
+
+  network_configuration {
+    subnets         = var.private_subnet_ids
+    security_groups = ["${aws_security_group.ecs_prometheus_tasks.id}"]
+  }
+}
+
 resource "aws_cloudwatch_log_group" "prometheus_cloudwatch_log_group" {
   name              = "${var.prefix}-prometheus-cloudwatch-log-group"
   retention_in_days = 7
