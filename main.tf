@@ -24,10 +24,6 @@ provider "grafana" {
   auth = "${var.grafana_admin_username}:${var.grafana_admin_password}"
 }
 
-provider "template" {
-  version = "~> 2.1"
-}
-
 module "label_pttp" {
   version = "0.16.0"
   source  = "cloudposse/label/null"
