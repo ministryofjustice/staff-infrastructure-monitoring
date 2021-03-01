@@ -1,19 +1,15 @@
 resource "aws_iam_role" "cloudwatch_execution_role" {
   name               = "${var.prefix}-cloudwatch-execution-role"
-  assume_role_policy = data.template_file.cloudwatch_assume_role_policy.rendered
+  assume_role_policy = templatefile("${path.module}/policies/cloudwatch_assume_role_policy.json", {})
 
   tags = var.tags
 }
 
 resource "aws_iam_role" "cloudwatch_task_role" {
   name               = "${var.prefix}-cloudwatch-task-role"
-  assume_role_policy = data.template_file.cloudwatch_assume_role_policy.rendered
+  assume_role_policy = templatefile("${path.module}/policies/cloudwatch_assume_role_policy.json", {})
 
   tags = var.tags
-}
-
-data "template_file" "cloudwatch_assume_role_policy" {
-  template = file("${path.module}/policies/cloudwatch_assume_role_policy.json")
 }
 
 resource "aws_iam_role_policy_attachment" "cloudwatch_access_policy_attachment" {

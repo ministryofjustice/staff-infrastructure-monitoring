@@ -54,7 +54,7 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
       "receive",
       "--grpc-address=0.0.0.0:10903",
       "--http-address=0.0.0.0:10904",
-      "--objstore.config=${data.template_file.storage_config.rendered}",
+      "--objstore.config=${local.storage_config}",
       "--tsdb.path=/var/lib/prometheus",
       "--receive.local-endpoint=127.0.0.1:10903",
       "--remote-write.address=0.0.0.0:10908"
@@ -106,7 +106,7 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
       "--grpc-address=0.0.0.0:20091",
       "--http-address=0.0.0.0:20902",
       "--data-dir=/tmp/thanos/store",
-      "--objstore.config=${data.template_file.storage_config.rendered}"
+      "--objstore.config=${local.storage_config}"
     ],
     "portMappings": [{
       "hostPort": 20902,
@@ -161,12 +161,10 @@ resource "aws_cloudwatch_log_group" "prometheus_cloudwatch_log_group" {
   tags = var.tags
 }
 
-data "template_file" "storage_config" {
-  template = file("${path.module}/s3config.template.yml")
-
-  vars = {
+locals {
+  storage_config = templatefile("${path.module}/s3config.template.yml", {
     bucket_name = var.storage_bucket_arn
     endpoint    = "s3.eu-west-2.amazonaws.com"
     kms_key_id  = var.storage_key_id
-  }
+  })
 }

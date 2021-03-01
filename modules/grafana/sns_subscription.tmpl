@@ -1,0 +1,8 @@
+${jsonencode("${name}")}: {
+  "Type" : "AWS::SNS::Subscription",
+  "Properties": {
+    "Endpoint": ${jsonencode("${email}")},
+    "Protocol": "email",
+    "TopicArn": ${jsonencode("${topic_arn}")}
+  }
+}

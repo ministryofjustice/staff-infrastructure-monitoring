@@ -10,7 +10,6 @@ env:
     TF_VAR_enable_critical_notifications: true
   parameter-store:
     TF_VAR_assume_role: "/codebuild/pttp-ci-ima-pipeline/$ENV/assume_role"
-    TF_VAR_meta_data_url: "/codebuild/pttp-ci-infrastructure-core-pipeline/meta_data_url"
     TF_VAR_grafana_db_name: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_db_name"
     TF_VAR_grafana_db_endpoint: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_db_endpoint"
     TF_VAR_grafana_db_endpoint_v2: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_db_endpoint_v2"
@@ -32,7 +31,6 @@ env:
     TF_VAR_azure_ad_token_url: "/codebuild/pttp-ci-ima-pipeline/$ENV/azure_ad_token_url"
     TF_VAR_transit_gateway_id: "/codebuild/pttp-ci-ima-pipeline/$ENV/transit_gateway_id"
     TF_VAR_transit_gateway_route_table_id: "/codebuild/pttp-ci-ima-pipeline/$ENV/transit_gateway_route_table_id"
-    TF_VAR_critical_notification_recipients: "/codebuild/pttp-ci-infrastructure-core-pipeline/$ENV/critical_notification_recipients"
     TF_VAR_sns_subscribers: "/codebuild/pttp-ci-ima-pipeline/$ENV/sns_subscribers"
     
 phases:

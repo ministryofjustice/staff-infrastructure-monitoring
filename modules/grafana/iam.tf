@@ -13,15 +13,9 @@ resource "aws_iam_role_policy_attachment" "cloudwatch_read_access_policy_attachm
 resource "aws_iam_policy" "s3_access_policy" {
   name = "${var.prefix_pttp}-grafana-s3-access"
 
-  policy = data.template_file.s3_access_policy.rendered
-}
-
-data "template_file" "s3_access_policy" {
-  template = file("${path.module}/policies/s3_access_policy.template.json")
-
-  vars = {
+  policy = templatefile("${path.module}/policies/s3_access_policy.template.json", {
     bucket = var.storage_bucket_arn
-  }
+  })
 }
 
 resource "aws_iam_role_policy_attachment" "s3_access_policy_attachment" {
