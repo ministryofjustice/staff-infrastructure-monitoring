@@ -1,7 +1,7 @@
 version: '2'
 services:
   chrome:
-    image: selenium/node-chrome:3.14.0-gallium
+    image: ${SHARED_SERVICES_ACCOUNT_ID}.dkr.ecr.eu-west-2.amazonaws.com/selenium-node-chrome:selenium-node-chrome-3-14-0-gallium
     volumes:
       - /dev/shm:/dev/shm
     depends_on:
@@ -10,6 +10,6 @@ services:
       HUB_HOST: hub
 
   hub:
-    image: selenium/hub:3.14.0-gallium
+    image: ${SHARED_SERVICES_ACCOUNT_ID}.dkr.ecr.eu-west-2.amazonaws.com/selenium-hub:selenium-hub-3-14-0-gallium
     ports:
       - "4444:4444"
