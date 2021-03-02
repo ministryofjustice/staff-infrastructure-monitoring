@@ -8,4 +8,6 @@ aws ssm put-parameter --name "/terraform_staff_infrastructure_monitoring/$ENV/ou
   --description "Terraform outputs that other pipelines or processes depend on" \
   --value "$terraform_outputs" \
   --type String \
-  --overwrite
+  --overwrite \
+  --tier "Advanced"
+
