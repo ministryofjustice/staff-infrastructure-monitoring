@@ -178,7 +178,7 @@ resource "aws_ecs_task_definition" "thanos_compactor_task_definition" {
     "command": [
       "compact",
       "--data-dir=/tmp/thanos-compact",
-      "--objstore.config=${data.template_file.storage_config.rendered}",
+      "--objstore.config=${local.storage_config}",
       "--wait",
       "--wait-interval=5m"
     ],
