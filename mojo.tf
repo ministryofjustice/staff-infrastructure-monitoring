@@ -84,6 +84,8 @@ module "grafana_v2" {
 module "prometheus_v2" {
   source = "./modules/prometheus"
 
+  enable_compactor = true
+
   aws_region  = var.aws_region
   prefix_pttp = module.label_mojo.id
   prefix      = module.label_mojo.id

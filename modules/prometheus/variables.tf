@@ -57,3 +57,9 @@ variable "execution_role_arn" {
 variable "fargate_count" {
   description = "Number of docker containers to run"
 }
+
+// This flag can be removed once everying is migrated over to the correct cidr range
+// we don't want to run two instances against the same bucket whilst everything is doubled up
+variable "enable_compactor" {
+  type = string
+}
