@@ -131,6 +131,8 @@ module "grafana" {
 module "prometheus" {
   source = "./modules/prometheus"
 
+  enable_compactor = "false"
+
   aws_region  = var.aws_region
   prefix_pttp = module.label_pttp.id
   prefix      = module.label.id

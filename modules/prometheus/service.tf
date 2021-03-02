@@ -200,6 +200,8 @@ DEFINITION
 }
 
 resource "aws_ecs_service" "thanos_compactor_ecs_service" {
+  count = var.enable_compactor == "true" ? 1 : 0 
+
   name = "${var.prefix_pttp}-comp-ecs-service"
 
   launch_type      = "FARGATE"
