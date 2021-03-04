@@ -7,6 +7,10 @@ resource "aws_vpc" "main" {
   tags = var.tags
 }
 
+resource "aws_default_security_group" "default" {
+  vpc_id = aws_vpc.main.id
+}
+
 resource "aws_subnet" "private" {
   count             = var.az_count
   vpc_id            = aws_vpc.main.id
