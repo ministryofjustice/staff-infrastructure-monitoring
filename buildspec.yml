@@ -9,6 +9,7 @@ env:
     TF_VAR_owner_email: pttp@justice.gov.uk
     TF_VAR_enable_critical_notifications: true
   parameter-store:
+    SHARED_SERVICES_ACCOUNT_ID: "/codebuild/staff_device_shared_services_account_id"
     TF_VAR_assume_role: "/codebuild/pttp-ci-ima-pipeline/$ENV/assume_role"
     TF_VAR_grafana_db_name: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_db_name"
     TF_VAR_grafana_db_endpoint: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_db_endpoint"
@@ -55,6 +56,7 @@ phases:
 
   post_build:
     commands:
+      - ./scripts/authenticate_docker.sh
       - cd test/
       - docker-compose up -d
       - bundle install
