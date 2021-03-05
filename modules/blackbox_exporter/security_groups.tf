@@ -20,6 +20,9 @@ resource "aws_security_group" "ecs_blackbox_exporter_tasks" {
   tags = var.tags
 }
 
+data "aws_subnet" "private_subnet" {
+  id = var.private_subnet_ids[0]
+}
 resource "aws_security_group" "lb_blackbox_exporter" {
   name        = "${var.prefix_pttp}-alb-blackbox-sg"
   description = "controls access to the ALB"
@@ -29,7 +32,7 @@ resource "aws_security_group" "lb_blackbox_exporter" {
     protocol    = "tcp"
     from_port   = var.fargate_port
     to_port     = var.fargate_port
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [data.aws_subnet.private_subnet.cidr_block]
   }
 
   egress {
