@@ -32,7 +32,7 @@ resource "aws_security_group" "lb_blackbox_exporter" {
     protocol    = "tcp"
     from_port   = var.fargate_port
     to_port     = var.fargate_port
-    cidr_blocks = "0.0.0.0/0"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
