@@ -35,3 +35,8 @@ variable "private_subnet_cidr_blocks" {
 variable "public_subnet_cidr_blocks" {
   type = list(string)
 }
+
+variable "is_eks_enabled" {
+  type = bool
+  default = false
+}
