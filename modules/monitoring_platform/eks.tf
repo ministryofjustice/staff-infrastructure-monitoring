@@ -1,6 +1,6 @@
 resource "aws_eks_cluster" "monitoring_alerting_cluster" {
   name     = "${var.prefix}-cluster"
-  role_arn = aws_iam_role.cluster_role.arn
+  role_arn = aws_iam_role.cluster_role[0].arn
 
   vpc_config {
     subnet_ids = aws_subnet.private.*.id
@@ -10,6 +10,8 @@ resource "aws_eks_cluster" "monitoring_alerting_cluster" {
     aws_iam_role_policy_attachment.cluster_role_policy_attachment,
     aws_iam_role_policy_attachment.service_role_policy_attachment,
   ]
+
+  count = var.is_eks_enabled ? 1 : 0
 }
 
 resource "aws_iam_role" "cluster_role" {
@@ -29,14 +31,18 @@ resource "aws_iam_role" "cluster_role" {
   ]
 }
 POLICY
+
+  count = var.is_eks_enabled ? 1 : 0
 }
 
 resource "aws_iam_role_policy_attachment" "cluster_role_policy_attachment" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.cluster_role.name
+  role       = aws_iam_role.cluster_role[0].name
+  count      = var.is_eks_enabled ? 1 : 0
 }
 
 resource "aws_iam_role_policy_attachment" "service_role_policy_attachment" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
-  role       = aws_iam_role.cluster_role.name
+  role       = aws_iam_role.cluster_role[0].name
+  count      = var.is_eks_enabled ? 1 : 0
 }
