@@ -37,6 +37,6 @@ variable "public_subnet_cidr_blocks" {
 }
 
 variable "is_eks_enabled" {
-  type = bool
+  type    = bool
   default = false
 }
