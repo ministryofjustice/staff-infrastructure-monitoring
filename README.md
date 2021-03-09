@@ -88,21 +88,28 @@ You will need to do this for both your Dev and Shared Services AWS accounts.
 
 ### 3. Set up your Terraform workspace
 
+1. Copy `.env.example` to `.env`.
+
+```shell
+$ cp .env.example .env
+```
+2. Modify the `.env` file and replace `<your-shared-services-aws-vault-profile>` with `moj-pttp-shared-services` or with your current aws-vault profile for the PTTP Shared Services AWS account.
+
 1. Prepare your working directory for Terraform
 
-```
-aws-vault exec moj-pttp-shared-services -- terraform init
+```shell
+make init
 ```
 
 You will be asked to provide the path to the state file inside the bucket, for development use `terraform.development.state`.
 
-2. Create your own personal workspace by replacing `<my-name>` with your name and running:
+4. Create your own personal workspace by replacing `<my-name>` with your name and running:
 
 ```
 aws-vault exec moj-pttp-shared-services -- terraform workspace new <my-name>
 ```
 
-3. Ensure your workspace is created by listing all available workspaces:
+5. Ensure your workspace is created by listing all available workspaces:
 
 ```
 aws-vault exec moj-pttp-shared-services -- terraform workspace list
@@ -110,7 +117,7 @@ aws-vault exec moj-pttp-shared-services -- terraform workspace list
 
 The current workspace you're using is indicated by an asterisk (*) in the list.
 
-4. If you don't see your workspace selected, run:
+6. If you don't see your workspace selected, run:
 
 ```
 aws-vault exec moj-pttp-shared-services -- terraform workspace select <my-name>
@@ -140,7 +147,7 @@ $ cp terraform.tfvars.example terraform.tfvars
 3. Create your infrastructure by running:
 
 ```
-$ aws-vault clear && aws-vault exec moj-pttp-shared-services --duration=2h -- terraform apply
+$ make apply
 ```
 
 4. Move into the `database` directory and initialise Terraform using:
@@ -192,13 +199,13 @@ To do so, see the README for each:
 To create an execution plan:
 
 ```
-$ aws-vault exec moj-pttp-shared-services -- terraform plan
+$ make plan
 ```
 
 To execute changes:
 
 ```
-$ aws-vault exec moj-pttp-shared-services -- terraform apply
+$ make apply
 ```
 
 To execute changes that require a longer session e.g. creating a database:
@@ -210,7 +217,7 @@ $ aws-vault clear && aws-vault exec moj-pttp-shared-services --duration=2h -- te
 To minimise costs and keep the environment clean, regularly run teardown in your workspace using:
 
 ```
-$ aws-vault exec moj-pttp-shared-services -- terraform destroy
+$ make destroy
 ```
 
 To view your changes within the AWS Management Console:
