@@ -35,5 +35,5 @@ output "cluster_certificate" {
 }
 
 output "cluster_token" {
-  value =  element(concat(data.aws_eks_cluster_auth.monitoring_alerting_cluster[*].token, list("")), 0)
+  value =  data.aws_eks_cluster_auth.monitoring_alerting_cluster.token
 }
