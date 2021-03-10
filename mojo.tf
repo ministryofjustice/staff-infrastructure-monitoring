@@ -31,8 +31,6 @@ module "monitoring_platform_v2" {
   private_subnet_cidr_blocks = ["10.180.100.0/25", "10.180.100.128/25", "10.180.101.0/25"]
   public_subnet_cidr_blocks  = ["10.180.102.0/25", "10.180.102.128/25", "10.180.103.0/25"]
 
-  is_eks_enabled = true
-
   providers = {
     aws = aws.env
   }
