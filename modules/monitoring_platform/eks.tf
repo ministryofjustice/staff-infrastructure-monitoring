@@ -1,3 +1,7 @@
+data "aws_eks_cluster_auth" "monitoring_alerting_cluster" {
+  count = var.is_eks_enabled ? 1 : 0
+  name = element(concat(aws_eks_cluster.monitoring_alerting_cluster[*].name, list("")), 0)
+}
 resource "aws_eks_cluster" "monitoring_alerting_cluster" {
   name     = "${var.prefix}-cluster"
   role_arn = aws_iam_role.cluster_role[0].arn
