@@ -31,18 +31,11 @@ module "monitoring_platform_v2" {
   private_subnet_cidr_blocks = ["10.180.100.0/25", "10.180.100.128/25", "10.180.101.0/25"]
   public_subnet_cidr_blocks  = ["10.180.102.0/25", "10.180.102.128/25", "10.180.103.0/25"]
 
+  is_eks_enabled = true
+
   providers = {
     aws = aws.env
   }
-}
-
-provider "kubernetes" {
-  host                   = module.monitoring_platform_v2.cluster_endpoint
-  cluster_ca_certificate = module.monitoring_platform_v2.cluster_certificate
-  token                  = module.monitoring_platform_v2.cluster_token
-  load_config_file       = false
-  version                = "1.10"
-  alias                  = "env"
 }
 
 module "grafana_v2" {
@@ -114,7 +107,6 @@ module "prometheus_v2" {
 
   providers = {
     aws = aws.env
-    kubernetes = kubernetes.env
   }
 }
 

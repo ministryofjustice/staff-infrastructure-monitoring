@@ -39,3 +39,6 @@ terraform.rc
 
 # Ignore test screenshots
 test/*.png
+
+# kubernetes config files
+kubeconfig*
