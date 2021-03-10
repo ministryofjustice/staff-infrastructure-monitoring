@@ -1,52 +1,24 @@
 data "aws_eks_cluster_auth" "monitoring_alerting_cluster" {
   count = var.is_eks_enabled ? 1 : 0
-  name = element(concat(aws_eks_cluster.monitoring_alerting_cluster[*].name, list("")), 0)
-}
-resource "aws_eks_cluster" "monitoring_alerting_cluster" {
-  name     = "${var.prefix}-cluster"
-  role_arn = aws_iam_role.cluster_role[0].arn
-
-  vpc_config {
-    subnet_ids = aws_subnet.private.*.id
-  }
-
-  depends_on = [
-    aws_iam_role_policy_attachment.cluster_role_policy_attachment,
-    aws_iam_role_policy_attachment.service_role_policy_attachment,
-  ]
-
-  count = var.is_eks_enabled ? 1 : 0
+  name = module.monitoring_alerting_cluster.cluster_id
 }
 
-resource "aws_iam_role" "cluster_role" {
-  name = "${var.prefix}-cluster-role"
+# This cluster will not be created
+module "monitoring_alerting_cluster" {
+  source = "terraform-aws-modules/eks/aws"
+  version = "10.0.0"
+  create_eks = var.is_eks_enabled
+  cluster_name    = "${var.prefix}-cluster"
+  cluster_version = "1.14"
 
-  assume_role_policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
+
+  subnets         = aws_subnet.private.*.id
+  vpc_id = aws_vpc.main.id
+
+  worker_groups = [
     {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "eks.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
+      instance_type = "t2.micro"
+      asg_max_size  = 2
     }
   ]
-}
-POLICY
-
-  count = var.is_eks_enabled ? 1 : 0
-}
-
-resource "aws_iam_role_policy_attachment" "cluster_role_policy_attachment" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.cluster_role[0].name
-  count      = var.is_eks_enabled ? 1 : 0
-}
-
-resource "aws_iam_role_policy_attachment" "service_role_policy_attachment" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
-  role       = aws_iam_role.cluster_role[0].name
-  count      = var.is_eks_enabled ? 1 : 0
 }
