@@ -38,6 +38,15 @@ module "monitoring_platform_v2" {
   }
 }
 
+provider "kubernetes" {
+  host                   = module.monitoring_platform_v2.cluster_endpoint
+  cluster_ca_certificate = module.monitoring_platform_v2.cluster_certificate
+  token                  = module.monitoring_platform_v2.cluster_token
+  load_config_file       = false
+  version                = "1.10"
+  alias                  = "env"
+}
+
 module "grafana_v2" {
   source = "./modules/grafana"
 
@@ -107,6 +116,7 @@ module "prometheus_v2" {
 
   providers = {
     aws = aws.env
+    kubernetes = kubernetes.env
   }
 }
 
