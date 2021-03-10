@@ -27,11 +27,11 @@ output "cluster_id" {
 }
 
 output "cluster_endpoint" {
-  value = element(concat(aws_eks_cluster.monitoring_alerting_cluster[*].endpoint, list("")), 0)
+  value = module.monitoring_alerting_cluster.cluster_endpoint
 }
 
 output "cluster_certificate" {
-  value = base64decode(element(concat(aws_eks_cluster.monitoring_alerting_cluster[*].certificate_authority.0.data, list("")), 0))
+  value = module.monitoring_alerting_cluster.cluster_certificate_authority_data
 }
 
 output "cluster_token" {
