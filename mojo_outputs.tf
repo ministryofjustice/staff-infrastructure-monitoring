@@ -48,3 +48,9 @@ output "grafana_database_config_v2" {
   }
 }
 
+############################################ EKS Cluser ##################################
+
+output "eks_cluster_endpoint" {
+  value = module.monitoring_platform_v2.cluster_endpoint
+}
+

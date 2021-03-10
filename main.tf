@@ -83,15 +83,6 @@ module "monitoring_platform" {
   }
 }
 
-provider "kubernetes" {
-  host                   = module.monitoring_platform.cluster_endpoint
-  cluster_ca_certificate = module.monitoring_platform.cluster_certificate
-  token                  = module.monitoring_platform.cluster_token
-  load_config_file       = false
-  version                = "1.10"
-  alias                  = "env_v1"
-}
-
 module "grafana" {
   source = "./modules/grafana"
 
