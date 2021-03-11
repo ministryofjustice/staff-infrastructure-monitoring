@@ -29,11 +29,3 @@ output "cluster_id" {
 output "cluster_endpoint" {
   value = module.monitoring_alerting_cluster.cluster_endpoint
 }
-
-output "cluster_certificate" {
-  value = module.monitoring_alerting_cluster.cluster_certificate_authority_data
-}
-
-output "cluster_token" {
-  value = element(concat(data.aws_eks_cluster_auth.monitoring_alerting_cluster[*].token, list("")), 0)
-}
