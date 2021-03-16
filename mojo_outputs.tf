@@ -54,3 +54,7 @@ output "eks_cluster_endpoint" {
   value = module.monitoring_platform_v2.cluster_endpoint
 }
 
+
+output "eks_cluster_role_arn" {
+  value = module.monitoring_platform_v2.cluster_role_arn
+}
