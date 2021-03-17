@@ -50,12 +50,12 @@ phases:
       - terraform providers
       - terraform workspace new $ENV || true
       - terraform workspace select $ENV
-      - terraform state replace-provider -- -/aws registry.terraform.io/hashicorp/aws --auto-approve
-      - terraform state replace-provider -- -/kubernetes registry.terraform.io/hashicorp/kubernetes --auto-approve
-      - terraform state replace-provider -- -/local registry.terraform.io/hashicorp/local --auto-approve
-      - terraform state replace-provider -- -/null registry.terraform.io/hashicorp/null --auto-approve
-      - terraform state replace-provider -- -/random registry.terraform.io/hashicorp/random --auto-approve
-      - terraform state replace-provider -- -/template registry.terraform.io/hashicorp/template --auto-approve
+      - terraform state replace-provider -auto-approve registry.terraform.io/-/aws registry.terraform.io/hashicorp/aws
+      - terraform state replace-provider -auto-approve registry.terraform.io/-/kubernetes registry.terraform.io/hashicorp/kubernetes
+      - terraform state replace-provider -auto-approve registry.terraform.io/-/local registry.terraform.io/hashicorp/local
+      - terraform state replace-provider -auto-approve registry.terraform.io/-/null registry.terraform.io/hashicorp/null
+      - terraform state replace-provider -auto-approve registry.terraform.io/-/random registry.terraform.io/hashicorp/random
+      - terraform state replace-provider -auto-approve registry.terraform.io/-/template registry.terraform.io/hashicorp/template
       - terraform apply --auto-approve -no-color
       - ./scripts/publish_terraform_outputs.sh
 
