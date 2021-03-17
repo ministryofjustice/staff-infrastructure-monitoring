@@ -62,8 +62,4 @@ module "monitoring_alerting_cluster" {
       asg_desired_capacity = 2
     },
   ]
-
-  workers_group_defaults = {
-    root_volume_type = "gp2"
-  }
 }
