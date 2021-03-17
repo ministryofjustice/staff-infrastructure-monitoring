@@ -38,7 +38,7 @@ phases:
   install:
     on-failure: CONTINUE
     commands:
-      - wget --no-verbose -O terraform.zip https://releases.hashicorp.com/terraform/0.12.29/terraform_0.12.29_linux_amd64.zip
+      - wget --no-verbose -O terraform.zip https://releases.hashicorp.com/terraform/0.13.6/terraform_0.13.6_linux_amd64.zip
       - unzip terraform.zip
       - mv terraform /bin
 

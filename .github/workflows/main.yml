@@ -23,7 +23,7 @@ jobs:
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v1.2.1
         with:
-          terraform_version: 0.12.29
+          terraform_version: 0.13.6
       - name: Run `terraform validate`
         run: |
           terraform init -backend=false

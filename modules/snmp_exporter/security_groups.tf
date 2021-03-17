@@ -7,7 +7,7 @@ resource "aws_security_group" "ecs_snmp_exporter_tasks" {
     protocol        = "tcp"
     from_port       = var.fargate_port
     to_port         = var.fargate_port
-    security_groups = ["${aws_security_group.lb_snmp_exporter.id}"]
+    security_groups = [aws_security_group.lb_snmp_exporter.id]
   }
 
   egress {

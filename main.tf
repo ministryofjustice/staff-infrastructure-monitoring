@@ -1,6 +1,4 @@
 terraform {
-  required_version = "> 0.12.0"
-
   backend "s3" {
     region     = "eu-west-2"
     bucket     = "pttp-ci-infrastructure-ima-client-core-tf-state"
@@ -11,7 +9,6 @@ terraform {
 provider "aws" {
   region  = var.aws_region
   alias   = "env"
-  version = "~> 2.68"
   profile = terraform.workspace
 
   assume_role {
@@ -25,43 +22,19 @@ provider "grafana" {
 }
 
 module "label_pttp" {
-  version = "0.16.0"
-  source  = "cloudposse/label/null"
-
-  delimiter = "-"
-  name      = "IMA"
-  namespace = "pttp"
-  stage     = terraform.workspace
-
-  tags = {
-    "business-unit"    = "MoJO"
-    "environment-name" = "global"
-    "owner"            = var.owner-email
-    "is-production"    = var.is-production
-    "application"      = "Infrastructure Monitoring and Alerting"
-    "source-code"      = "https://github.com/ministryofjustice/staff-infrastructure-monitoring"
-    "status"           = "legacy"
-    "notes"            = "To be removed post CIDR block change"
-  }
+  source          = "./modules/label"
+  label_namespace = "pttp"
+  owner-email     = var.owner-email
+  is-production   = var.is-production
+  label_status    = "legacy"
+  label_notes     = "To be removed post CIDR block change"
 }
 
 module "label" {
-  version = "0.16.0"
-  source  = "cloudposse/label/null"
-
-  delimiter = "-"
-  name      = "IMA"
-  namespace = "staff-infra"
-  stage     = terraform.workspace
-
-  tags = {
-    "business-unit"    = "MoJO"
-    "environment-name" = "global"
-    "owner"            = var.owner-email
-    "is-production"    = var.is-production
-    "application"      = "Infrastructure Monitoring and Alerting"
-    "source-code"      = "https://github.com/ministryofjustice/staff-infrastructure-monitoring"
-  }
+  source          = "./modules/label"
+  label_namespace = "staff-infra"
+  owner-email     = var.owner-email
+  is-production   = var.is-production
 }
 
 module "monitoring_platform" {

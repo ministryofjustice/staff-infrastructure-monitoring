@@ -1,20 +1,8 @@
 module "label_mojo" {
-  version = "0.16.0"
-  source  = "cloudposse/label/null"
-
-  delimiter = "-"
-  name      = "IMA"
-  namespace = "mojo"
-  stage     = terraform.workspace
-
-  tags = {
-    "business-unit"    = "MoJO"
-    "environment-name" = "global"
-    "owner"            = var.owner-email
-    "is-production"    = var.is-production
-    "application"      = "Infrastructure Monitoring and Alerting"
-    "source-code"      = "https://github.com/ministryofjustice/staff-infrastructure-monitoring"
-  }
+  source          = "./modules/label"
+  label_namespace = "mojo"
+  owner-email     = var.owner-email
+  is-production   = var.is-production
 }
 
 module "monitoring_platform_v2" {
