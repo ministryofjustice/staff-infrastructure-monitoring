@@ -1,8 +1,8 @@
 module "label_mojo" {
-  source  = "./modules/label"
+  source          = "./modules/label"
   label_namespace = "mojo"
-  owner-email = var.owner-email
-  is-production    = var.is-production
+  owner-email     = var.owner-email
+  is-production   = var.is-production
 }
 
 module "monitoring_platform_v2" {

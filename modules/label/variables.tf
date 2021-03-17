@@ -11,11 +11,11 @@ variable "is-production" {
 }
 
 variable "label_notes" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "label_status" {
-  type = string
+  type    = string
   default = ""
 }

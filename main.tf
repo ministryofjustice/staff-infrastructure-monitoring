@@ -22,19 +22,19 @@ provider "grafana" {
 }
 
 module "label_pttp" {
-  source  = "./modules/label"
+  source          = "./modules/label"
   label_namespace = "pttp"
-  owner-email = var.owner-email
-  is-production = var.is-production
-  label_status = "legacy"
-  label_notes = "To be removed post CIDR block change"
+  owner-email     = var.owner-email
+  is-production   = var.is-production
+  label_status    = "legacy"
+  label_notes     = "To be removed post CIDR block change"
 }
 
 module "label" {
-  source  = "./modules/label"
+  source          = "./modules/label"
   label_namespace = "staff-infra"
-  owner-email = var.owner-email
-  is-production = var.is-production
+  owner-email     = var.owner-email
+  is-production   = var.is-production
 }
 
 module "monitoring_platform" {
