@@ -20,8 +20,10 @@ resource "aws_security_group" "ecs_blackbox_exporter_tasks" {
   tags = var.tags
 }
 
-data "aws_subnet" "private_subnet" {
-  id = var.private_subnet_ids[0]
+data "aws_subnet" "private_subnets" {
+  count = length(var.private_subnet_ids)
+
+  id = var.private_subnet_ids[count.index]
 }
 resource "aws_security_group" "lb_blackbox_exporter" {
   name        = "${var.prefix_pttp}-alb-blackbox-sg"
@@ -32,7 +34,7 @@ resource "aws_security_group" "lb_blackbox_exporter" {
     protocol    = "tcp"
     from_port   = var.fargate_port
     to_port     = var.fargate_port
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = data.aws_subnet.private_subnets.*.cidr_block
   }
 
   egress {

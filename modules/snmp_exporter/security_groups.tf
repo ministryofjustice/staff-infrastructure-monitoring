@@ -20,6 +20,12 @@ resource "aws_security_group" "ecs_snmp_exporter_tasks" {
   tags = var.tags
 }
 
+data "aws_subnet" "private_subnets" {
+  count = length(var.private_subnet_ids)
+
+  id = var.private_subnet_ids[count.index]
+}
+
 resource "aws_security_group" "lb_snmp_exporter" {
   name        = "${var.prefix_pttp}-alb-snmp-sg"
   description = "controls access to the ALB"
@@ -29,7 +35,7 @@ resource "aws_security_group" "lb_snmp_exporter" {
     protocol    = "tcp"
     from_port   = var.fargate_port
     to_port     = var.fargate_port
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = data.aws_subnet.private_subnets.*.cidr_block
   }
 
   egress {

@@ -44,13 +44,15 @@ locals {
 }
 
 module "monitoring_alerting_cluster" {
-  source          = "terraform-aws-modules/eks/aws"
-  version         = "10.0.0"
-  create_eks      = var.is_eks_enabled
-  cluster_name    = "${var.prefix}-cluster"
-  cluster_version = "1.16"
-  manage_aws_auth = false
-  map_roles       = local.map_roles
+  source                          = "terraform-aws-modules/eks/aws"
+  version                         = "10.0.0"
+  create_eks                      = var.is_eks_enabled
+  cluster_name                    = "${var.prefix}-cluster"
+  cluster_version                 = "1.16"
+  manage_aws_auth                 = false
+  map_roles                       = local.map_roles
+  cluster_endpoint_private_access = true
+  cluster_enabled_log_types       = ["api", "authenticator", "controllerManager"]
 
   subnets = aws_subnet.private.*.id
   vpc_id  = aws_vpc.main.id

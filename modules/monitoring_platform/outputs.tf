@@ -29,3 +29,7 @@ output "cluster_id" {
 output "cluster_endpoint" {
   value = module.monitoring_alerting_cluster.cluster_endpoint
 }
+
+output "cluster_role_arn" {
+  value = module.monitoring_alerting_cluster.cluster_iam_role_arn
+}
