@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+data:
+  mapRoles: |
+    - rolearn: arn:aws:iam::068084030754:role/mojo-emma-corbett-ima-cluster20210317121147252400000014
+      username: system:node:{{EC2PrivateDNSName}}
+      groups:
+        - system:bootstrappers
+        - system:nodes
+    - userarn: arn:aws:iam::068084030754:user/emma@madetech.com
+      username: emma@madetech.com
+      groups:
+        - system:masters
