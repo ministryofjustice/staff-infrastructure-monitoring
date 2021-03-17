@@ -1,0 +1,2 @@
+rolearn: arn:aws:iam::068084030754:role/mojo-emma-corbett-ima-cluster20210317121147252400000014
+EC2PrivateDNSName: "{{EC2PrivateDNSName}}"
