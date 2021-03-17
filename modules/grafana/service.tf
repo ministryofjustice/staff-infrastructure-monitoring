@@ -99,7 +99,7 @@ resource "aws_ecs_service" "grafana_ecs_service" {
 
   network_configuration {
     subnets         = var.private_subnet_ids
-    security_groups = ["${aws_security_group.ecs_grafana_tasks.id}"]
+    security_groups = [aws_security_group.ecs_grafana_tasks.id]
   }
 
   load_balancer {

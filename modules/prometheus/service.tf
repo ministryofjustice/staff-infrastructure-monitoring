@@ -140,7 +140,7 @@ resource "aws_ecs_service" "prometheus_ecs_service" {
 
   network_configuration {
     subnets         = var.private_subnet_ids
-    security_groups = ["${aws_security_group.ecs_prometheus_tasks.id}"]
+    security_groups = [aws_security_group.ecs_prometheus_tasks.id]
   }
 
   load_balancer {
@@ -212,7 +212,7 @@ resource "aws_ecs_service" "thanos_compactor_ecs_service" {
 
   network_configuration {
     subnets         = var.private_subnet_ids
-    security_groups = ["${aws_security_group.ecs_prometheus_tasks.id}"]
+    security_groups = [aws_security_group.ecs_prometheus_tasks.id]
   }
 }
 

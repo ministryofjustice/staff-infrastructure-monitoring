@@ -7,7 +7,7 @@ resource "aws_security_group" "ecs_grafana_tasks" {
     protocol        = "tcp"
     from_port       = var.container_port
     to_port         = var.container_port
-    security_groups = ["${aws_security_group.lb_grafana.id}"]
+    security_groups = [aws_security_group.lb_grafana.id]
   }
 
   egress {

@@ -7,7 +7,7 @@ resource "aws_security_group" "ecs_prometheus_tasks" {
     protocol        = "tcp"
     from_port       = 10902
     to_port         = 10902
-    security_groups = ["${aws_security_group.lb_prom.id}"]
+    security_groups = [aws_security_group.lb_prom.id]
   }
 
   egress {

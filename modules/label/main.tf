@@ -1,5 +1,5 @@
 module "label" {
-  version = "0.16.0"
+  version = "0.24.0"
   source  = "cloudposse/label/null"
 
   delimiter = "-"
