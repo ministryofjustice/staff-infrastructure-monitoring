@@ -616,7 +616,7 @@ server:
   ## Prometheus server container image
   ##
   image:
-    repository: 068084030754.dkr.ecr.eu-west-2.amazonaws.com/mojo-emma-corbett-ima-prometheus
+    repository: ""
     tag: latest
     pullPolicy: IfNotPresent
 
