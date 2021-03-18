@@ -26,10 +26,14 @@ output "cluster_id" {
   value = aws_ecs_cluster.main.id
 }
 
-output "cluster_endpoint" {
+output "eks_cluster_id" {
+  value = module.monitoring_alerting_cluster.cluster_id
+}
+
+output "eks_cluster_endpoint" {
   value = module.monitoring_alerting_cluster.cluster_endpoint
 }
 
-output "cluster_role_arn" {
-  value = module.monitoring_alerting_cluster.cluster_iam_role_arn
+output "eks_cluster_worker_iam_role_arn" {
+  value = module.monitoring_alerting_cluster.worker_iam_role_arn
 }
