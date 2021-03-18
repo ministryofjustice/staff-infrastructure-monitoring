@@ -1,4 +1,8 @@
 
+provider "aws" {
+  region  = var.aws_region
+
+}
 
 module "label" {
   version = "0.24.0"
