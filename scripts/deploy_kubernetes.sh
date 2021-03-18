@@ -1,10 +1,10 @@
 #!/bin/bash
 
-set -x
+set -euox pipefail
 
 export KUBECONFIG="./kubernetes/kubeconfig"
 
-TEMP_ROLE=`aws-vault exec moj-shared-services -- aws sts assume-role --role-arn $TF_VAR_assume_role --role-session-name ci-authenticate-kubernetes-782`
+TEMP_ROLE=`aws sts assume-role --role-arn $TF_VAR_assume_role --role-session-name ci-authenticate-kubernetes-782`
 
 access_key=$(echo "${TEMP_ROLE}" | jq -r '.Credentials.AccessKeyId')
 secret_access_key=$(echo "${TEMP_ROLE}" | jq -r '.Credentials.SecretAccessKey')
