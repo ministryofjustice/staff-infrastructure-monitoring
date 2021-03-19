@@ -345,7 +345,7 @@ configmapReload:
   prometheus:
     ## If false, the configmap-reload container will not be deployed
     ##
-    enabled: true
+    enabled: false
 
     ## configmap-reload container name
     ##
@@ -611,7 +611,57 @@ server:
   #   sidecarContainers:
   #      webserver:
   #        image: nginx
-  sidecarContainers: {}
+  sidecarContainers:
+  - name: thanos-sidecar
+    # Always use explicit image tags (release or main-<date>-sha) instead of ambigous `latest` or `main`.
+    # Check https://quay.io/repository/thanos/thanos?tab=tags to get latest tag.
+    image: quay.io/thanos/thanos:v0.15.0
+    resources:
+      requests:
+        memory: "4Gi"
+        cpu: "2"
+      limits:
+        memory: "4Gi"
+        cpu: "2"
+    env:
+    - name: GOOGLE_APPLICATION_CREDENTIALS
+      value: /etc/secret/sa
+    args:
+    - "sidecar"
+    - "--log.level=debug"
+    - "--tsdb.path=/data/"
+    - "--prometheus.url=http://127.0.0.1:9090"
+    - "--objstore.config={type: s3, config: {bucket: ${bucket_name}
+                                            endpoint: ${endpoint}
+                                            insecure: false
+                                            signature_version2: false
+                                            sse_config:
+                                              type: SSE-KMS
+                                              kms_key_id: ${kms_key_id}
+                                            }
+                          }
+      "
+    - "--reloader.config-file=/etc/prometheus-config/prometheus.yml"
+    - "--reloader.config-envsubst-file=/etc/prometheus/prometheus.yml"
+    - "--reloader.rule-dir=/etc/prometheus-config/rules"
+    ports:
+    - name: sidecar-http
+      containerPort: 10902
+    - name: grpc
+      containerPort: 10901
+    - name: cluster
+      containerPort: 10900
+    volumeMounts:
+    - name: storage-volume
+      mountPath: /data
+    - name: thanos-storage-secret
+      mountPath: /etc/secret
+    - name: config-volume
+      mountPath: /etc/prometheus-config
+      readOnly: false
+    - name: prometheus-config-shared
+      mountPath: /etc/prometheus/
+      readOnly: false
 
   ## Prometheus server container image
   ##
@@ -680,6 +730,11 @@ server:
     scrape_timeout: 10s
     ## How frequently to evaluate rules
     ##
+
+    external_labels:
+      prometheus_group: ""
+      prometheus_replica: '$(HOSTNAME)'
+
     evaluation_interval: 1m
   ## https://prometheus.io/docs/prometheus/latest/configuration/configuration/#remote_write
   ##
@@ -690,7 +745,10 @@ server:
 
   ## Additional Prometheus server container arguments
   ##
-  extraArgs: {}
+  extraArgs:
+    log.level: debug
+    storage.tsdb.min-block-duration: 2h
+    storage.tsdb.max-block-duration: 2h
 
   ## Additional InitContainers to initialize the pod
   ##
@@ -698,11 +756,15 @@ server:
 
   ## Additional Prometheus server Volume mounts
   ##
-  extraVolumeMounts: []
+  extraVolumeMounts:
+  - name: prometheus-config-shared
+    mountPath: /etc/prometheus/
 
   ## Additional Prometheus server Volumes
   ##
-  extraVolumes: []
+  extraVolumes:
+  - name: prometheus-config-shared
+    emptyDir: {}
 
   ## Additional Prometheus server hostPath mounts
   ##
@@ -722,7 +784,12 @@ server:
 
   ## Additional Prometheus server Secret mounts
   # Defines additional mounts with secrets. Secrets must be manually created in the namespace.
-  extraSecretMounts: []
+  extraSecretMounts:
+  - name: thanos-storage-secret
+    mountPath: /etc/secret/
+    subPath: sa
+    readOnly: false
+    secretName: thanos-storage-secret
     # - name: secret-files
     #   mountPath: /etc/secrets
     #   subPath: ""
@@ -798,7 +865,20 @@ server:
 
   ## Pod affinity
   ##
-  affinity: {}
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - prometheus
+          - key: component
+            operator: In
+            values:
+            - server
+        topologyKey: "kubernetes.io/hostname" # <<<<<<<<<<<<<<<<<<<<<<<<<<
 
   ## PodDisruptionBudget settings
   ## ref: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
@@ -870,7 +950,9 @@ server:
 
   ## Annotations to be added to Prometheus server pods
   ##
-  podAnnotations: {}
+  podAnnotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "10902"
     # iam.amazonaws.com/role: prometheus
 
   ## Labels to be added to Prometheus server pods
@@ -897,7 +979,7 @@ server:
 
   ## Use a StatefulSet if replicaCount needs to be greater than 1 (see below)
   ##
-  replicaCount: 1
+  replicaCount: 2
 
   ## Annotations to be added to deployment
   ##
@@ -907,7 +989,7 @@ server:
     ## If true, use a statefulset instead of a deployment for pod management.
     ## This allows to scale replicas to more than 1 pod
     ##
-    enabled: false
+    enabled: true
 
     annotations: {}
     labels: {}
@@ -942,13 +1024,13 @@ server:
   ## Prometheus server resource requests and limits
   ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
   ##
-  resources: {}
-    # limits:
-    #   cpu: 500m
-    #   memory: 512Mi
-    # requests:
-    #   cpu: 500m
-    #   memory: 512Mi
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 500m
+      memory: 512Mi
 
   # Required for use in managed kubernetes clusters (such as AWS EKS) with custom CNI (such as calico),
   # because control-plane managed by AWS cannot communicate with pods' IP CIDR and admission webhooks are not working
@@ -987,7 +1069,9 @@ server:
     fsGroup: 65534
 
   service:
-    annotations: {}
+    annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "9090"
     labels: {}
     clusterIP: ""
 
