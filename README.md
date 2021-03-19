@@ -192,6 +192,13 @@ To do so, see the README for each:
 - [Blackbox Exporter](https://github.com/ministryofjustice/staff-infrastructure-monitoring-blackbox-exporter)
 - [Metric Aggregation Server](https://github.com/ministryofjustice/staff-infrastructure-metric-aggregation-server) (Prometheus)
 
+11. Before you move onto any other repo's run the following to export your terraform outputs to parameter store: 
+
+```
+$ export ENV=<your-workspace-name>
+$ aws-vault exec moj-pttp-shared-services -- ./scripts/publish_terraform_outputs.sh 
+```
+
 ## Usage
 
 ### Running the code for development
