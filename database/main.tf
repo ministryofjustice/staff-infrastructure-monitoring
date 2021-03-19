@@ -1,16 +1,12 @@
-terraform {
-  required_version = "> 0.12.0"
-}
 
 provider "aws" {
-  alias   = "env"
-  version = "~> 2.68"
+  region  = var.aws_region
   profile = var.environment
 
 }
 
 module "label" {
-  version = "0.16.0"
+  version = "0.24.0"
   source  = "cloudposse/label/null"
 
   delimiter = "-"
