@@ -23,4 +23,4 @@ AWS_ACCESS_KEY_ID=$access_key AWS_SECRET_ACCESS_KEY=$secret_access_key AWS_SESSI
 helm upgrade --install mojo-$ENV-ima-configmap ./kubernetes/auth-configmap --set rolearn=$cluster_role_arn
 
 # DEPLOY PROMETHEUS
-helm upgrade --install mojo-$ENV-ima-prometheus ./kubernetes/prometheus --set server.image.repository=$prometheus_image_repo
+helm upgrade --install mojo-$ENV-ima-prometheus ./kubernetes/prometheus --set server.image.repository=$prometheus_image_repo,server.global.external_labels.prometheus_group=$cluster_name
