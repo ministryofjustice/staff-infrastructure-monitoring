@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: thanos-receiver
+spec:
+  selector:
+    app: thanos-receiver
+  ports:
+    - name: grpc
+      protocol: TCP
+      port: 10903
+      targetPort: 10903
+    - name: remote-http
+      protocol: TCP
+      port: 10904
+      targetPort: 10904
+    - name: http
+      protocol: TCP
+      port: 10908
+      targetPort: 10908
