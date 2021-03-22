@@ -20,6 +20,7 @@ spec:
         ports:
         - containerPort: 10903
         - containerPort: 10904
+        - containerPort: 10908
         command: ["thanos", "receive"]
         args: 
           - "--grpc-address=0.0.0.0:10903"
