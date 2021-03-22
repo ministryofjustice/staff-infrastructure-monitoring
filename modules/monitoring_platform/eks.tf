@@ -54,7 +54,7 @@ module "monitoring_alerting_cluster" {
   cluster_endpoint_private_access = true
   cluster_enabled_log_types       = ["api", "authenticator", "controllerManager"]
 
-  subnets = aws_subnet.private.*.id
+  subnets = concat(aws_subnet.private.*.id, aws_subnet.public.*.id)
   vpc_id  = aws_vpc.main.id
 
   worker_groups = [
