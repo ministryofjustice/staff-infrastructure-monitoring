@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: prometheus
-        image: {{ .Values.prometheus.image }}
+        image: {{ .Values.prometheus.image }}:latest
         ports:
         - containerPort: 9090

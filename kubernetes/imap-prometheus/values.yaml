@@ -1,4 +1,4 @@
 prometheus:
-  image: "068084030754.dkr.ecr.eu-west-2.amazonaws.com/mojo-andym-ima-prometheus:latest"
+  image: ""
 thanos:
   image: "quay.io/thanos/thanos:v0.15.0"
