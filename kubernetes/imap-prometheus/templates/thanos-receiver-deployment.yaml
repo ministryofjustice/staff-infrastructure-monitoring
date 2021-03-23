@@ -25,7 +25,19 @@ spec:
         args: 
           - "--grpc-address=0.0.0.0:10903"
           - "--http-address=0.0.0.0:10904"
-          # - "--objstore.config=${local.storage_config}"
+          - "--objstore.config={
+            type: S3,
+            config: { 
+              bucket: {{ .Values.prometheusThanosStorageBucket.bucketName }},
+              endpoint: {{ .Values.prometheusThanosStorageBucket.endpoint }},
+              insecure: false,
+              signature_version2: false,
+              sse_config: {
+                type: SSE-KMS,
+                kms_key_id: {{ .Values.prometheusThanosStorageBucket.kmsKeyId }}
+              }
+            } 
+          }"
           - "--tsdb.path=/var/lib/prometheus"
           - "--receive.local-endpoint=127.0.0.1:10903"
           - "--remote-write.address=0.0.0.0:10908"
