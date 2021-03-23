@@ -32,7 +32,3 @@ helm upgrade --install --atomic mojo-$ENV-ima-prometheus-thanos ./kubernetes/pro
 prometheus.image=$prometheus_image_repo,\
 prometheusThanosStorageBucket.bucketName=$prometheus_thanos_storage_bucket_name,\
 prometheusThanosStorageBucket.kmsKeyId=$prometheus_thanos_storage_kms_key_id
-
-echo "Cleaning up old helm charts" 
-# TODO: Delete me old charts are gone in production environments
-helm uninstall mojo-$ENV-ima-prometheus
