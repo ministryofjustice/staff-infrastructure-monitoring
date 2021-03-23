@@ -55,7 +55,7 @@ phases:
       - terraform workspace select $ENV
       - terraform apply --auto-approve -no-color
       - ./scripts/publish_terraform_outputs.sh
-      - ./scripts/deploy_kubernetes.sh
+      # - ./scripts/deploy_kubernetes.sh
 
 
   post_build:
