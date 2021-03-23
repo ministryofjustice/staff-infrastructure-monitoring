@@ -48,15 +48,15 @@ output "grafana_database_config_v2" {
   }
 }
 
-############################################ EKS Cluser ##################################
+########################################### EKS Cluser ##################################
 
-# output "eks_cluster_id" {
-#   value = module.monitoring_platform_v2.eks_cluster_id
-# }
+output "eks_cluster_id" {
+  value = module.monitoring_platform_v2.eks_cluster_id
+}
 
-# output "eks_cluster_endpoint" {
-#   value = module.monitoring_platform_v2.eks_cluster_endpoint
-# }
+output "eks_cluster_endpoint" {
+  value = module.monitoring_platform_v2.eks_cluster_endpoint
+}
 
 output "eks_cluster_worker_iam_role_arn" {
   value = module.monitoring_platform_v2.eks_cluster_worker_iam_role_arn
