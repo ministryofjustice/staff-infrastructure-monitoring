@@ -4,6 +4,7 @@
 
 - [About the project](#about-the-project)
   - [Our repositories](#our-repositories)
+  - [Architecture Decision Record (ADR)](#architecture-decision-record)
 - [Getting started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [1. Set up AWS Vault](#1-set-up-aws-vault)
@@ -16,12 +17,14 @@
 - [Documentation](#documentation)
 - [License](#license)
 
-## About the project
+## About this repository
 
 The Infrastructure Monitoring and Alerting (IMA) Platform aims to allow service
 owners and support teams to monitor the health of the MoJ infrastructure and
 identify failures as early as possible ahead of the end users noticing and
 reporting them.
+
+- [Architecture Decision Record (ADR)](architecture-decision-record)
 
 ### Our repositories
 
@@ -30,7 +33,7 @@ reporting them.
 - [SNMP Exporter](https://github.com/ministryofjustice/staff-infrastructure-monitoring-snmpexporter) - to scrape data from physical devices (Docker image)
 - [Blackbox Exporter](https://github.com/ministryofjustice/staff-infrastructure-monitoring-blackbox-exporter) - to probe endpoints over HTTP, HTTPS, DNS, TCP and ICMP.s (Docker image)
 - [Metric Aggregation Server](https://github.com/ministryofjustice/staff-infrastructure-metric-aggregation-server) - to pull data from the SNMP exporter (Docker image)
-- [Shared Services Infrastructure](https://github.com/ministryofjustice/pttp-shared-services-infrastructure) - to manage our CI/CD pipelines
+- [Shared Services Infrastructure](https://github.com/ministryofjustice/staff-device-shared-services-infrastructure) - to manage our CI/CD pipelines
 
 ## Getting started
 
