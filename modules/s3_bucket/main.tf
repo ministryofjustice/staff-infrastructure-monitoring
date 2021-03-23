@@ -5,7 +5,9 @@ resource "aws_s3_bucket" "encrypted" {
 
   tags = var.tags
 
-
+  versioning {
+    enabled = var.versioning_enabled
+  }
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
@@ -23,6 +25,10 @@ resource "aws_s3_bucket" "non-encrypted" {
   acl    = "private"
 
   tags = var.tags
+
+  versioning {
+    enabled = var.versioning_enabled
+  }
 }
 
 resource "aws_s3_bucket_metric" "encrypted" {

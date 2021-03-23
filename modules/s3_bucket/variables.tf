@@ -16,3 +16,8 @@ variable "prefix_pttp" {
 variable "tags" {
   type = map(string)
 }
+
+variable "versioning_enabled" {
+  default = false
+  type    = bool
+}
