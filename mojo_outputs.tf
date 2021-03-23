@@ -58,6 +58,14 @@ output "grafana_database_config_v2" {
 #   value = module.monitoring_platform_v2.eks_cluster_endpoint
 # }
 
-# output "eks_cluster_worker_iam_role_arn" {
-#   value = module.monitoring_platform_v2.eks_cluster_worker_iam_role_arn
-# }
+output "eks_cluster_worker_iam_role_arn" {
+  value = module.monitoring_platform_v2.eks_cluster_worker_iam_role_arn
+}
+
+output "prometheus_thanos_storage_bucket_name" {
+  value = module.prometheus-thanos-storage.bucket_name
+}
+
+output "prometheus_thanos_storage_kms_key_id" {
+  value = module.prometheus-thanos-storage.kms_key_id
+}
