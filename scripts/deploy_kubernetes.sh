@@ -24,11 +24,11 @@ AWS_ACCESS_KEY_ID=$access_key AWS_SECRET_ACCESS_KEY=$secret_access_key AWS_SESSI
 
 # UPDATE CONFIGMAP
 echo "Deploying auth configmap"
-helm upgrade --install mojo-$ENV-ima-configmap ./kubernetes/auth-configmap --set rolearn=$cluster_role_arn
+helm upgrade --install --atomic mojo-$ENV-ima-configmap ./kubernetes/auth-configmap --set rolearn=$cluster_role_arn
 
 # DEPLOY PROMETHEUS
 echo "Deploying Prometheus"
-helm upgrade --install mojo-$ENV-ima-prometheus-thanos ./kubernetes/prometheus-thanos --set \
+helm upgrade --install --atomic mojo-$ENV-ima-prometheus-thanos ./kubernetes/prometheus-thanos --set \
 prometheus.image=$prometheus_image_repo,\
 prometheusThanosStorageBucket.bucketName=$prometheus_thanos_storage_bucket_name,\
 prometheusThanosStorageBucket.kmsKeyId=$prometheus_thanos_storage_kms_key_id
