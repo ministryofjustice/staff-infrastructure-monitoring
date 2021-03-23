@@ -171,10 +171,10 @@ module "blackbox_exporter" {
 module "prometheus-thanos-storage" {
   source = "./modules/s3_bucket"
 
-  name        = "thanos-storage"
-  prefix_pttp = module.label_pttp.id
-  tags        = module.label_pttp.tags
-
+  name               = "thanos-storage"
+  prefix_pttp        = module.label_pttp.id
+  tags               = module.label_pttp.tags
+  versioning_enabled = true
   providers = {
     aws = aws.env
   }
