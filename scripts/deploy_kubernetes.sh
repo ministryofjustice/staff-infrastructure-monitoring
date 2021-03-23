@@ -28,7 +28,7 @@ helm upgrade --install mojo-$ENV-ima-configmap ./kubernetes/auth-configmap --set
 
 # DEPLOY PROMETHEUS
 echo "Deploying Prometheus"
-helm upgrade --install mojo-$ENV-ima-prometheus ./kubernetes/imap-prometheus --set \
+helm upgrade --install mojo-$ENV-ima-prometheus-thanos ./kubernetes/prometheus-thanos --set \
 prometheus.image=$prometheus_image_repo,\
 prometheusThanosStorageBucket.bucketName=$prometheus_thanos_storage_bucket_name,\
 prometheusThanosStorageBucket.kmsKeyId=$prometheus_thanos_storage_kms_key_id
