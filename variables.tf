@@ -61,6 +61,10 @@ variable "vpn_hosted_zone_id" {
   type = string
 }
 
+variable "thanos_image_repository_url" {
+  type = string
+}
+
 #################### Azure AD ####################
 variable "azure_ad_client_id" {
   type = string

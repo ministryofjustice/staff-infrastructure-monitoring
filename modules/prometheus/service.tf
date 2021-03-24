@@ -49,7 +49,7 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     "name": "thanos-receiver",
     "cpu": 1024,
     "memory": 512,
-    "image": "quay.io/thanos/thanos:v0.15.0",
+    "image": "${var.thanos_image_repository_url}:latest",
     "command": [
       "receive",
       "--grpc-address=0.0.0.0:10903",
@@ -76,7 +76,7 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     "name": "thanos-querier",
     "cpu": 1024,
     "memory": 512,
-    "image": "quay.io/thanos/thanos:v0.15.0",
+    "image": "${var.thanos_image_repository_url}:latest",
     "command": [
       "query",
       "--store=localhost:10903",
@@ -99,7 +99,7 @@ resource "aws_ecs_task_definition" "prometheus_task_definition" {
     "name": "thanos-store",
     "cpu": 1024,
     "memory": 17408,
-    "image": "quay.io/thanos/thanos:v0.15.0",
+    "image": "${var.thanos_image_repository_url}:latest",
     "essential": false,
     "command": [
       "store",
@@ -173,7 +173,7 @@ resource "aws_ecs_task_definition" "thanos_compactor_task_definition" {
     "name": "thanos-compactor",
     "cpu": 512,
     "memory": 4096,
-    "image": "quay.io/thanos/thanos:v0.15.0",
+    "image": "${var.thanos_image_repository_url}:latest",
     "essential": true,
     "command": [
       "compact",

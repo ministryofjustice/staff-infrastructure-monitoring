@@ -23,6 +23,10 @@ variable "cluster_id" {
   type = string
 }
 
+variable "thanos_image_repository_url" {
+  type = string
+}
+
 #################### Long-Term S3 Storage ####################
 
 variable "storage_bucket_arn" {
