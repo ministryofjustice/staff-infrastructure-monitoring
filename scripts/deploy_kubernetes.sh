@@ -4,7 +4,9 @@ set -euo pipefail
 
 export KUBECONFIG="./kubernetes/kubeconfig"
 
-TEMP_ROLE=`aws sts assume-role --role-arn $TF_VAR_assume_role --role-session-name ci-authenticate-kubernetes-782`
+env=$(terraform output env)
+assume_role=$(terraform output assume_role)
+TEMP_ROLE=`aws sts assume-role --role-arn $assume_role --role-session-name ci-authenticate-kubernetes-782`
 
 access_key=$(echo "${TEMP_ROLE}" | jq -r '.Credentials.AccessKeyId')
 secret_access_key=$(echo "${TEMP_ROLE}" | jq -r '.Credentials.SecretAccessKey')
@@ -16,19 +18,17 @@ cluster_name=$(terraform output eks_cluster_id)
 prometheus_thanos_storage_bucket_name=$(terraform output prometheus_thanos_storage_bucket_name)
 prometheus_thanos_storage_kms_key_id=$(terraform output prometheus_thanos_storage_kms_key_id)
 
-echo $(AWS_ACCESS_KEY_ID=$access_key AWS_SECRET_ACCESS_KEY=$secret_access_key AWS_SESSION_TOKEN=$session_token aws  sts get-caller-identity)
-
 # SAVE KUBECONFIG FILE
 AWS_ACCESS_KEY_ID=$access_key AWS_SECRET_ACCESS_KEY=$secret_access_key AWS_SESSION_TOKEN=$session_token aws eks\
-    --region eu-west-2 update-kubeconfig --name $cluster_name --role-arn $TF_VAR_assume_role
+    --region eu-west-2 update-kubeconfig --name $cluster_name --role-arn $assume_role
 
 # UPDATE CONFIGMAP
 echo "Deploying auth configmap"
-helm upgrade --install --atomic mojo-$ENV-ima-configmap ./kubernetes/auth-configmap --set rolearn=$cluster_role_arn
+helm upgrade --install --atomic mojo-$env-ima-configmap ./kubernetes/auth-configmap --set rolearn=$cluster_role_arn
 
 # DEPLOY PROMETHEUS
 echo "Deploying Prometheus"
-helm upgrade --install --atomic mojo-$ENV-ima-prometheus-thanos ./kubernetes/prometheus-thanos --set \
+helm upgrade --install --atomic mojo-$env-ima-prometheus-thanos ./kubernetes/prometheus-thanos --set \
 prometheus.image=$prometheus_image_repo,\
 prometheusThanosStorageBucket.bucketName=$prometheus_thanos_storage_bucket_name,\
 prometheusThanosStorageBucket.kmsKeyId=$prometheus_thanos_storage_kms_key_id

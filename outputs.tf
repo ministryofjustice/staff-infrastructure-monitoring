@@ -1,3 +1,13 @@
+###################################### Env #################################################
+
+output "assume_role" {
+  value = var.assume_role
+}
+
+output "env" {
+  value = terraform.workspace
+}
+
 ####################################### Hostnames #################################################
 
 output "grafana_hostname" {
