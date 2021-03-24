@@ -96,7 +96,7 @@ You will need to do this for both your Dev and Shared Services AWS accounts.
 ```shell
 $ cp .env.example .env
 ```
-2. Modify the `.env` file and replace `<your-shared-services-aws-vault-profile>` with `moj-pttp-shared-services` or with your current aws-vault profile for the PTTP Shared Services AWS account.
+2. Modify the `.env` file and replace `<your-shared-services-aws-vault-profile>` with `moj-pttp-shared-services` or with your current aws-vault profile for the PTTP Shared Services AWS account. And replace `<thanos-image-repository-url>` with the thanos image url which can be found on Shared Services param store.
 
 1. Prepare your working directory for Terraform
 
