@@ -60,8 +60,8 @@ module "monitoring_alerting_cluster" {
   worker_groups = [
     {
       name                 = "prometheus-worker-group"
-      instance_type        = "t3.small"
-      asg_desired_capacity = 2
+      instance_type        = "t3.medium"
+      asg_desired_capacity = 3
     },
   ]
 }
