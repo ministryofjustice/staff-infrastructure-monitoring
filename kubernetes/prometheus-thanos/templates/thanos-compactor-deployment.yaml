@@ -1,0 +1,40 @@
+{{- if .Values.thanos.compactor.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thanos-compactor-deployment
+  labels:
+    app: thanos-compactor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: thanos-compactor
+  template:
+    metadata:
+      labels:
+        app: thanos-compactor
+    spec:
+      containers:
+        - name: thanos-compactor
+          image: {{ .Values.thanos.image }}
+          command: ["thanos", "compact"]
+          args:
+            - "--log.level=debug"
+            - "--data-dir=/tmp/thanos-compact"
+            - "--objstore.config={
+              type: S3,
+              config: { 
+                bucket: {{ .Values.prometheusThanosStorageBucket.bucketName }},
+                endpoint: {{ .Values.prometheusThanosStorageBucket.endpoint }},
+                insecure: false,
+                signature_version2: false,
+                sse_config: {
+                  type: SSE-KMS,
+                  kms_key_id: {{ .Values.prometheusThanosStorageBucket.kmsKeyId }}
+                }
+              } 
+            }"
+            - "--wait"
+            - "--wait-interval=5m"
+{{- end }}

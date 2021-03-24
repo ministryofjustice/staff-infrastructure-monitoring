@@ -2,6 +2,8 @@ prometheus:
   image: ""
 thanos:
   image: "quay.io/thanos/thanos:v0.15.0"
+  compactor:
+    enabled: false
 prometheusThanosStorageBucket:
   bucketName: ""
   endpoint: "s3.eu-west-2.amazonaws.com"

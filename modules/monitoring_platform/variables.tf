@@ -40,3 +40,8 @@ variable "is_eks_enabled" {
   type    = bool
   default = false
 }
+
+variable "storage_bucket_arn" {
+  type = string
+  default = ""
+}

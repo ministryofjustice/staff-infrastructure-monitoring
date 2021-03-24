@@ -65,3 +65,17 @@ module "monitoring_alerting_cluster" {
     },
   ]
 }
+
+resource "aws_iam_policy" "s3_access_policy" {
+  name = "${var.prefix}-thanos-worker-policy"
+
+  policy = templatefile("${path.module}/policies/s3_access_policy.template.json", {
+    bucket = var.storage_bucket_arn
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "s3_access_policy_attachment" {
+  policy_arn = aws_iam_policy.s3_access_policy.arn
+  role       = module.monitoring_alerting_cluster.worker_iam_role_name
+  count      = var.is_eks_enabled ? 1 : 0
+}
