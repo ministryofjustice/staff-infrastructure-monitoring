@@ -45,7 +45,7 @@ locals {
 
 module "monitoring_alerting_cluster" {
   source                          = "terraform-aws-modules/eks/aws"
-  version                         = "10.0.0"
+  version                         = "14.0.0"
   create_eks                      = var.is_eks_enabled
   cluster_name                    = "${var.prefix}-cluster"
   cluster_version                 = "1.16"
@@ -62,6 +62,7 @@ module "monitoring_alerting_cluster" {
       name                 = "prometheus-worker-group"
       instance_type        = "t3.medium"
       asg_desired_capacity = 3
+      root_volume_type     = "gp2"
     },
   ]
 }
