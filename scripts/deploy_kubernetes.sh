@@ -31,4 +31,5 @@ echo "Deploying Prometheus"
 helm upgrade --install --atomic mojo-$env-ima-prometheus-thanos ./kubernetes/prometheus-thanos --set \
 prometheus.image=$prometheus_image_repo,\
 prometheusThanosStorageBucket.bucketName=$prometheus_thanos_storage_bucket_name,\
-prometheusThanosStorageBucket.kmsKeyId=$prometheus_thanos_storage_kms_key_id
+prometheusThanosStorageBucket.kmsKeyId=$prometheus_thanos_storage_kms_key_id,\
+thanos.image=$TF_VAR_thanos_image_repository_url

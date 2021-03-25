@@ -1,7 +1,7 @@
 prometheus:
   image: ""
 thanos:
-  image: "quay.io/thanos/thanos:v0.15.0"
+  image: ""
   compactor:
     enabled: false
 prometheusThanosStorageBucket:

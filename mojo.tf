@@ -90,6 +90,8 @@ module "prometheus_v2" {
 
   execution_role_arn = module.monitoring_platform_v2.execution_role_arn
 
+  thanos_image_repository_url = var.thanos_image_repository_url
+
   storage_bucket_arn = module.prometheus-thanos-storage.bucket_arn
   storage_key_arn    = module.prometheus-thanos-storage.kms_key_arn
   storage_key_id     = module.prometheus-thanos-storage.kms_key_id
