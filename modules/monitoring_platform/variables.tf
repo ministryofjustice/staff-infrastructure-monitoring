@@ -7,6 +7,10 @@ variable "prefix" {
   type = string
 }
 
+variable "prefix_pttp" {
+  type = string
+}
+
 variable "tags" {
   type = map(string)
 }
@@ -44,4 +48,9 @@ variable "is_eks_enabled" {
 variable "storage_bucket_arn" {
   type    = string
   default = ""
+}
+
+variable "storage_key_arn" {
+  description = "ARN of the long-term storage S3 Bucket KMS Key"
+  type        = string
 }
