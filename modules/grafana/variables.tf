@@ -72,12 +72,12 @@ variable "container_port" {
 
 variable "grafana_image" {
   description = "Docker image to run in the ECS cluster"
-  type = string
+  type        = string
 }
 
 variable "grafana_image_renderer" {
   description = "Docker image to run in the ECS cluster"
-  type = string
+  type        = string
 }
 
 variable "fargate_cpu" {

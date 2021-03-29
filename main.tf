@@ -73,7 +73,7 @@ module "grafana" {
   execution_role_arn      = module.monitoring_platform.execution_role_arn
   rds_monitoring_role_arn = module.monitoring_platform.rds_monitoring_role_arn
 
-  grafana_image = var.grafana_image
+  grafana_image          = var.grafana_image
   grafana_image_renderer = var.grafana_image_renderer
 
   db_name        = var.grafana_db_name
