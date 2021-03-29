@@ -17,6 +17,14 @@ variable "assume_role" {
   type = string
 }
 
+variable "grafana_image" {
+  type = string
+}
+
+variable "grafana_image_renderer" {
+  type = string
+}
+
 variable "grafana_url" {
   type = string
 }
