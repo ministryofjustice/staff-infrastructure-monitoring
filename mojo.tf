@@ -9,6 +9,7 @@ module "monitoring_platform_v2" {
   source = "./modules/monitoring_platform"
 
   prefix = module.label_mojo.id
+  prefix_pttp        = module.label_mojo.id
   tags   = module.label_mojo.tags
 
   transit_gateway_id             = var.transit_gateway_id
@@ -21,6 +22,7 @@ module "monitoring_platform_v2" {
 
   is_eks_enabled     = true
   storage_bucket_arn = module.prometheus-thanos-storage.bucket_arn
+  storage_key_arn    = module.prometheus-thanos-storage.kms_key_arn
 
   providers = {
     aws = aws.env
