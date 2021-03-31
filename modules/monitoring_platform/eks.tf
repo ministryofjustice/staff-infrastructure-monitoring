@@ -36,7 +36,7 @@ resource "aws_iam_role_policy_attachment" "s3_access_policy_attachment" {
 }
 
 resource "aws_iam_policy" "kms_access_policy" {
-  name = "${var.prefix_pttp}-thanos-prometheus-kms-policy"
+  name = "${var.prefix}-thanos-prometheus-kms-policy"
 
   policy = templatefile("${path.module}/policies/kms_access_policy.template.json", {
     kms_key_arn = var.storage_key_arn
