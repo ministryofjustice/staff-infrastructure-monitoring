@@ -8,8 +8,8 @@ module "label_mojo" {
 module "monitoring_platform_v2" {
   source = "./modules/monitoring_platform"
 
-  prefix      = module.label_mojo.id
-  tags        = module.label_mojo.tags
+  prefix = module.label_mojo.id
+  tags   = module.label_mojo.tags
 
   transit_gateway_id             = var.transit_gateway_id
   enable_transit_gateway         = var.enable_transit_gateway
