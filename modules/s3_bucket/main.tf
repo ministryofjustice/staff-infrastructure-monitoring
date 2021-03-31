@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "encrypted" {
 
   tags = var.tags
 
-  dynamic "logging" { 
+  dynamic "logging" {
     for_each = length(keys(var.logging)) == 0 ? [] : [var.logging]
 
     content {
@@ -15,7 +15,7 @@ resource "aws_s3_bucket" "encrypted" {
   }
 
   versioning {
-    enabled = var.versioning_enabled
+    enabled    = var.versioning_enabled
     mfa_delete = var.mfa_delete_enabled
   }
 
@@ -36,8 +36,8 @@ resource "aws_s3_bucket" "non-encrypted" {
   acl    = var.acl
 
   tags = var.tags
-  
-  dynamic "logging" { 
+
+  dynamic "logging" {
     for_each = length(keys(var.logging)) == 0 ? [] : [var.logging]
 
     content {
@@ -47,11 +47,11 @@ resource "aws_s3_bucket" "non-encrypted" {
   }
 
   versioning {
-    enabled = var.versioning_enabled
+    enabled    = var.versioning_enabled
     mfa_delete = var.mfa_delete_enabled
   }
 
-  
+
 }
 
 resource "aws_s3_bucket_metric" "encrypted" {
