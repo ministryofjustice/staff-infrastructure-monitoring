@@ -19,7 +19,7 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
     "name": "grafana",
     "cpu": ${var.fargate_cpu},
     "memory": ${var.fargate_memory},
-    "image": "${var.grafana_image_repository_url}",
+    "image": "${var.grafana_image_repository_url}:latest",
     "environment": [
       {"name": "GF_DATABASE_TYPE", "value": "postgres"},
       {"name": "GF_DATABASE_USER", "value": "${var.db_username}"},
