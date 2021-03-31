@@ -44,8 +44,8 @@ module "grafana_v2" {
   execution_role_arn      = module.monitoring_platform_v2.execution_role_arn
   rds_monitoring_role_arn = module.monitoring_platform_v2.rds_monitoring_role_arn
 
-  grafana_image          = var.grafana_image
-  grafana_image_renderer = var.grafana_image_renderer
+  grafana_image_repository_url          = var.grafana_image_repository_url
+  grafana_image_renderer_repository_url = var.grafana_image_renderer_repository_url
 
   db_name        = var.grafana_db_name
   db_endpoint    = var.grafana_db_endpoint_v2

@@ -70,12 +70,12 @@ variable "container_port" {
   default     = 3000
 }
 
-variable "grafana_image" {
+variable "grafana_image_repository_url" {
   description = "Docker image to run in the ECS cluster"
   type        = string
 }
 
-variable "grafana_image_renderer" {
+variable "grafana_image_renderer_repository_url" {
   description = "Docker image to run in the ECS cluster"
   type        = string
 }
