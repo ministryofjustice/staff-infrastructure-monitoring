@@ -73,7 +73,7 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
     "name": "grafana-image-renderer",
     "cpu": ${var.fargate_cpu},
     "memory": ${var.fargate_memory},
-    "image": "${var.grafana_image_renderer_repository_url}",
+    "image": "${var.grafana_image_renderer_repository_url}:latest",
     "environment": [
       {"name": "LOG_LEVEL", "value": "debug"}
     ],
