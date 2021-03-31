@@ -33,8 +33,8 @@ env:
     TF_VAR_transit_gateway_id: "/codebuild/pttp-ci-ima-pipeline/$ENV/transit_gateway_id"
     TF_VAR_transit_gateway_route_table_id: "/codebuild/pttp-ci-ima-pipeline/$ENV/transit_gateway_route_table_id"
     TF_VAR_sns_subscribers: "/codebuild/pttp-ci-ima-pipeline/$ENV/sns_subscribers"
-    TF_VAR_grafana_image: "/codebuild/pttp-ci-ima-pipeline/grafana_image_repository_url"
-    TF_VAR_grafana_image_renderer: "/codebuild/pttp-ci-ima-pipeline/grafana_image_renderer_repository_url"
+    TF_VAR_grafana_image_repository_url: "/codebuild/pttp-ci-ima-pipeline/grafana_image_repository_url"
+    TF_VAR_grafana_image_renderer_repository_url: "/codebuild/pttp-ci-ima-pipeline/grafana_image_renderer_repository_url"
     TF_VAR_thanos_image_repository_url: "/codebuild/pttp-ci-ima-pipeline/thanos_image_repository_url"
     
 phases:
