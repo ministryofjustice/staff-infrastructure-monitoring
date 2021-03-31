@@ -7,10 +7,6 @@ variable "prefix" {
   type = string
 }
 
-variable "prefix_pttp" {
-  type = string
-}
-
 variable "tags" {
   type = map(string)
 }
