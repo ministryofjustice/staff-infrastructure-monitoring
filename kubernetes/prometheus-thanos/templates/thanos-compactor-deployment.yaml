@@ -16,7 +16,7 @@ spec:
         app: thanos-compactor
     spec:
       containers:
-        - name: thanos-compactor
+        - name: {{ .Release.Name }}-thanos-compactor
           image: {{ .Values.thanos.image }}
           command: ["thanos", "compact"]
           args:
