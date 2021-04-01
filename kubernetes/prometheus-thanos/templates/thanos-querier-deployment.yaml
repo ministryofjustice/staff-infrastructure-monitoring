@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: thanos-querier-deployment
+  name: {{ .Release.Name }}-thanos-querier
   labels:
     app: thanos-querier
 spec:
