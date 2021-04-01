@@ -50,6 +50,7 @@ module "monitoring_platform" {
   vpc_cidr_block             = "10.180.88.0/21"
   private_subnet_cidr_blocks = ["10.180.88.0/24", "10.180.89.0/24", "10.180.90.0/24"]
   public_subnet_cidr_blocks  = ["10.180.91.0/24", "10.180.92.0/24", "10.180.93.0/24"]
+  storage_key_arn    = module.prometheus-thanos-storage.kms_key_arn
 
   providers = {
     aws = aws.env
