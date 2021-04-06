@@ -29,7 +29,7 @@ helm upgrade --install --atomic mojo-$env-ima-configmap ./kubernetes/auth-config
 
 # DEPLOY PROMETHEUS
 echo "Deploying Prometheus"
-helm upgrade --install mojo-$env-ima ./kubernetes/prometheus-thanos --set \
+helm upgrade --install --atomic mojo-$env-ima ./kubernetes/prometheus-thanos --set \
 prometheus.image=$prometheus_image_repo,\
 alertmanager.image=prom/alertmanager,\
 prometheusThanosStorageBucket.bucketName=$prometheus_thanos_storage_bucket_name,\
