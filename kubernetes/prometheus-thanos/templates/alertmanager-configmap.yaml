@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alertmanager-configmap
+data:
+  alertmanager.yml: |
+    global:
+      # The API URL to use for Slack notifications.
+      slack_api_url: "https://hooks.slack.com/services/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"
+      # The root route with all parameters, which are inherited by the child
+    # routes if they are not overwritten.
+    route:
+      receiver: 'default-receiver'
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 4h
+      group_by: ['...']
+      # All alerts that do not match the following child routes
+      # will remain at the root node and be dispatched to 'default-receiver'.
+    receivers:
+      - name: 'default-receiver'
+
+

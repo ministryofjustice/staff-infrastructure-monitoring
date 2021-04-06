@@ -17,5 +17,20 @@ spec:
       containers:
       - name: alertmanager
         image: {{ .Values.alertmanager.image }}:latest
+        command: ["alertmanager"]
+        args: 
+          - "--config.file=/config/alertmanager.yml"
         ports:
         - containerPort: 9093
+          protocol: TCP
+        volumeMounts:
+        - name: configuration
+          mountPath: "/config"
+          readOnly: true
+      volumes:
+      - name: configuration
+        configMap:
+          name: alertmanager-configmap
+          items:
+          - key: "alertmanager.yml"
+            path: "alertmanager.yml"
