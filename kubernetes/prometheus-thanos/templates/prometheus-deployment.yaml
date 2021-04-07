@@ -17,17 +17,28 @@ spec:
       containers:
       - name: prometheus
         image: {{ .Values.prometheus.image }}:latest
-        cmd: ["--config.file=/etc/prometheus/prometheus.yml"]
+        command: ["prometheus"]
+        args: 
+          - "--config.file=/config/prometheus.yml"
         ports:
         - containerPort: 9090
         volumeMounts:
         - name: configuration
-          mountPath: "/etc/prometheus"
+          mountPath: "/config"
+          readOnly: true
+        - name: alert-rules-configuration
+          mountPath: "/alert-rules"
           readOnly: true
       volumes:
       - name: configuration
         configMap:
-          name: prometheus-config
+          name: prometheus-configmap
           items:
           - key: "prometheus.yml"
             path: "prometheus.yml"
+      - name: alert-rules-configuration
+        configMap:
+          name: alert-rules-configmap
+          items:
+          - key: "alert-rules.yml"
+            path: "alert-rules.yml"
