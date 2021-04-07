@@ -17,5 +17,17 @@ spec:
       containers:
       - name: prometheus
         image: {{ .Values.prometheus.image }}:latest
+        cmd: ["--config.file=/etc/prometheus/prometheus.yml"]
         ports:
         - containerPort: 9090
+        volumeMounts:
+        - name: configuration
+          mountPath: "/etc/prometheus"
+          readOnly: true
+      volumes:
+      - name: configuration
+        configMap:
+          name: prometheus-config
+          items:
+          - key: "prometheus.yml"
+            path: "prometheus.yml"
