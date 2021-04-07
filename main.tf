@@ -174,13 +174,33 @@ module "blackbox_exporter" {
   }
 }
 
+
+module "s3_access_logging" {
+  source = "./modules/s3_bucket"
+
+  name               = "s3-access-logging"
+  prefix_pttp        = module.label_pttp.id
+  tags               = module.label_pttp.tags
+  acl                = "log-delivery-write"
+  versioning_enabled = false
+
+  providers = {
+    aws = aws.env
+  }
+}
+
+
 module "prometheus-thanos-storage" {
   source = "./modules/s3_bucket"
 
   name               = "thanos-storage"
   prefix_pttp        = module.label_pttp.id
   tags               = module.label_pttp.tags
-  versioning_enabled = true
+
+  logging = {
+    target_bucket = module.s3_access_logging.bucket_name
+  }
+
   providers = {
     aws = aws.env
   }
@@ -193,6 +213,12 @@ module "grafana-image-storage" {
   prefix_pttp        = module.label_pttp.id
   tags               = module.label_pttp.tags
   encryption_enabled = false
+  versioning_enabled = false
+
+  logging = {
+    target_bucket = module.s3_access_logging.bucket_name
+  }
+  
 
   providers = {
     aws = aws.env
