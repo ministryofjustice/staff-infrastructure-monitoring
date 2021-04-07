@@ -27,6 +27,9 @@ AWS_ACCESS_KEY_ID=$access_key AWS_SECRET_ACCESS_KEY=$secret_access_key AWS_SESSI
 echo "Deploying auth configmap"
 helm upgrade --install --atomic mojo-$env-ima-configmap ./kubernetes/auth-configmap --set rolearn=$cluster_role_arn
 
+#TEMP - uninstalling old chart in order to rename
+helm uninstall mojo-$env-ima-prometheus-thanos
+
 # DEPLOY PROMETHEUS
 echo "Deploying Prometheus"
 helm upgrade --install --atomic mojo-$env-ima ./kubernetes/prometheus-thanos --set \
