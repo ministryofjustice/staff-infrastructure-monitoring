@@ -1,6 +1,10 @@
 resource "aws_ecr_repository" "prometheus" {
   name                 = "${var.prefix_pttp}-prometheus"
   image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
 }
 
 resource "aws_ecr_repository_policy" "prometheus_ecr_policy" {

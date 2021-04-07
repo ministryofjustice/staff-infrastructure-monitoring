@@ -1,6 +1,10 @@
 resource "aws_ecr_repository" "snmp_exporter" {
   name                 = "${var.prefix_pttp}-snmp-exporter"
   image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
 }
 
 resource "aws_ecr_repository_policy" "snmp_exporter_ecr_policy" {
