@@ -38,3 +38,8 @@ variable "versioning_enabled" {
   default = true
   type    = bool
 }
+
+variable "attach_elb_log_delivery_policy" {
+  default = false
+  type    = bool
+}

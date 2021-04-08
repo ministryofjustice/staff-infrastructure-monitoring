@@ -46,6 +46,13 @@ variable "storage_bucket_arn" {
   type        = string
 }
 
+################## Load Balancer Access Logging Bucket ####################
+
+variable "lb_access_logging_bucket_name" {
+  description = "Load balancer access logging AWS S3 bucket"
+  type        = string
+}
+
 #################### Networking ####################
 variable "public_subnet_ids" {
   type = list

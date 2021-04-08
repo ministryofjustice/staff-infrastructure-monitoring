@@ -5,6 +5,12 @@ resource "aws_alb" "main_blackbox_exporter" {
   subnets         = var.private_subnet_ids
   security_groups = [aws_security_group.lb_blackbox_exporter.id]
 
+  access_logs {
+   bucket  = var.lb_access_logging_bucket_name
+   prefix  = "grafana_access_logs"
+   enabled = true
+  }
+
   tags = var.tags
 }
 

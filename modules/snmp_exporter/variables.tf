@@ -56,3 +56,10 @@ variable "fargate_count" {
   description = "Number of docker containers to run"
   default     = "1"
 }
+
+################## Load Balancer Access Logging Bucket ####################
+
+variable "lb_access_logging_bucket_name" {
+  description = "Load balancer access logging AWS S3 bucket"
+  type        = string
+}

@@ -71,10 +71,28 @@ module "grafana_v2" {
 
   storage_bucket_arn = module.grafana-image-storage.bucket_arn
 
+  lb_access_logging_bucket_name = module.grafana_lb_access_logging.bucket_name
+
   providers = {
     aws = aws.env
   }
 }
+
+module "grafana_lb_access_logging" {
+  source = "./modules/s3_bucket"
+
+  name               = "grafana-lb-access-logging"
+  prefix_pttp        = module.label_pttp.id
+  tags               = module.label_pttp.tags
+  versioning_enabled = false
+  encryption_enabled = false
+  attach_elb_log_delivery_policy = true
+
+  providers = {
+    aws = aws.env
+  }
+}
+
 
 module "prometheus_v2" {
   source = "./modules/prometheus"
@@ -100,6 +118,23 @@ module "prometheus_v2" {
   storage_key_arn    = module.prometheus-thanos-storage.kms_key_arn
   storage_key_id     = module.prometheus-thanos-storage.kms_key_id
 
+  lb_access_logging_bucket_name = module.prometheus_lb_access_logging.bucket_name
+
+  providers = {
+    aws = aws.env
+  }
+}
+
+module "prometheus_lb_access_logging" {
+  source = "./modules/s3_bucket"
+
+  name               = "prometheus-lb-access-logging"
+  prefix_pttp        = module.label_pttp.id
+  tags               = module.label_pttp.tags
+  versioning_enabled = false
+  encryption_enabled = false
+  attach_elb_log_delivery_policy = true
+
   providers = {
     aws = aws.env
   }
@@ -120,6 +155,23 @@ module "snmp_exporter_v2" {
 
   execution_role_arn = module.monitoring_platform_v2.execution_role_arn
 
+  lb_access_logging_bucket_name = module.snmp_exporter_lb_access_logging.bucket_name
+
+  providers = {
+    aws = aws.env
+  }
+}
+
+module "snmp_exporter_lb_access_logging" {
+  source = "./modules/s3_bucket"
+
+  name               = "snmp-exporter-lb-access-logging"
+  prefix_pttp        = module.label_pttp.id
+  tags               = module.label_pttp.tags
+  versioning_enabled = false
+  encryption_enabled = false
+  attach_elb_log_delivery_policy = true
+
   providers = {
     aws = aws.env
   }
@@ -139,6 +191,23 @@ module "blackbox_exporter_v2" {
   private_subnet_ids = module.monitoring_platform_v2.private_subnet_ids
 
   execution_role_arn = module.monitoring_platform_v2.execution_role_arn
+
+  lb_access_logging_bucket_name = module.blackbox_exporter_lb_access_logging.bucket_name
+
+  providers = {
+    aws = aws.env
+  }
+}
+
+module "blackbox_exporter_lb_access_logging" {
+  source = "./modules/s3_bucket"
+
+  name               = "blackbox-exporter-lb-access-logging"
+  prefix_pttp        = module.label_pttp.id
+  tags               = module.label_pttp.tags
+  versioning_enabled = false
+  encryption_enabled = false
+  attach_elb_log_delivery_policy = true
 
   providers = {
     aws = aws.env
