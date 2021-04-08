@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: thanos-store-deployment
+  name: {{ .Release.Name }}-thanos-store
   labels:
     app: thanos-store
 spec:
