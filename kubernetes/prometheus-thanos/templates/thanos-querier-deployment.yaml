@@ -21,5 +21,5 @@ spec:
         - containerPort: 10902
         command: ["thanos", "query"]
         args: 
-          - "--store=thanos-receiver:10903"
-      
+          - --store={{ .Release.Name }}-thanos-receiver:10903
+          - --store={{ .Release.Name }}-thanos-store:20091
