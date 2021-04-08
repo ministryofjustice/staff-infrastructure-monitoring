@@ -6,9 +6,9 @@ resource "aws_alb" "main_snmp_exporter" {
   security_groups = [aws_security_group.lb_snmp_exporter.id]
 
   access_logs {
-   bucket  = var.lb_access_logging_bucket_name
-   prefix  = "snmp_exporter_access_logs"
-   enabled = true
+    bucket  = var.lb_access_logging_bucket_name
+    prefix  = "snmp_exporter_access_logs"
+    enabled = true
   }
 
   tags = var.tags

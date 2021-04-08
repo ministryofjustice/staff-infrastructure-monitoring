@@ -6,9 +6,9 @@ resource "aws_alb" "main_prometheus" {
   security_groups = [aws_security_group.lb_prom.id]
 
   access_logs {
-   bucket  = var.lb_access_logging_bucket_name
-   prefix  = "prometheus_access_logs"
-   enabled = true
+    bucket  = var.lb_access_logging_bucket_name
+    prefix  = "prometheus_access_logs"
+    enabled = true
   }
 
   tags = var.tags

@@ -81,11 +81,11 @@ module "grafana_v2" {
 module "grafana_lb_access_logging_v2" {
   source = "./modules/s3_bucket"
 
-  name               = "grafana-lb-access-logging-v2"
-  prefix_pttp        = module.label_pttp.id
-  tags               = module.label_pttp.tags
-  versioning_enabled = false
-  encryption_enabled = false
+  name                           = "grafana-lb-access-logging-v2"
+  prefix_pttp                    = module.label_pttp.id
+  tags                           = module.label_pttp.tags
+  versioning_enabled             = false
+  encryption_enabled             = false
   attach_elb_log_delivery_policy = true
 
   providers = {
@@ -127,11 +127,11 @@ module "prometheus_v2" {
 module "prometheus_lb_access_logging_v2" {
   source = "./modules/s3_bucket"
 
-  name               = "prometheus-lb-access-logging-v2"
-  prefix_pttp        = module.label_pttp.id
-  tags               = module.label_pttp.tags
-  versioning_enabled = false
-  encryption_enabled = false
+  name                           = "prometheus-lb-access-logging-v2"
+  prefix_pttp                    = module.label_pttp.id
+  tags                           = module.label_pttp.tags
+  versioning_enabled             = false
+  encryption_enabled             = false
   attach_elb_log_delivery_policy = true
 
   providers = {
@@ -164,11 +164,11 @@ module "snmp_exporter_v2" {
 module "snmp_exporter_lb_access_logging_v2" {
   source = "./modules/s3_bucket"
 
-  name               = "snmp-exporter-lb-access-logging-v2"
-  prefix_pttp        = module.label_pttp.id
-  tags               = module.label_pttp.tags
-  versioning_enabled = false
-  encryption_enabled = false
+  name                           = "snmp-exporter-lb-access-logging-v2"
+  prefix_pttp                    = module.label_pttp.id
+  tags                           = module.label_pttp.tags
+  versioning_enabled             = false
+  encryption_enabled             = false
   attach_elb_log_delivery_policy = true
 
   providers = {
@@ -201,11 +201,11 @@ module "blackbox_exporter_v2" {
 module "blackbox_exporter_lb_access_logging_v2" {
   source = "./modules/s3_bucket"
 
-  name               = "blackbox-exporter-lb-access-logging-v2"
-  prefix_pttp        = module.label_pttp.id
-  tags               = module.label_pttp.tags
-  versioning_enabled = false
-  encryption_enabled = false
+  name                           = "blackbox-exporter-lb-access-logging-v2"
+  prefix_pttp                    = module.label_pttp.id
+  tags                           = module.label_pttp.tags
+  versioning_enabled             = false
+  encryption_enabled             = false
   attach_elb_log_delivery_policy = true
 
   providers = {

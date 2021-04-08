@@ -72,7 +72,7 @@ resource "aws_kms_key" "this" {
 }
 
 resource "aws_s3_bucket_policy" "this" {
-  count =  var.attach_elb_log_delivery_policy ? 1 : 0
+  count = var.attach_elb_log_delivery_policy ? 1 : 0
 
   bucket = var.encryption_enabled ? aws_s3_bucket.encrypted[0].id : aws_s3_bucket.non-encrypted[0].id
   policy = data.aws_iam_policy_document.elb_log_delivery[0].json

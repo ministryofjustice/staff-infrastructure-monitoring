@@ -1,7 +1,7 @@
 variable "acl" {
-  type = string
+  type        = string
   description = "Canned ACL to use"
-  default = "private"
+  default     = "private"
 }
 
 variable "encryption_enabled" {

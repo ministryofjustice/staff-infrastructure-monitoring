@@ -110,11 +110,11 @@ module "grafana" {
 module "grafana_lb_access_logging" {
   source = "./modules/s3_bucket"
 
-  name               = "grafana-lb-access-logging"
-  prefix_pttp        = module.label_pttp.id
-  tags               = module.label_pttp.tags
-  versioning_enabled = false
-  encryption_enabled = false
+  name                           = "grafana-lb-access-logging"
+  prefix_pttp                    = module.label_pttp.id
+  tags                           = module.label_pttp.tags
+  versioning_enabled             = false
+  encryption_enabled             = false
   attach_elb_log_delivery_policy = true
 
   providers = {
@@ -156,11 +156,11 @@ module "prometheus" {
 module "prometheus_lb_access_logging" {
   source = "./modules/s3_bucket"
 
-  name               = "prometheus-lb-access-logging"
-  prefix_pttp        = module.label_pttp.id
-  tags               = module.label_pttp.tags
-  versioning_enabled = false
-  encryption_enabled = false
+  name                           = "prometheus-lb-access-logging"
+  prefix_pttp                    = module.label_pttp.id
+  tags                           = module.label_pttp.tags
+  versioning_enabled             = false
+  encryption_enabled             = false
   attach_elb_log_delivery_policy = true
 
   providers = {
@@ -193,11 +193,11 @@ module "snmp_exporter" {
 module "snmp_exporter_lb_access_logging" {
   source = "./modules/s3_bucket"
 
-  name               = "snmp-exporter-lb-access-logging"
-  prefix_pttp        = module.label_pttp.id
-  tags               = module.label_pttp.tags
-  versioning_enabled = false
-  encryption_enabled = false
+  name                           = "snmp-exporter-lb-access-logging"
+  prefix_pttp                    = module.label_pttp.id
+  tags                           = module.label_pttp.tags
+  versioning_enabled             = false
+  encryption_enabled             = false
   attach_elb_log_delivery_policy = true
 
   providers = {
@@ -230,11 +230,11 @@ module "blackbox_exporter" {
 module "blackbox_exporter_lb_access_logging" {
   source = "./modules/s3_bucket"
 
-  name               = "blackbox-exporter-lb-access-logging"
-  prefix_pttp        = module.label_pttp.id
-  tags               = module.label_pttp.tags
-  versioning_enabled = false
-  encryption_enabled = false
+  name                           = "blackbox-exporter-lb-access-logging"
+  prefix_pttp                    = module.label_pttp.id
+  tags                           = module.label_pttp.tags
+  versioning_enabled             = false
+  encryption_enabled             = false
   attach_elb_log_delivery_policy = true
 
   providers = {
@@ -259,9 +259,9 @@ module "s3_access_logging" {
 module "prometheus-thanos-storage" {
   source = "./modules/s3_bucket"
 
-  name               = "thanos-storage"
-  prefix_pttp        = module.label_pttp.id
-  tags               = module.label_pttp.tags
+  name        = "thanos-storage"
+  prefix_pttp = module.label_pttp.id
+  tags        = module.label_pttp.tags
 
   logging = {
     target_bucket = module.s3_access_logging.bucket_name
@@ -284,7 +284,7 @@ module "grafana-image-storage" {
   logging = {
     target_bucket = module.s3_access_logging.bucket_name
   }
-  
+
   providers = {
     aws = aws.env
   }
