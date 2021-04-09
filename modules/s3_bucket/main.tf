@@ -70,3 +70,38 @@ resource "aws_kms_key" "this" {
   count       = var.encryption_enabled ? 1 : 0
   description = "${var.prefix_pttp}-${var.name} encryption key"
 }
+
+resource "aws_s3_bucket_policy" "this" {
+  count = var.attach_elb_log_delivery_policy ? 1 : 0
+
+  bucket = var.encryption_enabled ? aws_s3_bucket.encrypted[0].id : aws_s3_bucket.non-encrypted[0].id
+  policy = data.aws_iam_policy_document.elb_log_delivery[0].json
+}
+
+# AWS Load Balancer access log delivery policy
+data "aws_elb_service_account" "this" {
+  count = var.attach_elb_log_delivery_policy ? 1 : 0
+}
+
+data "aws_iam_policy_document" "elb_log_delivery" {
+  count = var.attach_elb_log_delivery_policy ? 1 : 0
+
+  statement {
+    sid = ""
+
+    principals {
+      type        = "AWS"
+      identifiers = data.aws_elb_service_account.this.*.arn
+    }
+
+    effect = "Allow"
+
+    actions = [
+      "s3:PutObject",
+    ]
+
+    resources = [
+      "${var.encryption_enabled ? aws_s3_bucket.encrypted[0].arn : aws_s3_bucket.non-encrypted[0].arn}/*",
+    ]
+  }
+}

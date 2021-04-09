@@ -5,6 +5,12 @@ resource "aws_alb" "main_prometheus" {
   subnets         = var.private_subnet_ids
   security_groups = [aws_security_group.lb_prom.id]
 
+  access_logs {
+    bucket  = var.lb_access_logging_bucket_name
+    prefix  = "prometheus_access_logs"
+    enabled = true
+  }
+
   tags = var.tags
 }
 
@@ -33,3 +39,4 @@ resource "aws_alb_listener" "front_end_prometheus" {
     type             = "forward"
   }
 }
+

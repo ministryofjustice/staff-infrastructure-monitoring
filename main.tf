@@ -100,6 +100,23 @@ module "grafana" {
 
   storage_bucket_arn = module.grafana-image-storage.bucket_arn
 
+  lb_access_logging_bucket_name = module.grafana_lb_access_logging.bucket_name
+
+  providers = {
+    aws = aws.env
+  }
+}
+
+module "grafana_lb_access_logging" {
+  source = "./modules/s3_bucket"
+
+  name                           = "grafana-lb-access-logging"
+  prefix_pttp                    = module.label_pttp.id
+  tags                           = module.label_pttp.tags
+  versioning_enabled             = false
+  encryption_enabled             = false
+  attach_elb_log_delivery_policy = true
+
   providers = {
     aws = aws.env
   }
@@ -129,6 +146,23 @@ module "prometheus" {
   storage_key_arn    = module.prometheus-thanos-storage.kms_key_arn
   storage_key_id     = module.prometheus-thanos-storage.kms_key_id
 
+  lb_access_logging_bucket_name = module.prometheus_lb_access_logging.bucket_name
+
+  providers = {
+    aws = aws.env
+  }
+}
+
+module "prometheus_lb_access_logging" {
+  source = "./modules/s3_bucket"
+
+  name                           = "prometheus-lb-access-logging"
+  prefix_pttp                    = module.label_pttp.id
+  tags                           = module.label_pttp.tags
+  versioning_enabled             = false
+  encryption_enabled             = false
+  attach_elb_log_delivery_policy = true
+
   providers = {
     aws = aws.env
   }
@@ -148,6 +182,23 @@ module "snmp_exporter" {
   private_subnet_ids = module.monitoring_platform.private_subnet_ids
 
   execution_role_arn = module.monitoring_platform.execution_role_arn
+
+  lb_access_logging_bucket_name = module.snmp_exporter_lb_access_logging.bucket_name
+
+  providers = {
+    aws = aws.env
+  }
+}
+
+module "snmp_exporter_lb_access_logging" {
+  source = "./modules/s3_bucket"
+
+  name                           = "snmp-exporter-lb-access-logging"
+  prefix_pttp                    = module.label_pttp.id
+  tags                           = module.label_pttp.tags
+  versioning_enabled             = false
+  encryption_enabled             = false
+  attach_elb_log_delivery_policy = true
 
   providers = {
     aws = aws.env
@@ -169,11 +220,27 @@ module "blackbox_exporter" {
 
   execution_role_arn = module.monitoring_platform.execution_role_arn
 
+  lb_access_logging_bucket_name = module.blackbox_exporter_lb_access_logging.bucket_name
+
   providers = {
     aws = aws.env
   }
 }
 
+module "blackbox_exporter_lb_access_logging" {
+  source = "./modules/s3_bucket"
+
+  name                           = "blackbox-exporter-lb-access-logging"
+  prefix_pttp                    = module.label_pttp.id
+  tags                           = module.label_pttp.tags
+  versioning_enabled             = false
+  encryption_enabled             = false
+  attach_elb_log_delivery_policy = true
+
+  providers = {
+    aws = aws.env
+  }
+}
 
 module "s3_access_logging" {
   source = "./modules/s3_bucket"
@@ -189,13 +256,12 @@ module "s3_access_logging" {
   }
 }
 
-
 module "prometheus-thanos-storage" {
   source = "./modules/s3_bucket"
 
-  name               = "thanos-storage"
-  prefix_pttp        = module.label_pttp.id
-  tags               = module.label_pttp.tags
+  name        = "thanos-storage"
+  prefix_pttp = module.label_pttp.id
+  tags        = module.label_pttp.tags
 
   logging = {
     target_bucket = module.s3_access_logging.bucket_name
@@ -218,7 +284,6 @@ module "grafana-image-storage" {
   logging = {
     target_bucket = module.s3_access_logging.bucket_name
   }
-  
 
   providers = {
     aws = aws.env

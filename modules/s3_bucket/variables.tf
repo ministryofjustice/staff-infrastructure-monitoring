@@ -1,7 +1,7 @@
 variable "acl" {
-  type = string
+  type        = string
   description = "Canned ACL to use"
-  default = "private"
+  default     = "private"
 }
 
 variable "encryption_enabled" {
@@ -36,5 +36,10 @@ variable "tags" {
 
 variable "versioning_enabled" {
   default = true
+  type    = bool
+}
+
+variable "attach_elb_log_delivery_policy" {
+  default = false
   type    = bool
 }
