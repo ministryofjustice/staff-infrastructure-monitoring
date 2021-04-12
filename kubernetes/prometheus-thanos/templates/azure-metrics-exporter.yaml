@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-azure-metrics-exporter
+  labels:
+    app: azure-metrics-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: azure-metrics-exporter
+  template:
+    metadata:
+      labels:
+        app: azure-metrics-exporter
+    spec:
+      containers:
+      - name: azure-metrics-exporter
+        image: robustperception/azure_metrics_exporter:latest
+        command: ["azure_metrics_exporter"]
+        args: 
+          - "--config.file=/config/azure.yml"
+        ports:
+        - containerPort: 9276
+        volumeMounts:
+        - name: configuration
+          mountPath: "/config"
+          readOnly: true
+      volumes:
+      - name: configuration
+        configMap:
+          name: azure-metrics-exporter-configmap
+          items:
+          - key: "azure.yml"
+            path: "azure.yml"
