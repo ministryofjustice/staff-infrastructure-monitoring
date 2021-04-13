@@ -6,7 +6,9 @@
             "Effect": "Allow",
             "Action": [
                 "cloudwatch:GetMetricStatistics",
-                "cloudwatch:ListMetrics"
+                "cloudwatch:GetMetricData",
+                "cloudwatch:ListMetrics",
+                "tag:GetResources"
             ],
             "Resource": [
                 "*"
