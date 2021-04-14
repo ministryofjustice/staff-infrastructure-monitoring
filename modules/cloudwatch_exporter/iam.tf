@@ -1,5 +1,5 @@
 resource "aws_iam_role" "cloudwatch_exporter_assume_role" {
-  name = "cloudwatch_exporter_production_assume_role"
+  name = "${var.prefix}-cloudwatch-exporter-production-assume-role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
