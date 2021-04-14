@@ -5,3 +5,7 @@ variable "production_account_id" {
 variable "cloudwatch_access_policy_arn" {
   type = string
 }
+
+variable "prefix" {
+  type = string
+}
