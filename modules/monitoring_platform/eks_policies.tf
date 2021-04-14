@@ -38,3 +38,40 @@ resource "aws_iam_role_policy_attachment" "cloudwatch_access_eks_policy_attachme
   role       = module.monitoring_alerting_cluster.worker_iam_role_name
   count      = var.is_eks_enabled ? 1 : 0
 }
+
+data "aws_iam_role" "production_role" {
+  name = "mojo-production-ima-cloudwatch-exporter-production-assume-role"
+}
+
+data "aws_iam_role" "pre_production_role" {
+  name = "mojo-pre-production-ima-cloudwatch-exporter-production-assume-role"
+}
+
+data "aws_iam_role" "development_role" {
+  name = "mojo-development-ima-cloudwatch-exporter-production-assume-role"
+}
+
+resource "aws_iam_role_policy" "assume_cross_account_roles" {
+  count  = var.is_production && var.is_eks_enabled ? 1 : 0
+  role   = module.monitoring_alerting_cluster.worker_iam_role_name
+  policy = element(data.aws_iam_policy_document.assume_cross_account_roles.*.json, 0)
+}
+
+data "aws_iam_policy_document" "assume_cross_account_roles" {
+  count = var.is_production && var.is_eks_enabled ? 1 : 0
+
+  statement {
+    actions   = ["sts:AssumeRole"]
+    resources = [data.aws_iam_role.production_role.arn]
+  }
+
+  statement {
+    actions   = ["sts:AssumeRole"]
+    resources = [data.aws_iam_role.pre_production_role.arn]
+  }
+
+  statement {
+    actions   = ["sts:AssumeRole"]
+    resources = [data.aws_iam_role.development_role.arn]
+  }
+}
