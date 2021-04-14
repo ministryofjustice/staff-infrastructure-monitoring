@@ -214,6 +214,7 @@ module "blackbox_exporter_lb_access_logging_v2" {
   }
 }
 
+
 module "test_bastion" {
   source                     = "./modules/test_bastion"
   subnets                    = module.monitoring_platform_v2.public_subnet_ids
@@ -230,4 +231,14 @@ module "test_bastion" {
   }
 
   count = var.enable_test_bastion == true ? 1 : 0
+}
+
+module "cloudwatch_exporter" {
+  source                = "./modules/cloudwatch_exporter"
+  production_account_id = var.production_account_id
+  cloudwatch_access_policy_arn = module.monitoring_platform_v2.cloudwatch_access_policy
+
+  providers = {
+    aws = aws.env
+  }
 }

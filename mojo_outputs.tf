@@ -69,3 +69,7 @@ output "prometheus_thanos_storage_bucket_name" {
 output "prometheus_thanos_storage_kms_key_id" {
   value = module.prometheus-thanos-storage.kms_key_id
 }
+
+output "cloudwatch_exporter_assume_role_arn" {
+  value = module.cloudwatch_exporter.assume_role_arn
+}

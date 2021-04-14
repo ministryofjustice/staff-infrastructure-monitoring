@@ -13,6 +13,10 @@ variable "is-production" {
   default = "true"
 }
 
+variable "production_account_id" {
+  type = string
+}
+
 variable "assume_role" {
   type = string
 }
