@@ -25,11 +25,11 @@ variable "cluster_id" {
 
 #################### Networking ####################
 variable "public_subnet_ids" {
-  type = list
+  type = list(any)
 }
 
 variable "private_subnet_ids" {
-  type = list
+  type = list(any)
 }
 
 #################### Fargate ####################

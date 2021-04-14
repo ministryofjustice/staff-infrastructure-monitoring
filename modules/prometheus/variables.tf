@@ -53,11 +53,11 @@ variable "lb_access_logging_bucket_name" {
 
 #################### Networking ####################
 variable "public_subnet_ids" {
-  type = list
+  type = list(any)
 }
 
 variable "private_subnet_ids" {
-  type = list
+  type = list(any)
 }
 
 #################### Fargate ####################
