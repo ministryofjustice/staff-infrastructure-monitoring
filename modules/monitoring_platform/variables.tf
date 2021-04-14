@@ -11,6 +11,11 @@ variable "tags" {
   type = map(string)
 }
 
+variable "is_production" {
+  type    = bool
+  default = false
+}
+
 variable "enable_transit_gateway" {
   type    = bool
   default = false
@@ -42,6 +47,11 @@ variable "is_eks_enabled" {
 }
 
 variable "storage_bucket_name" {
+  type    = string
+  default = ""
+}
+
+variable "storage_bucket_arn" {
   type    = string
   default = ""
 }
