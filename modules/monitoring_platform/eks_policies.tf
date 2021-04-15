@@ -41,17 +41,17 @@ resource "aws_iam_role_policy_attachment" "cloudwatch_access_eks_policy_attachme
 
 data "aws_iam_role" "production_role" {
   count = var.is_production && var.is_eks_enabled ? 1 : 0
-  name = "mojo-production-ima-cloudwatch-exporter-production-assume-role"
+  name  = "mojo-production-ima-cloudwatch-exporter-production-assume-role"
 }
 
 data "aws_iam_role" "pre_production_role" {
   count = var.is_production && var.is_eks_enabled ? 1 : 0
-  name = "mojo-pre-production-ima-cloudwatch-exporter-production-assume-role"
+  name  = "mojo-pre-production-ima-cloudwatch-exporter-production-assume-role"
 }
 
 data "aws_iam_role" "development_role" {
   count = var.is_production && var.is_eks_enabled ? 1 : 0
-  name = "mojo-development-ima-cloudwatch-exporter-production-assume-role"
+  name  = "mojo-development-ima-cloudwatch-exporter-production-assume-role"
 }
 
 resource "aws_iam_role_policy" "assume_cross_account_roles" {
