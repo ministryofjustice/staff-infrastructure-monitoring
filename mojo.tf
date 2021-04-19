@@ -212,3 +212,21 @@ module "blackbox_exporter_lb_access_logging_v2" {
     aws = aws.env
   }
 }
+
+module "test_bastion" {
+  source                     = "./modules/test_bastion"
+  subnets                    = module.monitoring_platform_v2.public_subnet_ids
+  vpc_id                     = module.monitoring_platform_v2.vpc_id
+  tags                       = module.label_mojo.tags
+  bastion_allowed_ingress_ip = var.bastion_allowed_ingress_ip
+
+  depends_on = [
+    module.monitoring_platform_v2
+  ]
+
+  providers = {
+    aws = aws.env
+  }
+
+  count = var.enable_test_bastion == true ? 1 : 0
+}
