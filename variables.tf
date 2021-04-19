@@ -116,3 +116,11 @@ variable "smtp_password" {
 variable "sns_subscribers" {
   type = string
 }
+
+variable "enable_test_bastion" {
+  type = bool
+}
+
+variable "bastion_allowed_ingress_ip" {
+  type = string
+}
