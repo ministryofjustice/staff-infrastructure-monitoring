@@ -3,7 +3,7 @@ resource "tls_private_key" "ec2" {
 }
 
 resource "aws_key_pair" "testing_bastion_public_key_pair" {
-  key_name   = "test-bastion"
+  key_name   = "test-${terraform.workspace}-bastion"
   public_key = tls_private_key.ec2.public_key_openssh
   tags       = var.tags
 }
