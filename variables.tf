@@ -119,7 +119,7 @@ variable "sns_subscribers" {
 
 variable "enable_test_bastion" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "bastion_allowed_ingress_ip" {
