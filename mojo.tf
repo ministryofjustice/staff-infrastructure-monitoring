@@ -16,8 +16,8 @@ module "monitoring_platform_v2" {
   transit_gateway_route_table_id = var.transit_gateway_route_table_id
 
   vpc_cidr_block             = "10.180.100.0/22"
-  private_subnet_cidr_blocks = ["10.180.100.0/25", "10.180.100.128/25", "10.180.101.0/25"]
-  public_subnet_cidr_blocks  = ["10.180.102.0/25", "10.180.102.128/25", "10.180.103.0/25"]
+  private_subnet_cidr_blocks = [for cidr_block in cidrsubnets("10.180.100.0/22", 2, 2, 2) : cidrsubnets(cidr_block, 1, 1)[0]]
+  public_subnet_cidr_blocks  = [for cidr_block in cidrsubnets("10.180.100.0/22", 2, 2, 2) : cidrsubnets(cidr_block, 1, 1)[1]]
 
   is_eks_enabled     = true
   storage_bucket_arn = module.prometheus-thanos-storage.bucket_arn
