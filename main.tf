@@ -98,7 +98,7 @@ module "grafana" {
 
   sns_subscribers = split(",", var.sns_subscribers)
 
-  storage_bucket_arn = module.grafana-image-storage.bucket_arn
+  storage_bucket_name = module.grafana-image-storage.bucket_name
 
   lb_access_logging_bucket_name = module.grafana_lb_access_logging.bucket_name
 
@@ -142,9 +142,9 @@ module "prometheus" {
 
   thanos_image_repository_url = var.thanos_image_repository_url
 
-  storage_bucket_arn = module.prometheus-thanos-storage.bucket_arn
-  storage_key_arn    = module.prometheus-thanos-storage.kms_key_arn
-  storage_key_id     = module.prometheus-thanos-storage.kms_key_id
+  storage_bucket_name = module.prometheus-thanos-storage.bucket_name
+  storage_key_arn     = module.prometheus-thanos-storage.kms_key_arn
+  storage_key_id      = module.prometheus-thanos-storage.kms_key_id
 
   lb_access_logging_bucket_name = module.prometheus_lb_access_logging.bucket_name
 

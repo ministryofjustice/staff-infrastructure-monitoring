@@ -41,8 +41,8 @@ variable "cluster_id" {
 
 ####################  S3 Storage ####################
 
-variable "storage_bucket_arn" {
-  description = "ARN of the S3 Bucket to be used for image storage"
+variable "storage_bucket_name" {
+  description = "Name of the S3 Bucket to be used for image storage"
   type        = string
 }
 

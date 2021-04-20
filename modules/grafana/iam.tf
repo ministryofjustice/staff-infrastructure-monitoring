@@ -14,7 +14,7 @@ resource "aws_iam_policy" "s3_access_policy" {
   name = "${var.prefix_pttp}-grafana-s3-access"
 
   policy = templatefile("${path.module}/policies/s3_access_policy.template.json", {
-    bucket = var.storage_bucket_arn
+    bucket = var.storage_bucket_name
   })
 }
 
