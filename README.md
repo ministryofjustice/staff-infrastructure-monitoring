@@ -39,10 +39,11 @@ reporting them.
 
 ### Prerequisites
 
+Before you start you should ensure that you have installed the following:
 - [AWS Command Line Interface (CLI)](https://aws.amazon.com/cli/) - to manage AWS services
 - [AWS Vault](https://github.com/99designs/aws-vault) (>= 6.0.0) - to easily manage and switch between AWS account profiles on the command line
-- [Terraform](https://www.terraform.io/) (0.12.29) - to manage infrastructure
 - [tfenv](https://github.com/tfutils/tfenv) - to easily manage and switch versions Terraform versions
+- [Terraform](https://www.terraform.io/) (0.14.x installed via tfenv) - to manage infrastructure 
 
 You should also have AWS account access to at least the Dev and Shared Services AWS accounts.
 
