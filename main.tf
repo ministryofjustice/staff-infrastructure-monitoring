@@ -86,7 +86,7 @@ module "grafana" {
 
   vpn_hosted_zone_id     = var.vpn_hosted_zone_id
   vpn_hosted_zone_domain = var.vpn_hosted_zone_domain
-  domain_prefix          = var.domain_prefix
+  domain_prefix          = "${var.domain_prefix}-decomissioned"
 
   azure_ad_auth_url      = var.azure_ad_auth_url
   azure_ad_token_url     = var.azure_ad_token_url
