@@ -61,13 +61,13 @@ phases:
       - ./scripts/deploy_kubernetes.sh
 
 
-#   post_build:
-#     commands:
-#       - ./scripts/authenticate_docker.sh
-#       - cd test/
-#       - docker-compose up -d
-#       - bundle install
-#       - bundle exec rspec --format documentation
-#       - cd ../scripts/
-#       - bundle install
-#       - bundle exec ruby create_ci_user.rb
+  post_build:
+    commands:
+      - ./scripts/authenticate_docker.sh
+      - cd test/
+      - docker-compose up -d
+      - bundle install
+      - bundle exec rspec --format documentation
+      - cd ../scripts/
+      - bundle install
+      - bundle exec ruby create_ci_user.rb
