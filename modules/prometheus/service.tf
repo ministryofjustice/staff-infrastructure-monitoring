@@ -225,7 +225,7 @@ resource "aws_cloudwatch_log_group" "prometheus_cloudwatch_log_group" {
 
 locals {
   storage_config = templatefile("${path.module}/s3config.template.yml", {
-    bucket_name = var.storage_bucket_arn
+    bucket_name = var.storage_bucket_name
     endpoint    = "s3.eu-west-2.amazonaws.com"
     kms_key_id  = var.storage_key_id
   })

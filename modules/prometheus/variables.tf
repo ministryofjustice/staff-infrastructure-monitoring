@@ -29,8 +29,8 @@ variable "thanos_image_repository_url" {
 
 #################### Long-Term S3 Storage ####################
 
-variable "storage_bucket_arn" {
-  description = "ARN of the S3 Bucket to be used for long-term storage"
+variable "storage_bucket_name" {
+  description = "Name of the S3 Bucket to be used for long-term storage"
   type        = string
 }
 
