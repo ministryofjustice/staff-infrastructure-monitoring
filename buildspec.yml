@@ -44,9 +44,6 @@ phases:
       - wget --no-verbose -O terraform.zip https://releases.hashicorp.com/terraform/0.14.9/terraform_0.14.9_linux_amd64.zip
       - unzip terraform.zip
       - mv terraform /bin
-      - curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-      - chmod 700 get_helm.sh
-      - ./get_helm.sh
 
   build:
     commands:
@@ -58,7 +55,6 @@ phases:
       - terraform workspace select $ENV
       - terraform apply --auto-approve -no-color
       - ./scripts/publish_terraform_outputs.sh
-      # - ./scripts/deploy_kubernetes.sh
 
 
   post_build:
