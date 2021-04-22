@@ -20,7 +20,7 @@ module "monitoring_platform_v2" {
   public_subnet_cidr_blocks  = [for cidr_block in cidrsubnets("10.180.100.0/22", 2, 2, 2) : cidrsubnets(cidr_block, 1, 1)[1]]
 
   is_eks_enabled     = true
-  storage_bucket_arn = module.prometheus-thanos-storage.bucket_arn
+  storage_bucket_name = module.prometheus-thanos-storage.bucket_name
   storage_key_arn    = module.prometheus-thanos-storage.kms_key_arn
 
   providers = {
@@ -69,7 +69,7 @@ module "grafana_v2" {
 
   sns_subscribers = split(",", var.sns_subscribers)
 
-  storage_bucket_arn = module.grafana-image-storage.bucket_arn
+  storage_bucket_name = module.grafana-image-storage.bucket_name
 
   lb_access_logging_bucket_name = module.grafana_lb_access_logging_v2.bucket_name
 
@@ -113,7 +113,7 @@ module "prometheus_v2" {
 
   thanos_image_repository_url = var.thanos_image_repository_url
 
-  storage_bucket_arn = module.prometheus-thanos-storage.bucket_arn
+  storage_bucket_name = module.prometheus-thanos-storage.bucket_name
   storage_key_arn    = module.prometheus-thanos-storage.kms_key_arn
   storage_key_id     = module.prometheus-thanos-storage.kms_key_id
 
