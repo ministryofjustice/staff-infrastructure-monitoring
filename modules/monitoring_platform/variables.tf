@@ -53,5 +53,4 @@ variable "storage_key_arn" {
 
 variable "vpc_flow_log_bucket_arn" {
   type    = string
-  default = ""
 }
