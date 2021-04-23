@@ -22,6 +22,7 @@ module "monitoring_platform_v2" {
   is_eks_enabled      = true
   storage_bucket_name = module.prometheus-thanos-storage.bucket_name
   storage_key_arn     = module.prometheus-thanos-storage.kms_key_arn
+  vpc_flow_log_bucket_arn    = module.vpc_flow_logging.bucket_arn
 
   providers = {
     aws = aws.env

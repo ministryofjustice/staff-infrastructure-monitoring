@@ -84,6 +84,7 @@ resource "aws_route_table_association" "private" {
 
 # Enable VPC Flow Logging
 resource "aws_flow_log" "vpc_flow_log" {
+  count                = var.vpc_flow_log_bucket_arn == "" ? 0 : 1
   log_destination      = var.vpc_flow_log_bucket_arn
   log_destination_type = "s3"
   traffic_type         = "ALL"
