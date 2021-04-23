@@ -256,6 +256,21 @@ module "s3_access_logging" {
   }
 }
 
+module "vpc_flow_logging" {
+  source = "./modules/s3_bucket"
+
+  name               = "vpc-flow-logging"
+  prefix_pttp        = module.label_pttp.id
+  tags               = module.label_pttp.tags
+  acl                = "log-delivery-write"
+  versioning_enabled = false
+
+  providers = {
+    aws = aws.env
+  }
+}
+
+
 module "prometheus-thanos-storage" {
   source = "./modules/s3_bucket"
 
