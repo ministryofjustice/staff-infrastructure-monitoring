@@ -19,9 +19,9 @@ module "monitoring_platform_v2" {
   private_subnet_cidr_blocks = [for cidr_block in cidrsubnets("10.180.100.0/22", 2, 2, 2) : cidrsubnets(cidr_block, 1, 1)[0]]
   public_subnet_cidr_blocks  = [for cidr_block in cidrsubnets("10.180.100.0/22", 2, 2, 2) : cidrsubnets(cidr_block, 1, 1)[1]]
 
-  is_eks_enabled     = true
+  is_eks_enabled      = true
   storage_bucket_name = module.prometheus-thanos-storage.bucket_name
-  storage_key_arn    = module.prometheus-thanos-storage.kms_key_arn
+  storage_key_arn     = module.prometheus-thanos-storage.kms_key_arn
 
   providers = {
     aws = aws.env
@@ -114,8 +114,8 @@ module "prometheus_v2" {
   thanos_image_repository_url = var.thanos_image_repository_url
 
   storage_bucket_name = module.prometheus-thanos-storage.bucket_name
-  storage_key_arn    = module.prometheus-thanos-storage.kms_key_arn
-  storage_key_id     = module.prometheus-thanos-storage.kms_key_id
+  storage_key_arn     = module.prometheus-thanos-storage.kms_key_arn
+  storage_key_id      = module.prometheus-thanos-storage.kms_key_id
 
   lb_access_logging_bucket_name = module.prometheus_lb_access_logging_v2.bucket_name
 

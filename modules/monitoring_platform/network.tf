@@ -81,3 +81,12 @@ resource "aws_route_table_association" "private" {
   subnet_id      = element(aws_subnet.private.*.id, count.index)
   route_table_id = element(aws_route_table.private.*.id, count.index)
 }
+
+# Enable VPC Flow Logging
+resource "aws_flow_log" "vpc_flow_log" {
+  log_destination      = var.vpc_flow_log_bucket_arn
+  log_destination_type = "s3"
+  traffic_type         = "ALL"
+  vpc_id               = aws_vpc.main.id
+}
+

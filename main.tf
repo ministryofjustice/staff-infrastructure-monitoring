@@ -51,6 +51,8 @@ module "monitoring_platform" {
   private_subnet_cidr_blocks = ["10.180.88.0/24", "10.180.89.0/24", "10.180.90.0/24"]
   public_subnet_cidr_blocks  = ["10.180.91.0/24", "10.180.92.0/24", "10.180.93.0/24"]
   storage_key_arn            = module.prometheus-thanos-storage.kms_key_arn
+  vpc_flow_log_bucket_arn    = module.vpc_flow_logging.bucket_arn
+
 
   providers = {
     aws = aws.env
@@ -255,6 +257,21 @@ module "s3_access_logging" {
     aws = aws.env
   }
 }
+
+module "vpc_flow_logging" {
+  source = "./modules/s3_bucket"
+
+  name               = "vpc-flow-logging"
+  prefix_pttp        = module.label_pttp.id
+  tags               = module.label_pttp.tags
+  acl                = "log-delivery-write"
+  versioning_enabled = false
+
+  providers = {
+    aws = aws.env
+  }
+}
+
 
 module "prometheus-thanos-storage" {
   source = "./modules/s3_bucket"
