@@ -50,3 +50,8 @@ variable "storage_key_arn" {
   description = "ARN of the long-term storage S3 Bucket KMS Key"
   type        = string
 }
+
+variable "vpc_flow_log_bucket_arn" {
+  type    = string
+  default = ""
+}
