@@ -73,3 +73,7 @@ output "prometheus_thanos_storage_kms_key_id" {
 output "cloudwatch_exporter_assume_role_arn" {
   value = module.cloudwatch_exporter.assume_role_arn
 }
+
+output "cloudwatch_exporter_access_role_arns" {
+  value = var.cloudwatch_exporter_access_role_arns
+}
