@@ -22,11 +22,11 @@ module "monitoring_platform_v2" {
   is_eks_enabled = true
   is_production  = var.is-production == "true"
 
-  storage_bucket_arn = module.prometheus-thanos-storage.bucket_arn
+  storage_bucket_arn  = module.prometheus-thanos-storage.bucket_arn
   storage_bucket_name = module.prometheus-thanos-storage.bucket_name
-  storage_key_arn    = module.prometheus-thanos-storage.kms_key_arn
+  storage_key_arn     = module.prometheus-thanos-storage.kms_key_arn
 
-  vpc_flow_log_bucket_arn    = module.vpc_flow_logging.bucket_arn
+  vpc_flow_log_bucket_arn = module.vpc_flow_logging.bucket_arn
 
   cloudwatch_exporter_access_role_arns = split(",", var.cloudwatch_exporter_access_role_arns)
 

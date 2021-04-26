@@ -42,7 +42,7 @@ resource "aws_iam_role_policy_attachment" "cloudwatch_access_eks_policy_attachme
 }
 
 resource "aws_iam_role_policy" "assume_cross_account_roles" {
-  count = local.any_cloudwatch_exporter_roles && var.is_eks_enabled ? 1 : 0
+  count  = local.any_cloudwatch_exporter_roles && var.is_eks_enabled ? 1 : 0
   role   = module.monitoring_alerting_cluster.worker_iam_role_name
   policy = element(data.aws_iam_policy_document.assume_cross_account_roles.*.json, 0)
 }
