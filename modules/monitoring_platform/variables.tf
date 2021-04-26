@@ -63,11 +63,11 @@ variable "storage_key_arn" {
 
 
 variable "vpc_flow_log_bucket_arn" {
-  type    = string
+  type = string
 }
 
 variable "cloudwatch_exporter_access_role_arns" {
   description = "Cloudwatch exporter role arns for access to metric data"
-  type = set(string)
-  default = []
+  type        = set(string)
+  default     = []
 }
