@@ -130,3 +130,9 @@ variable "bastion_allowed_ingress_ip" {
   type    = string
   default = "0.0.0.0"
 }
+
+variable "cloudwatch_exporter_access_role_arns" {
+  description = "Cloudwatch exporter role arns for access to metric data"
+  type = string
+  default = ""
+}

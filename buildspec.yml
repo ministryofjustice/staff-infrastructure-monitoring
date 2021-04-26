@@ -36,7 +36,7 @@ env:
     TF_VAR_grafana_image_repository_url: "/codebuild/pttp-ci-ima-pipeline/grafana_image_repository_url"
     TF_VAR_grafana_image_renderer_repository_url: "/codebuild/pttp-ci-ima-pipeline/grafana_image_renderer_repository_url"
     TF_VAR_thanos_image_repository_url: "/codebuild/pttp-ci-ima-pipeline/thanos_image_repository_url"
-    
+    TF_VAR_cloudwatch_exporter_access_role_arns: "/codebuild/pttp-ci-ima-pipeline/$ENV/cloudwatch_exporter_access_role_arns"
 phases:
   install:
     on-failure: CONTINUE
