@@ -16,7 +16,9 @@ plan:
 	aws-vault clear $$AWS_VAULT_PROFILE && aws-vault exec $$AWS_VAULT_PROFILE -- terraform plan
 
 apply:
-	aws-vault clear $$AWS_VAULT_PROFILE && aws-vault exec $$AWS_VAULT_PROFILE --duration=2h -- terraform apply
+	aws-vault clear $$AWS_VAULT_PROFILE
+	aws-vault exec $$AWS_VAULT_PROFILE --duration=2h -- terraform apply
+	ENV=$$ENV aws-vault exec $$AWS_VAULT_PROFILE -- ./scripts/publish_terraform_outputs.sh
 
 destroy:
 	aws-vault clear $$AWS_VAULT_PROFILE && aws-vault exec $$AWS_VAULT_PROFILE -- terraform destroy
