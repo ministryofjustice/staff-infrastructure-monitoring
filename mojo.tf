@@ -28,7 +28,7 @@ module "monitoring_platform_v2" {
 
   vpc_flow_log_bucket_arn = module.vpc_flow_logging.bucket_arn
 
-  cloudwatch_exporter_access_role_arns = split(",", var.cloudwatch_exporter_access_role_arns)
+  cloudwatch_exporter_access_role_arns = compact(split(",", var.cloudwatch_exporter_access_role_arns))
 
   providers = {
     aws = aws.env
