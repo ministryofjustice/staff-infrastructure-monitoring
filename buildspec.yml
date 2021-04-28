@@ -10,6 +10,7 @@ env:
     TF_VAR_enable_critical_notifications: true
   parameter-store:
     SHARED_SERVICES_ACCOUNT_ID: "/codebuild/staff_device_shared_services_account_id"
+    TF_VAR_production_account_id: "/codebuild/pttp-ci-ima-pipeline/production_account_id"
     TF_VAR_assume_role: "/codebuild/pttp-ci-ima-pipeline/$ENV/assume_role"
     TF_VAR_grafana_db_name: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_db_name"
     TF_VAR_grafana_db_endpoint: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_db_endpoint"
@@ -37,6 +38,7 @@ env:
     TF_VAR_grafana_image_renderer_repository_url: "/codebuild/pttp-ci-ima-pipeline/grafana_image_renderer_repository_url"
     TF_VAR_thanos_image_repository_url: "/codebuild/pttp-ci-ima-pipeline/thanos_image_repository_url"
     TF_VAR_cloudwatch_exporter_access_role_arns: "/codebuild/pttp-ci-ima-pipeline/$ENV/cloudwatch_exporter_access_role_arns"
+    TF_VAR_production_account_id: "/codebuild/pttp-ci-ima-pipeline/production_account_id"
 phases:
   install:
     on-failure: CONTINUE
