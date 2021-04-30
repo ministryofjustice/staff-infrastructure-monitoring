@@ -48,14 +48,19 @@ variable "attach_elb_log_delivery_policy" {
   type        = bool
 }
 
-variable "attach_mfa_delete_policy" {
+variable "override_attach_mfa_delete_policy" {
   description = "Controls if S3 bucket should have MFA Delete (emulated) policy attached"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "policy" {
   description = "(Optional) A valid custom bucket policy JSON document."
   type        = string
   default     = null
+}
+
+variable "is_production" {
+  description = "Enforces Bucket Policy for Production Environments"
+  type        = bool
 }

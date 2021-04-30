@@ -1,5 +1,5 @@
 locals {
-  attach_policy = var.attach_elb_log_delivery_policy || var.attach_policy || var.attach_mfa_delete_policy
+  attach_policy = var.attach_elb_log_delivery_policy || var.attach_policy || var.is_production
 }
 
 resource "aws_s3_bucket" "encrypted" {
@@ -19,8 +19,7 @@ resource "aws_s3_bucket" "encrypted" {
   }
 
   versioning {
-    enabled    = var.versioning_enabled
-    mfa_delete = var.mfa_delete_enabled
+    enabled = var.versioning_enabled
   }
 
   server_side_encryption_configuration {
@@ -51,8 +50,7 @@ resource "aws_s3_bucket" "non-encrypted" {
   }
 
   versioning {
-    enabled    = var.versioning_enabled
-    mfa_delete = var.mfa_delete_enabled
+    enabled = var.versioning_enabled
   }
 
 
@@ -86,7 +84,6 @@ resource "aws_s3_bucket_policy" "this" {
 }
 
 data "aws_caller_identity" "current" {
-  count = var.attach_mfa_delete_policy ? 1 : 0
 }
 
 data "aws_elb_service_account" "this" {
@@ -98,7 +95,7 @@ data "aws_iam_policy_document" "combined" {
 
   source_policy_documents = compact([
     var.attach_elb_log_delivery_policy ? data.aws_iam_policy_document.elb_log_delivery[0].json : "",
-    var.attach_mfa_delete_policy ? data.aws_iam_policy_document.mfa_delete[0].json : "",
+    var.is_production ? (var.override_attach_mfa_delete_policy ? "" : data.aws_iam_policy_document.mfa_delete[0].json) : "",
     var.attach_policy ? var.policy : ""
   ])
 }
@@ -109,7 +106,7 @@ data "aws_iam_policy_document" "elb_log_delivery" {
   count = var.attach_elb_log_delivery_policy ? 1 : 0
 
   statement {
-    sid = ""
+    sid = "AllowELBPutObject"
 
     principals {
       type        = "AWS"
@@ -131,33 +128,29 @@ data "aws_iam_policy_document" "elb_log_delivery" {
 # Pre-defined MFA Delete Policy
 
 data "aws_iam_policy_document" "mfa_delete" {
-  count = var.attach_mfa_delete_policy ? 1 : 0
+  count = var.is_production ? (var.override_attach_mfa_delete_policy ? 0 : 1) : 0
 
   statement {
-    sid = ""
+    sid = "DenyDeleteWithoutMFA"
 
     principals {
-      type        = "AWS"
-      identifiers = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+      type = "AWS"
+      identifiers = [
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+      ]
     }
 
     effect = "Deny"
 
     actions = [
-      "s3:DeleteBucket",
       "s3:DeleteBucketPolicy",
       "s3:DeleteObjectVersion",
-      "s3:GetBucketPolicy",
-      "s3:GetBucketVersioning",
-      "s3:GetLifecycleConfiguration",
-      "s3:PutBucketPolicy",
       "s3:PutBucketVersioning",
-      "s3:PutLifecycleConfiguration"
     ]
 
     resources = [
-      "${var.encryption_enabled ? aws_s3_bucket.encrypted[0].arn : aws_s3_bucket.non-encrypted[0].arn}/*",
-      "${var.encryption_enabled ? aws_s3_bucket.encrypted[0].arn : aws_s3_bucket.non-encrypted[0].arn}",
+      var.encryption_enabled ? aws_s3_bucket.encrypted[0].arn : "${aws_s3_bucket.non-encrypted[0].arn}/*",
+      var.encryption_enabled ? aws_s3_bucket.encrypted[0].arn : aws_s3_bucket.non-encrypted[0].arn,
     ]
 
     condition {
