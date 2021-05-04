@@ -228,7 +228,6 @@ module "blackbox_exporter_lb_access_logging_v2" {
   }
 }
 
-
 module "test_bastion" {
   source                     = "./modules/test_bastion"
   subnets                    = module.monitoring_platform_v2.public_subnet_ids
