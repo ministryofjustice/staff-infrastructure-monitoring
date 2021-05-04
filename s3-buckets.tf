@@ -127,3 +127,71 @@ module "vpc_flow_logging" {
     aws = aws.env
   }
 }
+
+module "grafana_lb_access_logging_v2" {
+  source = "./modules/s3_bucket"
+
+  name                              = "grafana-lb-access-logging-v2"
+  prefix_pttp                       = module.label_pttp.id
+  tags                              = module.label_pttp.tags
+  versioning_enabled                = false
+  encryption_enabled                = false
+  attach_elb_log_delivery_policy    = true
+  is_production                     = var.is-production
+  override_attach_mfa_delete_policy = true
+
+  providers = {
+    aws = aws.env
+  }
+}
+
+module "prometheus_lb_access_logging_v2" {
+  source = "./modules/s3_bucket"
+
+  name                              = "prometheus-lb-access-logging-v2"
+  prefix_pttp                       = module.label_pttp.id
+  tags                              = module.label_pttp.tags
+  versioning_enabled                = false
+  encryption_enabled                = false
+  attach_elb_log_delivery_policy    = true
+  is_production                     = var.is-production
+  override_attach_mfa_delete_policy = true
+
+  providers = {
+    aws = aws.env
+  }
+}
+
+module "snmp_exporter_lb_access_logging_v2" {
+  source = "./modules/s3_bucket"
+
+  name                              = "snmp-exporter-lb-access-logging-v2"
+  prefix_pttp                       = module.label_pttp.id
+  tags                              = module.label_pttp.tags
+  versioning_enabled                = false
+  encryption_enabled                = false
+  attach_elb_log_delivery_policy    = true
+  is_production                     = var.is-production
+  override_attach_mfa_delete_policy = true
+
+  providers = {
+    aws = aws.env
+  }
+}
+
+module "blackbox_exporter_lb_access_logging_v2" {
+  source = "./modules/s3_bucket"
+
+  name                              = "blackbox-exporter-lb-access-logging-v2"
+  prefix_pttp                       = module.label_pttp.id
+  tags                              = module.label_pttp.tags
+  versioning_enabled                = false
+  encryption_enabled                = false
+  attach_elb_log_delivery_policy    = true
+  is_production                     = var.is-production
+  override_attach_mfa_delete_policy = true
+
+  providers = {
+    aws = aws.env
+  }
+}

@@ -26,8 +26,7 @@ module "label_pttp" {
   label_namespace = "pttp"
   owner-email     = var.owner-email
   is-production   = var.is-production
-  label_status    = "legacy"
-  label_notes     = "To be removed post CIDR block change"
+  label_status    = "pre CIDR change infrastructure"
 }
 
 module "label" {
@@ -37,50 +36,65 @@ module "label" {
   is-production   = var.is-production
 }
 
-module "monitoring_platform" {
+module "label_mojo" {
+  source          = "./modules/label"
+  label_namespace = "mojo"
+  owner-email     = var.owner-email
+  is-production   = var.is-production
+}
+
+module "monitoring_platform_v2" {
   source = "./modules/monitoring_platform"
 
-  prefix = module.label_pttp.id
-  tags   = module.label_pttp.tags
+  prefix = module.label_mojo.id
+  tags   = module.label_mojo.tags
 
   transit_gateway_id             = var.transit_gateway_id
   enable_transit_gateway         = var.enable_transit_gateway
   transit_gateway_route_table_id = var.transit_gateway_route_table_id
 
-  vpc_cidr_block             = "10.180.88.0/21"
-  private_subnet_cidr_blocks = ["10.180.88.0/24", "10.180.89.0/24", "10.180.90.0/24"]
-  public_subnet_cidr_blocks  = ["10.180.91.0/24", "10.180.92.0/24", "10.180.93.0/24"]
-  storage_key_arn            = module.prometheus-thanos-storage.kms_key_arn
-  vpc_flow_log_bucket_arn    = module.vpc_flow_logging.bucket_arn
+  vpc_cidr_block             = "10.180.100.0/22"
+  private_subnet_cidr_blocks = [for cidr_block in cidrsubnets("10.180.100.0/22", 2, 2, 2) : cidrsubnets(cidr_block, 1, 1)[0]]
+  public_subnet_cidr_blocks  = [for cidr_block in cidrsubnets("10.180.100.0/22", 2, 2, 2) : cidrsubnets(cidr_block, 1, 1)[1]]
 
+  is_eks_enabled = true
+  is_production  = var.is-production == "true"
+
+  storage_bucket_arn  = module.prometheus-thanos-storage.bucket_arn
+  storage_bucket_name = module.prometheus-thanos-storage.bucket_name
+  storage_key_arn     = module.prometheus-thanos-storage.kms_key_arn
+
+  vpc_flow_log_bucket_arn = module.vpc_flow_logging.bucket_arn
+
+  cloudwatch_exporter_access_role_arns = compact(split(",", trimspace(var.cloudwatch_exporter_access_role_arns)))
 
   providers = {
     aws = aws.env
   }
 }
 
-module "grafana" {
+module "grafana_v2" {
   source = "./modules/grafana"
 
   aws_region   = var.aws_region
-  prefix_pttp  = module.label_pttp.id
-  prefix       = module.label.id
-  tags         = module.label_pttp.tags
-  short_prefix = module.label_pttp.stage
+  prefix_pttp  = module.label_mojo.id
+  prefix       = module.label_mojo.id
+  tags         = module.label_mojo.tags
+  short_prefix = module.label_mojo.stage
 
-  vpc                = module.monitoring_platform.vpc_id
-  cluster_id         = module.monitoring_platform.cluster_id
-  public_subnet_ids  = module.monitoring_platform.public_subnet_ids
-  private_subnet_ids = module.monitoring_platform.private_subnet_ids
+  vpc                = module.monitoring_platform_v2.vpc_id
+  cluster_id         = module.monitoring_platform_v2.cluster_id
+  public_subnet_ids  = module.monitoring_platform_v2.public_subnet_ids
+  private_subnet_ids = module.monitoring_platform_v2.private_subnet_ids
 
-  execution_role_arn      = module.monitoring_platform.execution_role_arn
-  rds_monitoring_role_arn = module.monitoring_platform.rds_monitoring_role_arn
+  execution_role_arn      = module.monitoring_platform_v2.execution_role_arn
+  rds_monitoring_role_arn = module.monitoring_platform_v2.rds_monitoring_role_arn
 
   grafana_image_repository_url          = var.grafana_image_repository_url
   grafana_image_renderer_repository_url = var.grafana_image_renderer_repository_url
 
   db_name        = var.grafana_db_name
-  db_endpoint    = var.grafana_db_endpoint
+  db_endpoint    = var.grafana_db_endpoint_v2
   db_username    = var.grafana_db_username
   db_password    = var.grafana_db_password
   admin_username = var.grafana_admin_username
@@ -88,7 +102,7 @@ module "grafana" {
 
   vpn_hosted_zone_id     = var.vpn_hosted_zone_id
   vpn_hosted_zone_domain = var.vpn_hosted_zone_domain
-  domain_prefix          = "${var.domain_prefix}-xx"
+  domain_prefix          = var.domain_prefix
 
   azure_ad_auth_url      = var.azure_ad_auth_url
   azure_ad_token_url     = var.azure_ad_token_url
@@ -109,23 +123,23 @@ module "grafana" {
   }
 }
 
-module "prometheus" {
+module "prometheus_v2" {
   source = "./modules/prometheus"
 
-  enable_compactor = "false"
+  enable_compactor = "true"
 
   aws_region  = var.aws_region
-  prefix_pttp = module.label_pttp.id
-  prefix      = module.label.id
-  tags        = module.label_pttp.tags
+  prefix_pttp = module.label_mojo.id
+  prefix      = module.label_mojo.id
+  tags        = module.label_mojo.tags
 
-  vpc                = module.monitoring_platform.vpc_id
-  cluster_id         = module.monitoring_platform.cluster_id
-  public_subnet_ids  = module.monitoring_platform.public_subnet_ids
-  private_subnet_ids = module.monitoring_platform.private_subnet_ids
+  vpc                = module.monitoring_platform_v2.vpc_id
+  cluster_id         = module.monitoring_platform_v2.cluster_id
+  public_subnet_ids  = module.monitoring_platform_v2.public_subnet_ids
+  private_subnet_ids = module.monitoring_platform_v2.private_subnet_ids
   fargate_count      = 1
 
-  execution_role_arn = module.monitoring_platform.execution_role_arn
+  execution_role_arn = module.monitoring_platform_v2.execution_role_arn
 
   thanos_image_repository_url = var.thanos_image_repository_url
 
@@ -140,20 +154,20 @@ module "prometheus" {
   }
 }
 
-module "snmp_exporter" {
+module "snmp_exporter_v2" {
   source = "./modules/snmp_exporter"
 
   aws_region  = var.aws_region
-  prefix_pttp = module.label_pttp.id
-  prefix      = module.label.id
-  tags        = module.label_pttp.tags
+  prefix_pttp = module.label_mojo.id
+  prefix      = module.label_mojo.id
+  tags        = module.label_mojo.tags
 
-  vpc                = module.monitoring_platform.vpc_id
-  cluster_id         = module.monitoring_platform.cluster_id
-  public_subnet_ids  = module.monitoring_platform.public_subnet_ids
-  private_subnet_ids = module.monitoring_platform.private_subnet_ids
+  vpc                = module.monitoring_platform_v2.vpc_id
+  cluster_id         = module.monitoring_platform_v2.cluster_id
+  public_subnet_ids  = module.monitoring_platform_v2.public_subnet_ids
+  private_subnet_ids = module.monitoring_platform_v2.private_subnet_ids
 
-  execution_role_arn = module.monitoring_platform.execution_role_arn
+  execution_role_arn = module.monitoring_platform_v2.execution_role_arn
 
   lb_access_logging_bucket_name = module.snmp_exporter_lb_access_logging.bucket_name
 
@@ -162,25 +176,53 @@ module "snmp_exporter" {
   }
 }
 
-
-module "blackbox_exporter" {
+module "blackbox_exporter_v2" {
   source = "./modules/blackbox_exporter"
 
   aws_region  = var.aws_region
-  prefix_pttp = module.label_pttp.id
-  prefix      = module.label.id
-  tags        = module.label_pttp.tags
+  prefix_pttp = module.label_mojo.id
+  prefix      = module.label_mojo.id
+  tags        = module.label_mojo.tags
 
-  vpc                = module.monitoring_platform.vpc_id
-  cluster_id         = module.monitoring_platform.cluster_id
-  public_subnet_ids  = module.monitoring_platform.public_subnet_ids
-  private_subnet_ids = module.monitoring_platform.private_subnet_ids
+  vpc                = module.monitoring_platform_v2.vpc_id
+  cluster_id         = module.monitoring_platform_v2.cluster_id
+  public_subnet_ids  = module.monitoring_platform_v2.public_subnet_ids
+  private_subnet_ids = module.monitoring_platform_v2.private_subnet_ids
 
-  execution_role_arn = module.monitoring_platform.execution_role_arn
+  execution_role_arn = module.monitoring_platform_v2.execution_role_arn
 
   lb_access_logging_bucket_name = module.blackbox_exporter_lb_access_logging.bucket_name
 
   providers = {
     aws = aws.env
   }
+}
+
+module "cloudwatch_exporter" {
+  source                       = "./modules/cloudwatch_exporter"
+  production_account_id        = var.production_account_id
+  prefix                       = module.label_mojo.id
+  cloudwatch_access_policy_arn = module.monitoring_platform_v2.cloudwatch_access_policy
+
+  providers = {
+    aws = aws.env
+  }
+}
+
+module "test_bastion" {
+  source                     = "./modules/test_bastion"
+  subnets                    = module.monitoring_platform_v2.public_subnet_ids
+  vpc_id                     = module.monitoring_platform_v2.vpc_id
+  tags                       = module.label_mojo.tags
+  bastion_allowed_ingress_ip = var.bastion_allowed_ingress_ip
+
+  depends_on = [
+    module.monitoring_platform_v2
+  ]
+
+  providers = {
+    aws = aws.env
+  }
+
+  count = var.enable_test_bastion == true ? 1 : 0
 }
