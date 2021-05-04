@@ -109,21 +109,6 @@ module "grafana" {
   }
 }
 
-module "grafana_lb_access_logging" {
-  source = "./modules/s3_bucket"
-
-  name                           = "grafana-lb-access-logging"
-  prefix_pttp                    = module.label_pttp.id
-  tags                           = module.label_pttp.tags
-  versioning_enabled             = false
-  encryption_enabled             = false
-  attach_elb_log_delivery_policy = true
-
-  providers = {
-    aws = aws.env
-  }
-}
-
 module "prometheus" {
   source = "./modules/prometheus"
 
@@ -155,21 +140,6 @@ module "prometheus" {
   }
 }
 
-module "prometheus_lb_access_logging" {
-  source = "./modules/s3_bucket"
-
-  name                           = "prometheus-lb-access-logging"
-  prefix_pttp                    = module.label_pttp.id
-  tags                           = module.label_pttp.tags
-  versioning_enabled             = false
-  encryption_enabled             = false
-  attach_elb_log_delivery_policy = true
-
-  providers = {
-    aws = aws.env
-  }
-}
-
 module "snmp_exporter" {
   source = "./modules/snmp_exporter"
 
@@ -192,20 +162,6 @@ module "snmp_exporter" {
   }
 }
 
-module "snmp_exporter_lb_access_logging" {
-  source = "./modules/s3_bucket"
-
-  name                           = "snmp-exporter-lb-access-logging"
-  prefix_pttp                    = module.label_pttp.id
-  tags                           = module.label_pttp.tags
-  versioning_enabled             = false
-  encryption_enabled             = false
-  attach_elb_log_delivery_policy = true
-
-  providers = {
-    aws = aws.env
-  }
-}
 
 module "blackbox_exporter" {
   source = "./modules/blackbox_exporter"
@@ -223,84 +179,6 @@ module "blackbox_exporter" {
   execution_role_arn = module.monitoring_platform.execution_role_arn
 
   lb_access_logging_bucket_name = module.blackbox_exporter_lb_access_logging.bucket_name
-
-  providers = {
-    aws = aws.env
-  }
-}
-
-module "blackbox_exporter_lb_access_logging" {
-  source = "./modules/s3_bucket"
-
-  name                           = "blackbox-exporter-lb-access-logging"
-  prefix_pttp                    = module.label_pttp.id
-  tags                           = module.label_pttp.tags
-  versioning_enabled             = false
-  encryption_enabled             = false
-  attach_elb_log_delivery_policy = true
-
-  providers = {
-    aws = aws.env
-  }
-}
-
-module "s3_access_logging" {
-  source = "./modules/s3_bucket"
-
-  name               = "s3-access-logging"
-  prefix_pttp        = module.label_pttp.id
-  tags               = module.label_pttp.tags
-  acl                = "log-delivery-write"
-  versioning_enabled = false
-
-  providers = {
-    aws = aws.env
-  }
-}
-
-module "vpc_flow_logging" {
-  source = "./modules/s3_bucket"
-
-  name               = "vpc-flow-logging"
-  prefix_pttp        = module.label_pttp.id
-  tags               = module.label_pttp.tags
-  acl                = "log-delivery-write"
-  versioning_enabled = false
-
-  providers = {
-    aws = aws.env
-  }
-}
-
-
-module "prometheus-thanos-storage" {
-  source = "./modules/s3_bucket"
-
-  name        = "thanos-storage"
-  prefix_pttp = module.label_pttp.id
-  tags        = module.label_pttp.tags
-
-  logging = {
-    target_bucket = module.s3_access_logging.bucket_name
-  }
-
-  providers = {
-    aws = aws.env
-  }
-}
-
-module "grafana-image-storage" {
-  source = "./modules/s3_bucket"
-
-  name               = "grafana-image-storage"
-  prefix_pttp        = module.label_pttp.id
-  tags               = module.label_pttp.tags
-  encryption_enabled = false
-  versioning_enabled = false
-
-  logging = {
-    target_bucket = module.s3_access_logging.bucket_name
-  }
 
   providers = {
     aws = aws.env

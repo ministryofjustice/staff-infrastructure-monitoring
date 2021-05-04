@@ -5,7 +5,7 @@ variable "acl" {
 }
 
 variable "encryption_enabled" {
-  description = "Boolean for enabling server-side encryption"
+  description = "Controls if S3 bucket should have server-side encryption"
   default     = true
   type        = bool
 }
@@ -14,11 +14,6 @@ variable "logging" {
   description = "Map containing access bucket logging configuration."
   type        = map(string)
   default     = {}
-}
-
-variable "mfa_delete_enabled" {
-  default = false
-  type    = bool
 }
 
 variable "name" {
@@ -31,15 +26,41 @@ variable "prefix_pttp" {
 }
 
 variable "tags" {
-  type = map(string)
+  description = "Map of tags to attach to the bucket"
+  type        = map(string)
 }
 
 variable "versioning_enabled" {
-  default = true
-  type    = bool
+  description = "Controls if S3 bucket should have versioning enabled"
+  default     = true
+  type        = bool
+}
+
+variable "attach_policy" {
+  description = "Controls if S3 bucket should have a custom bucket policy attached (set to `true` to use value of `policy` as bucket policy)"
+  type        = bool
+  default     = false
 }
 
 variable "attach_elb_log_delivery_policy" {
-  default = false
-  type    = bool
+  description = "Controls if S3 bucket should have ELB log delivery policy attached"
+  default     = false
+  type        = bool
+}
+
+variable "override_attach_mfa_delete_policy" {
+  description = "Controls if S3 bucket should have MFA Delete (emulated) policy attached"
+  type        = bool
+  default     = false
+}
+
+variable "policy" {
+  description = "(Optional) A valid custom bucket policy JSON document."
+  type        = string
+  default     = null
+}
+
+variable "is_production" {
+  description = "Enforces Bucket Policy for Production Environments"
+  type        = bool
 }
