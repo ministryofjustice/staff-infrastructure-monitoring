@@ -13,3 +13,7 @@ output "grafana_db_subnet_group_name" {
 output "db_in_security_group_id" {
   value = aws_security_group.db_in.id
 }
+
+output "ses_mail_from_domain" {
+  value = aws_ses_domain_mail_from.grafana_email_from.mail_from_domain
+}
