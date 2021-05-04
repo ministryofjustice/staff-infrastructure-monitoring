@@ -145,11 +145,11 @@ data "aws_iam_policy_document" "mfa_delete" {
     actions = [
       "s3:DeleteBucketPolicy",
       "s3:DeleteObjectVersion",
-      "s3:PutBucketVersioning",
+      "s3:PutBucketVersioning"
     ]
 
     resources = [
-      var.encryption_enabled ? aws_s3_bucket.encrypted[0].arn : "${aws_s3_bucket.non-encrypted[0].arn}/*",
+      var.encryption_enabled ? "${aws_s3_bucket.encrypted[0].arn}/*" : "${aws_s3_bucket.non-encrypted[0].arn}/*",
       var.encryption_enabled ? aws_s3_bucket.encrypted[0].arn : aws_s3_bucket.non-encrypted[0].arn,
     ]
 
