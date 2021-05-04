@@ -1,0 +1,18 @@
+dependencies:
+- name: kube-prometheus
+  repository: https://charts.bitnami.com/bitnami
+  version: 4.2.1
+- name: prometheus-blackbox-exporter
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 4.10.2
+- name: prometheus-snmp-exporter
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 0.1.2
+- name: thanos
+  repository: https://charts.bitnami.com/bitnami
+  version: 3.14.1
+- name: grafana
+  repository: https://grafana.github.io/helm-charts
+  version: 6.7.0
+digest: sha256:c5c36ecf4d94034b1b456b34bb334d5391b1d457161252c959f0cef07bd4eb57
+generated: "2021-03-31T16:49:51.7266265+01:00"

@@ -1,0 +1,28 @@
+apiVersion: v2
+name: mojo-ima
+description: A Helm chart for MoJO Infrastructure Monitoring
+type: application
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+version: 0.1.0
+
+dependencies:
+  - name: kube-prometheus
+    version: 4.2.1
+    repository: https://charts.bitnami.com/bitnami
+  - name: prometheus-blackbox-exporter
+    version: 4.10.2
+    repository: https://prometheus-community.github.io/helm-charts
+    condition: prometheus-blackbox-exporter.enabled
+  - name: prometheus-snmp-exporter
+    version: 0.1.2
+    repository: https://prometheus-community.github.io/helm-charts
+    condition: prometheus-snmp-exporter.enabled
+  - name: thanos
+    version: 3.14.1
+    repository: https://charts.bitnami.com/bitnami
+  - name: grafana
+    version: 6.7.0
+    repository: https://grafana.github.io/helm-charts

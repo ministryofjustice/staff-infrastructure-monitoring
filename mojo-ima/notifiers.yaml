@@ -1,0 +1,26 @@
+notifiers:
+  - name: notification-channel-1
+    type: slack
+    uid: notifier1
+    # either
+    org_id: 2
+    # or
+    org_name: Main Org.
+    is_default: true
+    send_reminder: true
+    frequency: 1h
+    disable_resolve_message: false
+    # See `Supported Settings` section for settings supporter for each
+    # alert notification type.
+    settings:
+      recipient: 'XXX'
+      token: 'xoxb'
+      uploadImage: true
+      url: https://slack.com
+
+# delete_notifiers:
+#   - name: notification-channel-1
+#     uid: notifier1
+#     org_id: 2
+#   - name: notification-channel-2
+#     # default org_id: 1

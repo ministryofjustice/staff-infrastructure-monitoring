@@ -1,0 +1,195 @@
+kube-prometheus:
+  operator:
+    enabled: true
+  prometheus:
+    replicaCount: 1
+    resources:
+      requests:
+        cpu: 500m
+        memory: 512Mi
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+    scrapeInterval: 1m
+    additionalScrapeConfigs:
+      enabled: true
+      type: internal
+      internal:
+        jobList:
+          - job_name: docker_image_version
+            scheme: https
+            static_configs:
+              - targets:
+                - raw.githubusercontent.com:443
+            metrics_path: /ministryofjustice/staff-device-docker-base-images/main/prometheus_metrics/docker_image_versions.txt
+    thanos:
+      create: true
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 500m
+          memory: 500Mi
+
+  alertmanager:
+    enabled: true
+    resources:
+      requests:
+        cpu: 250m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 500Mi
+  
+  exporters:
+    node-exporter:
+      enabled: false
+
+  kubeProxy:
+    enabled: false
+
+  kubeControllerManager:
+    enabled: false
+
+  kubeScheduler:
+    enabled: false
+
+#############################################################
+#
+#####  Prometheus blackbox exporter
+#
+#############################################################
+
+prometheus-blackbox-exporter:
+  enabled: false
+  config:
+    modules:
+      http_2xx:
+        prober: http
+        timeout: 5s
+        http:
+          method: GET
+          valid_status_codes: []
+          no_follow_redirects: false
+          preferred_ip_protocol: ip4 # defaults to "ip6"
+          ip_protocol_fallback: false # no fallback to "ip6"
+      http_get_pki: # job to check status of enrollment URL
+        prober: http
+        timeout: 5s
+        http:
+          method: GET
+          fail_if_body_not_matches_regexp:
+              - "POSTPKIOperation" # the presence of this shows enrollment is working
+          tls_config:
+            insecure_skip_verify: true
+      icmp:
+        prober: icmp
+        icmp:
+          preferred_ip_protocol: ip4
+      dns_udp:
+        prober: dns
+        timeout: 5s
+        dns:
+          query_name: "www.prometheus.io"
+          query_type: "A"
+          valid_rcodes:
+          - NOERROR
+          validate_answer_rrs:
+            fail_if_matches_regexp:
+            - ".*127.0.0.1"
+            fail_if_not_matches_regexp:
+            - "www.prometheus.io.\t300\tIN\tA\t127.0.0.1"
+          validate_authority_rrs:
+            fail_if_matches_regexp:
+            - ".*127.0.0.1"
+          validate_additional_rrs:
+            fail_if_matches_regexp:
+            - ".*127.0.0.1"
+
+#############################################################
+#
+#####  Prometheus SNMP exporter
+#
+#############################################################
+
+prometheus-snmp-exporter:
+  enabled: false
+
+#############################################################
+#
+#####  Thanos
+#
+#############################################################
+
+thanos:
+  objstoreConfig: |-
+    type: s3
+    config:
+      bucket: thanos
+      endpoint: mojo-ti-ima-minio:9000
+      access_key: minio
+      secret_key: minio123
+      insecure: true
+  query:
+    dnsDiscovery:
+      sidecarsService: mojo-ti-ima-kube-prometheu-prometheus-thanos
+      sidecarsNamespace: monitoring
+  bucketweb:
+    enabled: false
+  compactor:
+    enabled: true
+  storegateway:
+    enabled: false
+  ruler:
+    enabled: false
+    alertmanagers:
+      - http://alertmanager-operated:9093
+    config: |-
+      groups:
+        - name: "metamonitoring"
+          rules:
+            - alert: "PrometheusDown"
+              expr: absent(up{prometheus="monitoring/kube-prometheus"})
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+  minio:
+    enabled: true
+    accessKey:
+      password: "minio"
+    secretKey:
+      password: "minio123"
+    defaultBuckets: "thanos"
+
+#############################################################
+#
+#####  Grafana
+#
+#############################################################
+
+grafana:
+  replicas: 1
+  ingress:
+    enabled: true
+    hosts:
+      - kubernetes.docker.internal
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: Prometheus
+          type: prometheus
+          url: mojo-ti-ima-thanos-query:9090
+          access: proxy
+          isDefault: true
+  imageRenderer:
+    enabled: true
