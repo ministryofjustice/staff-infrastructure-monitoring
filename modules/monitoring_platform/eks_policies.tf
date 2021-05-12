@@ -29,6 +29,18 @@ resource "aws_iam_role_policy_attachment" "kms_access_policy_attachment" {
   count      = var.is_eks_enabled ? 1 : 0
 }
 
+resource "aws_iam_policy" "route_53_access_policy" {
+  name = "${var.prefix}-thanos-prometheus-route-53-policy"
+
+  policy = templatefile("${path.module}/policies/route_53_access.template.json", {})
+}
+
+resource "aws_iam_role_policy_attachment" "route_53_access_policy_attachment" {
+  policy_arn = aws_iam_policy.route_53_access_policy.arn
+  role       = module.monitoring_alerting_cluster.worker_iam_role_name
+  count      = var.is_eks_enabled ? 1 : 0
+}
+
 resource "aws_iam_policy" "cloudwatch_access_eks_policy" {
   name = "${var.prefix}-cloudwatch-access-eks-policy"
 
