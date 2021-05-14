@@ -21,6 +21,16 @@ provider "grafana" {
   auth = "${var.grafana_admin_username}:${var.grafana_admin_password}"
 }
 
+resource "aws_route53_zone" "internal" {
+  name = terraform.workspace == "production" ? "internal.ima.justice.gov.uk" : "${module.label_mojo.id}.${"internal.ima.justice.gov.uk"}"
+
+  vpc {
+    vpc_id = module.monitoring_platform_v2.vpc_id
+  }
+
+  tags = module.label_mojo.tags
+}
+
 module "label_pttp" {
   source          = "./modules/label"
   label_namespace = "pttp"
