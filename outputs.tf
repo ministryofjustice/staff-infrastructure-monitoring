@@ -26,6 +26,13 @@ output "blackbox_exporter_hostname_v2" {
   value = module.blackbox_exporter_v2.hostname
 }
 
+output "internal_hosted_zone_domain" {
+  value = {
+    name = aws_route53_zone.internal.name
+    id   = aws_route53_zone.internal.zone_id
+  }
+}
+
 ####################################### Repositories #################################################
 
 output "prometheus_repository_v2" {
