@@ -29,6 +29,10 @@ resource "aws_route53_zone" "internal" {
   }
 
   tags = module.label_mojo.tags
+
+  providers = {
+    aws = aws.env
+  }
 }
 
 module "label_pttp" {
