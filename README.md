@@ -28,8 +28,9 @@ reporting them.
 
 ### Our repositories
 
-- [IMA Platform](https://github.com/ministryofjustice/staff-infrastructure-monitoring) - to monitor MoJ infrastructure and physical devices
-- [Configuration](https://github.com/ministryofjustice/staff-infrastructure-monitoring-datasource-config) - to provision configuration for the IMA Platform
+- [IMA Platform Infrastructure](https://github.com/ministryofjustice/staff-infrastructure-monitoring) - to provision the infrastructure that the IMA Platfrom is deployed on
+- [Configuration](https://github.com/ministryofjustice/staff-infrastructure-monitoring-config) - to provision dashboards, alerts, and datasources that monitor MoJ infrastructure and physical devices on the IMA Platform
+- [Deployments](https://github.com/ministryofjustice/staff-infrastructure-monitoring-deployments) - to deploy the IMA Platform's core services onto our infrastructure
 - [SNMP Exporter](https://github.com/ministryofjustice/staff-infrastructure-monitoring-snmpexporter) - to scrape data from physical devices (Docker image)
 - [Blackbox Exporter](https://github.com/ministryofjustice/staff-infrastructure-monitoring-blackbox-exporter) - to probe endpoints over HTTP, HTTPS, DNS, TCP and ICMP.s (Docker image)
 - [Metric Aggregation Server](https://github.com/ministryofjustice/staff-infrastructure-metric-aggregation-server) - to pull data from the SNMP exporter (Docker image)
