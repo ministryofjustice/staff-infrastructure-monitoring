@@ -65,7 +65,8 @@ module "monitoring_platform_v2" {
   enable_transit_gateway         = var.enable_transit_gateway
   transit_gateway_route_table_id = var.transit_gateway_route_table_id
 
-  mojo_dns_ips = var.mojo_dns_ips
+  mojo_dns_ips   = var.mojo_dns_ips
+  psn_cidr_block = var.psn_cidr_block
 
   vpc_cidr_block             = "10.180.100.0/22"
   private_subnet_cidr_blocks = [for cidr_block in cidrsubnets("10.180.100.0/22", 2, 2, 2) : cidrsubnets(cidr_block, 1, 1)[0]]

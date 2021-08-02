@@ -141,3 +141,8 @@ variable "mojo_dns_ips" {
   type    = list(string)
   default = ["10.180.80.5", "10.180.81.5"]
 }
+
+variable "psn_cidr_block" {
+  type    = string
+  default = "51.0.0.0/8"
+}

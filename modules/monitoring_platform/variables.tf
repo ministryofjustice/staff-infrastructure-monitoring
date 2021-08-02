@@ -75,3 +75,7 @@ variable "cloudwatch_exporter_access_role_arns" {
 variable "mojo_dns_ips" {
   type = list(string)
 }
+
+variable "psn_cidr_block" {
+  type = string
+}
