@@ -8,6 +8,6 @@ resource "aws_security_group" "test_bastion" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["${var.bastion_allowed_ingress_ip}/32"]
+    cidr_blocks = [var.bastion_allowed_ingress_ip]
   }
 }
