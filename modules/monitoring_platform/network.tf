@@ -48,13 +48,13 @@ resource "aws_route" "internet_access" {
 resource "aws_route" "mojo_dns_access_primary" {
   route_table_id         = aws_vpc.main.main_route_table_id
   gateway_id             = var.transit_gateway_id
-  destination_cidr_block = "10.180.80.5/32"
+  destination_cidr_block = "${var.mojo_dns_ips[0]}/32"
 }
 
 resource "aws_route" "mojo_dns_access_secondary" {
   route_table_id         = aws_vpc.main.main_route_table_id
   gateway_id             = var.transit_gateway_id
-  destination_cidr_block = "10.180.81.5/32"
+  destination_cidr_block = "${var.mojo_dns_ips[1]}/32"
 }
 
 # Create a NAT gateway with an EIP for each private subnet to get internet connectivity

@@ -1,5 +1,5 @@
 resource "aws_vpc_dhcp_options" "mojo_dns_resolver" {
-  domain_name_servers = ["10.180.80.5", "10.180.81.5"]
+  domain_name_servers = var.mojo_dns_ips
 }
 
 resource "aws_vpc_dhcp_options_association" "mojo_dns_resolver_association" {

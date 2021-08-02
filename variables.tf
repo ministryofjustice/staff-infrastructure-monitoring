@@ -136,3 +136,8 @@ variable "cloudwatch_exporter_access_role_arns" {
   type        = string
   default     = ""
 }
+
+variable "mojo_dns_ips" {
+  type    = list(string)
+  default = ["10.180.80.5", "10.180.81.5"]
+}
