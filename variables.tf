@@ -128,7 +128,7 @@ variable "enable_test_bastion" {
 
 variable "bastion_allowed_ingress_ip" {
   type    = string
-  default = "0.0.0.0"
+  default = "0.0.0.0/0"
 }
 
 variable "cloudwatch_exporter_access_role_arns" {
