@@ -39,8 +39,6 @@ resource "aws_ecs_service" "blackbox_exporter_ecs_service" {
   cluster         = var.cluster_id
   task_definition = aws_ecs_task_definition.blackbox_exporter_task_definition.arn
 
-  enable_execute_command = true
-
   network_configuration {
     subnets         = var.private_subnet_ids
     security_groups = [aws_security_group.ecs_blackbox_exporter_tasks.id]
