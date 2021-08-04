@@ -58,7 +58,6 @@ module "label_mojo" {
 module "monitoring_platform_v2" {
   source = "./modules/monitoring_platform"
 
-  region = var.aws_region
   prefix = module.label_mojo.id
   tags   = module.label_mojo.tags
 
