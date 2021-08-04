@@ -7,6 +7,7 @@ resource "aws_ecs_task_definition" "blackbox_exporter_task_definition" {
   cpu                = var.fargate_cpu
   memory             = var.fargate_memory
   execution_role_arn = var.execution_role_arn
+  task_role_arn      = aws_iam_role.task_role.arn
   tags               = var.tags
 
   container_definitions = <<DEFINITION
@@ -38,6 +39,8 @@ resource "aws_ecs_service" "blackbox_exporter_ecs_service" {
   desired_count   = var.fargate_count
   cluster         = var.cluster_id
   task_definition = aws_ecs_task_definition.blackbox_exporter_task_definition.arn
+
+  enable_execute_command = true
 
   network_configuration {
     subnets         = var.private_subnet_ids

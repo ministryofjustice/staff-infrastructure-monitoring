@@ -6,7 +6,7 @@ fmt:
 	terraform fmt --recursive
 
 init:
-	aws-vault clear $$AWS_VAULT_PROFILE && aws-vault exec $$AWS_VAULT_PROFILE -- terraform init -reconfigure \
+	aws-vault exec $$AWS_VAULT_PROFILE -- terraform init -reconfigure -upgrade \
 	--backend-config="key=terraform.development.state"
 
 validate:
@@ -16,7 +16,6 @@ plan:
 	aws-vault clear $$AWS_VAULT_PROFILE && aws-vault exec $$AWS_VAULT_PROFILE -- terraform plan
 
 apply:
-	aws-vault clear $$AWS_VAULT_PROFILE
 	aws-vault exec $$AWS_VAULT_PROFILE --duration=2h -- terraform apply
 	ENV=$$ENV aws-vault exec $$AWS_VAULT_PROFILE -- ./scripts/publish_terraform_outputs.sh
 
