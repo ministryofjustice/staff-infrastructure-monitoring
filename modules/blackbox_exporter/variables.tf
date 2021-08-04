@@ -63,8 +63,3 @@ variable "lb_access_logging_bucket_name" {
   description = "Load balancer access logging AWS S3 bucket"
   type        = string
 }
-
-variable "storage_key_arn" {
-  description = "ARN of the long-term storage S3 Bucket KMS Key"
-  type        = string
-}

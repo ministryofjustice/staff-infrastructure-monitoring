@@ -206,8 +206,6 @@ module "blackbox_exporter_v2" {
 
   execution_role_arn = module.monitoring_platform_v2.execution_role_arn
 
-  storage_key_arn = module.prometheus-thanos-storage.kms_key_arn
-
   lb_access_logging_bucket_name = module.blackbox_exporter_lb_access_logging.bucket_name
 
   providers = {
