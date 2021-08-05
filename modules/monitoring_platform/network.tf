@@ -44,26 +44,6 @@ resource "aws_route" "internet_access" {
   destination_cidr_block = "0.0.0.0/0"
 }
 
-# Route the DNS Traffic from public subnet through the TGW
-resource "aws_route" "mojo_dns_access_primary" {
-  route_table_id         = aws_vpc.main.main_route_table_id
-  gateway_id             = var.transit_gateway_id
-  destination_cidr_block = "${var.mojo_dns_ips[0]}/32"
-}
-
-resource "aws_route" "mojo_dns_access_secondary" {
-  route_table_id         = aws_vpc.main.main_route_table_id
-  gateway_id             = var.transit_gateway_id
-  destination_cidr_block = "${var.mojo_dns_ips[1]}/32"
-}
-
-# Route the PSN Traffic from public subnet through the TGW
-resource "aws_route" "psn_access" {
-  route_table_id         = aws_vpc.main.main_route_table_id
-  gateway_id             = var.transit_gateway_id
-  destination_cidr_block = var.psn_cidr_block
-}
-
 # Create a NAT gateway with an EIP for each private subnet to get internet connectivity
 resource "aws_eip" "gw" {
   vpc        = true
