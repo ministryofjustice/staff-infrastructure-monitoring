@@ -49,8 +49,8 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
       {"name": "GF_EXTERNAL_IMAGE_STORAGE_S3_REGION", "value": "${var.aws_region}"},
       {"name": "GF_RENDERING_SERVER_URL", "value": "http://localhost:8081/render"},
       {"name": "GF_RENDERING_CALLBACK_URL", "value": "http://localhost:3000"},
-      {"name": "GF_INSTALL_PLUGINS", "value": "alexanderzobnin-zabbix-app,vonage-status-panel,agenty-flowcharting-panel,grafana-polystat-panel,camptocamp-prometheus-alertmanager-datasource"},
-      {"name": "GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS", "value": "alexanderzobnin-zabbix-datasource,vonage-status-panel,agenty-flowcharting-panel,camptocamp-prometheus-alertmanager-datasource"}
+      {"name": "GF_INSTALL_PLUGINS", "value": "alexanderzobnin-zabbix-app,vonage-status-panel,agenty-flowcharting-panel,grafana-polystat-panel,camptocamp-prometheus-alertmanager-datasource,grafana-github-datasource"},
+      {"name": "GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS", "value": "alexanderzobnin-zabbix-datasource,vonage-status-panel,agenty-flowcharting-panel,camptocamp-prometheus-alertmanager-datasource,grafana-github-datasource"}
     ],
     "portMappings": [{
       "hostPort": ${var.container_port},
