@@ -41,6 +41,10 @@ variable "public_subnet_cidr_blocks" {
   type = list(string)
 }
 
+variable "network_services_cidr_block" {
+  type = string
+}
+
 variable "is_eks_enabled" {
   type    = bool
   default = false

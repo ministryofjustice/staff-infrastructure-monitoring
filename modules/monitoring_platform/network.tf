@@ -44,6 +44,13 @@ resource "aws_route" "internet_access" {
   destination_cidr_block = "0.0.0.0/0"
 }
 
+# Route network services VPC through the TGW
+resource "aws_route" "network_services" {
+  route_table_id         = aws_vpc.main.main_route_table_id
+  gateway_id             = var.transit_gateway_id
+  destination_cidr_block = var.network_services_cidr_block
+}
+
 # Create a NAT gateway with an EIP for each private subnet to get internet connectivity
 resource "aws_eip" "gw" {
   vpc        = true
