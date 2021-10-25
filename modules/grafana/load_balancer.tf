@@ -59,3 +59,38 @@ resource "aws_alb_listener" "redirect_http_to_https" {
     }
   }
 }
+
+resource "aws_alb_listener_rule" "public_metrics_rule" {
+  listener_arn = aws_alb_listener.front_end_grafana.arn
+  action {
+    type = "redirect"
+    redirect {
+      path    = "/"
+      status_code = "HTTP_301"
+    }
+  }
+  condition {
+    path_pattern {
+      values = ["/metrics"]
+    }
+  }
+}
+
+resource "aws_alb_listener_rule" "private_metrics_rule" {
+  listener_arn = aws_alb_listener.front_end_grafana.arn
+  action {
+    type = "forward"
+    target_group_arn = aws_alb_target_group.app_grafana.arn
+  }
+  condition {
+    http_header {
+      http_header_name = "X-Forwarded-For"
+      values           = [var.vpc_cidr_range]
+    }
+  }
+  condition {
+    path_pattern {
+      values = ["/metrics"]
+    }
+  }
+}
