@@ -17,7 +17,7 @@ provider "aws" {
 }
 
 locals {
-    vpc_cidr_range = "10.180.100.0/22"
+  vpc_cidr_range = "10.180.100.0/22"
 }
 provider "grafana" {
   url  = var.grafana_url

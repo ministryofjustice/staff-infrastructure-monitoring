@@ -65,7 +65,7 @@ resource "aws_alb_listener_rule" "public_metrics_rule" {
   action {
     type = "redirect"
     redirect {
-      path    = "/"
+      path        = "/"
       status_code = "HTTP_301"
     }
   }
@@ -79,7 +79,7 @@ resource "aws_alb_listener_rule" "public_metrics_rule" {
 resource "aws_alb_listener_rule" "private_metrics_rule" {
   listener_arn = aws_alb_listener.front_end_grafana.arn
   action {
-    type = "forward"
+    type             = "forward"
     target_group_arn = aws_alb_target_group.app_grafana.arn
   }
   condition {
