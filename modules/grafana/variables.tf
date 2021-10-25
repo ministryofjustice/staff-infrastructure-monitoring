@@ -172,3 +172,7 @@ variable "sns_subscribers" {
   type    = list(any)
   default = []
 }
+
+variable "vpc_cidr_range" {
+  type = string
+}

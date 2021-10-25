@@ -16,6 +16,9 @@ provider "aws" {
   }
 }
 
+locals {
+  vpc_cidr_range = "10.180.100.0/22"
+}
 provider "grafana" {
   url  = var.grafana_url
   auth = "${var.grafana_admin_username}:${var.grafana_admin_password}"
@@ -65,7 +68,7 @@ module "monitoring_platform_v2" {
   enable_transit_gateway         = var.enable_transit_gateway
   transit_gateway_route_table_id = var.transit_gateway_route_table_id
 
-  vpc_cidr_block              = "10.180.100.0/22"
+  vpc_cidr_block              = local.vpc_cidr_range
   private_subnet_cidr_blocks  = [for cidr_block in cidrsubnets("10.180.100.0/22", 2, 2, 2) : cidrsubnets(cidr_block, 1, 1)[0]]
   public_subnet_cidr_blocks   = [for cidr_block in cidrsubnets("10.180.100.0/22", 2, 2, 2) : cidrsubnets(cidr_block, 1, 1)[1]]
   network_services_cidr_block = "10.180.104.0/22"
@@ -96,6 +99,7 @@ module "grafana_v2" {
   short_prefix = module.label_mojo.stage
 
   vpc                = module.monitoring_platform_v2.vpc_id
+  vpc_cidr_range     = local.vpc_cidr_range
   cluster_id         = module.monitoring_platform_v2.cluster_id
   public_subnet_ids  = module.monitoring_platform_v2.public_subnet_ids
   private_subnet_ids = module.monitoring_platform_v2.private_subnet_ids
