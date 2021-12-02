@@ -84,6 +84,11 @@ module "monitoring_platform_v2" {
 
   cloudwatch_exporter_access_role_arns = compact(split(",", trimspace(var.cloudwatch_exporter_access_role_arns)))
 
+  enable_ima_dns_resolver = var.enable_ima_dns_resolver
+  gsi_domain              = var.gsi_domain
+  mojo_dns_ip_1           = var.mojo_dns_ip_1
+  mojo_dns_ip_2           = var.mojo_dns_ip_2
+
   providers = {
     aws = aws.env
   }

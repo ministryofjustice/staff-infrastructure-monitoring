@@ -40,6 +40,10 @@ env:
     TF_VAR_cloudwatch_exporter_access_role_arns: "/codebuild/pttp-ci-ima-pipeline/$ENV/cloudwatch_exporter_access_role_arns"
     TF_VAR_production_account_id: "/codebuild/pttp-ci-ima-pipeline/production_account_id"
     TF_VAR_enable_test_bastion: "/codebuild/pttp-ci-ima-pipeline/$ENV/enable_test_bastion"
+    TF_VAR_enable_ima_dns_resolver: "/codebuild/pttp-ci-ima-pipeline/$ENV/enable_ima_dns_resolver"
+    TF_VAR_gsi_domain: "/codebuild/pttp-ci-ima-pipeline/$ENV/gsi_domain"
+    TF_VAR_mojo_dns_ip_1: "/codebuild/pttp-ci-ima-pipeline/$ENV/mojo_dns_ip_1"
+    TF_VAR_mojo_dns_ip_2: "/codebuild/pttp-ci-ima-pipeline/$ENV/mojo_dns_ip_2"
 phases:
   install:
     on-failure: CONTINUE

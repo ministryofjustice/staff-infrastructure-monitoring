@@ -79,6 +79,16 @@ resource "aws_route_table" "private" {
     nat_gateway_id = element(aws_nat_gateway.gw.*.id, count.index)
   }
 
+  route {
+    cidr_block         = "${var.mojo_dns_ip_1}/32"
+    transit_gateway_id = var.transit_gateway_id
+  }
+
+  route {
+    cidr_block         = "${var.mojo_dns_ip_2}/32"
+    transit_gateway_id = var.transit_gateway_id
+  }
+
   tags = var.tags
 }
 
