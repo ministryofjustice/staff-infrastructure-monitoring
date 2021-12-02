@@ -9,15 +9,15 @@ resource "aws_route53_resolver_endpoint" "ima_vpc_outbound" {
   ]
 
   ip_address {
-    subnet_id = aws_subnet.private[0]
+    subnet_id = aws_subnet.private[0].id
   }
 
   ip_address {
-    subnet_id = aws_subnet.private[1]
+    subnet_id = aws_subnet.private[1].id
   }
 
   ip_address {
-    subnet_id = aws_subnet.private[2]
+    subnet_id = aws_subnet.private[2].id
   }
 }
 
