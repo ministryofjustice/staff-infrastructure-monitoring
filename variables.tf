@@ -139,6 +139,11 @@ variable "cloudwatch_exporter_access_role_arns" {
 
 #################### Route53 details ####################
 
+variable "enable_ima_dns_resolver" {
+  type    = bool
+  default = false
+}
+
 variable "gsi_domain" {
   type = string
 }
