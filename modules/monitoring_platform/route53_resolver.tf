@@ -48,11 +48,15 @@ resource "aws_route53_resolver_rule_association" "ima_mojo_rule_association" {
 }
 
 resource "aws_route53_resolver_query_log_config" "ima_mojo_resolver_query_log" {
+  count = var.enable_ima_dns_resolver ? 1 : 0
+
   name            = "ima-resolver-query-log-${var.prefix}"
   destination_arn = aws_cloudwatch_log_group.vpc_flow_log_group.id
 }
 
 resource "aws_route53_resolver_query_log_config_association" "ima_resolver_query_log_association" {
-  resolver_query_log_config_id = aws_route53_resolver_query_log_config.ima_mojo_resolver_query_log.id
+  count = var.enable_ima_dns_resolver ? 1 : 0
+
+  resolver_query_log_config_id = aws_route53_resolver_query_log_config.ima_mojo_resolver_query_log[0].id
   resource_id                  = aws_vpc.main.id
 }
