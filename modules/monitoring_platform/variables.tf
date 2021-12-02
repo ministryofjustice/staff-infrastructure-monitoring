@@ -77,7 +77,7 @@ variable "cloudwatch_exporter_access_role_arns" {
 }
 
 variable "enable_ima_dns_resolver" {
-  type    = bool
+  type = bool
 }
 
 variable "gsi_domain" {
