@@ -75,3 +75,20 @@ variable "cloudwatch_exporter_access_role_arns" {
   type        = set(string)
   default     = []
 }
+
+variable "enable_ima_dns_resolver" {
+  type    = bool
+  default = false
+}
+
+variable "gsi_domain" {
+  type = string
+}
+
+variable "mojo_dns_ip_1" {
+  type = string
+}
+
+variable "mojo_dns_ip_2" {
+  type = string
+}
