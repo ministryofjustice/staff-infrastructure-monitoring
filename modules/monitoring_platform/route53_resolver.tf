@@ -51,7 +51,7 @@ resource "aws_route53_resolver_query_log_config" "ima_mojo_resolver_query_log" {
   count = var.enable_ima_dns_resolver ? 1 : 0
 
   name            = "ima-resolver-query-log-${var.prefix}"
-  destination_arn = aws_cloudwatch_log_group.vpc_flow_log_group.id
+  destination_arn = aws_cloudwatch_log_group.vpc_flow_log_group.arn
 }
 
 resource "aws_route53_resolver_query_log_config_association" "ima_resolver_query_log_association" {
