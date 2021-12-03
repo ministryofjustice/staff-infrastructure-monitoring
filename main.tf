@@ -88,6 +88,8 @@ module "monitoring_platform_v2" {
   gsi_domain              = var.gsi_domain
   mojo_dns_ip_1           = var.mojo_dns_ip_1
   mojo_dns_ip_2           = var.mojo_dns_ip_2
+  psn_team_protected_range_1 = var.psn_team_protected_range_1
+  psn_team_protected_range_2 = var.psn_team_protected_range_2
 
   providers = {
     aws = aws.env
