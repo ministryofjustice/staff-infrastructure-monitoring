@@ -52,27 +52,27 @@ resource "aws_route" "network_services" {
 }
 
 # Route MoJO DNS VPC traffic through the TGW
-resource "aws_route" "network_services" {
+resource "aws_route" "mojo_dns_1" {
   route_table_id         = aws_vpc.main.main_route_table_id
   gateway_id             = var.transit_gateway_id
   destination_cidr_block = "${var.mojo_dns_ip_1}/32"
 }
 
-resource "aws_route" "network_services" {
+resource "aws_route" "mojo_dns_2" {
   route_table_id         = aws_vpc.main.main_route_table_id
   gateway_id             = var.transit_gateway_id
   destination_cidr_block = "${var.mojo_dns_ip_2}/32"
 }
 
 # Route PSN traffic through the TGW
-resource "aws_route" "network_services" {
+resource "aws_route" "psn_route_1" {
   route_table_id         = aws_vpc.main.main_route_table_id
   gateway_id             = var.transit_gateway_id
   destination_cidr_block = var.psn_team_protected_range_1
 }
 
 # Route PSN VPC traffic through the TGW
-resource "aws_route" "network_services" {
+resource "aws_route" "psn_route_2" {
   route_table_id         = aws_vpc.main.main_route_table_id
   gateway_id             = var.transit_gateway_id
   destination_cidr_block = var.psn_team_protected_range_2
