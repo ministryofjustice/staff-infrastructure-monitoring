@@ -160,6 +160,6 @@ variable "psn_team_protected_range_1" {
   type = string
 }
 
-variable "psn_team_protected_range_1" {
+variable "psn_team_protected_range_2" {
   type = string
 }
