@@ -51,6 +51,33 @@ resource "aws_route" "network_services" {
   destination_cidr_block = var.network_services_cidr_block
 }
 
+# Route MoJO DNS VPC traffic through the TGW
+resource "aws_route" "network_services" {
+  route_table_id         = aws_vpc.main.main_route_table_id
+  gateway_id             = var.transit_gateway_id
+  destination_cidr_block = "${var.mojo_dns_ip_1}/32"
+}
+
+resource "aws_route" "network_services" {
+  route_table_id         = aws_vpc.main.main_route_table_id
+  gateway_id             = var.transit_gateway_id
+  destination_cidr_block = "${var.mojo_dns_ip_2}/32"
+}
+
+# Route PSN traffic through the TGW
+resource "aws_route" "network_services" {
+  route_table_id         = aws_vpc.main.main_route_table_id
+  gateway_id             = var.transit_gateway_id
+  destination_cidr_block = var.psn_team_protected_range_1
+}
+
+# Route PSN VPC traffic through the TGW
+resource "aws_route" "network_services" {
+  route_table_id         = aws_vpc.main.main_route_table_id
+  gateway_id             = var.transit_gateway_id
+  destination_cidr_block = var.psn_team_protected_range_2
+}
+
 # Create a NAT gateway with an EIP for each private subnet to get internet connectivity
 resource "aws_eip" "gw" {
   vpc        = true
@@ -77,16 +104,6 @@ resource "aws_route_table" "private" {
   route {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = element(aws_nat_gateway.gw.*.id, count.index)
-  }
-
-  route {
-    cidr_block         = "${var.mojo_dns_ip_1}/32"
-    transit_gateway_id = var.transit_gateway_id
-  }
-
-  route {
-    cidr_block         = "${var.mojo_dns_ip_2}/32"
-    transit_gateway_id = var.transit_gateway_id
   }
 
   tags = var.tags
