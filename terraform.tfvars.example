@@ -29,3 +29,10 @@ sns_subscribers = ","
 enable_transit_gateway = false
 transit_gateway_id = ""
 transit_gateway_route_table_id  = ""
+
+#IMA DNS to MoJO DNS related
+gsi_domain                 = ""
+mojo_dns_ip_1              = ""
+mojo_dns_ip_2              = ""
+psn_team_protected_range_1 = ""
+psn_team_protected_range_2 = ""
