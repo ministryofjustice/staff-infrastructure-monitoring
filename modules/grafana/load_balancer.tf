@@ -43,7 +43,6 @@ resource "aws_alb_listener" "front_end_grafana" {
 
   depends_on = [aws_acm_certificate.grafana]
 
-  tags = var.tags
 }
 
 resource "aws_alb_listener" "redirect_http_to_https" {
@@ -61,7 +60,6 @@ resource "aws_alb_listener" "redirect_http_to_https" {
     }
   }
 
-  tags = var.tags
 }
 
 resource "aws_alb_listener_rule" "public_metrics_rule" {

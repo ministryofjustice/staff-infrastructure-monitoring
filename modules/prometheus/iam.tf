@@ -12,7 +12,6 @@ resource "aws_iam_policy" "s3_access_policy" {
     bucket = var.storage_bucket_name
   })
 
-  tags = var.tags
 }
 
 resource "aws_iam_role_policy_attachment" "s3_access_policy_attachment" {
@@ -27,7 +26,6 @@ resource "aws_iam_policy" "kms_access_policy" {
     kms_key_arn = var.storage_key_arn
   })
 
-  tags = var.tags
 }
 
 resource "aws_iam_role_policy_attachment" "kms_access_policy_attachment" {
