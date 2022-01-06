@@ -112,6 +112,8 @@ resource "aws_ecs_service" "grafana_ecs_service" {
   depends_on = [
     aws_alb_listener.front_end_grafana
   ]
+
+  tags = var.tags
 }
 
 resource "aws_cloudwatch_log_group" "grafana_cloudwatch_log_group" {
