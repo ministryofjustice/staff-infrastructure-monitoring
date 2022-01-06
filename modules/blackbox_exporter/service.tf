@@ -57,6 +57,8 @@ resource "aws_ecs_service" "blackbox_exporter_ecs_service" {
   depends_on = [
     aws_alb_listener.front_end_blackbox_exporter
   ]
+
+  tags = var.tags
 }
 
 resource "aws_cloudwatch_log_group" "blackbox_exporter_cloudwatch_log_group" {
