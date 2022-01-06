@@ -27,5 +27,4 @@ resource "aws_cloudformation_stack" "email" {
   }
 
   STACK
-  tags = var.tags
 }
