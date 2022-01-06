@@ -9,3 +9,7 @@ variable "cloudwatch_access_policy_arn" {
 variable "prefix" {
   type = string
 }
+
+variable "tags" {
+  type = map(string)
+}

@@ -10,6 +10,8 @@ resource "aws_iam_role" "cloudwatch_exporter_assume_role" {
         Principal = { "AWS" : "arn:aws:iam::${var.production_account_id}:root" }
     }]
   })
+
+  tags = var.tags
 }
 
 resource "aws_iam_role_policy_attachment" "production_cloudwatch_access_policy_attachment" {

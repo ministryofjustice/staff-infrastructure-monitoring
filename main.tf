@@ -227,6 +227,7 @@ module "cloudwatch_exporter" {
   production_account_id        = var.production_account_id
   prefix                       = module.label_mojo.id
   cloudwatch_access_policy_arn = module.monitoring_platform_v2.cloudwatch_access_policy
+  tags                         = module.label_mojo.tags
 
   providers = {
     aws = aws.env
