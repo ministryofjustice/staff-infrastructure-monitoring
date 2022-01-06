@@ -16,6 +16,8 @@ resource "aws_iam_policy" "s3_access_policy" {
   policy = templatefile("${path.module}/policies/s3_access_policy.template.json", {
     bucket = var.storage_bucket_name
   })
+
+  tags = var.tags
 }
 
 resource "aws_iam_role_policy_attachment" "s3_access_policy_attachment" {

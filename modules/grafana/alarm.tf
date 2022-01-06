@@ -16,4 +16,6 @@ resource "aws_cloudwatch_metric_alarm" "grafana" {
   }
 
   insufficient_data_actions = []
+
+  tags = var.tags
 }
