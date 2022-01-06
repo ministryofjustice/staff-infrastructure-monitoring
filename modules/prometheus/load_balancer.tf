@@ -38,5 +38,6 @@ resource "aws_alb_listener" "front_end_prometheus" {
     target_group_arn = aws_alb_target_group.app_prometheus.id
     type             = "forward"
   }
+  tags = var.tags
 }
 

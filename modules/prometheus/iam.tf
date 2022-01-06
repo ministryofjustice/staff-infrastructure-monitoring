@@ -11,6 +11,8 @@ resource "aws_iam_policy" "s3_access_policy" {
   policy = templatefile("${path.module}/policies/s3_access_policy.template.json", {
     bucket = var.storage_bucket_name
   })
+
+  tags = var.tags
 }
 
 resource "aws_iam_role_policy_attachment" "s3_access_policy_attachment" {
@@ -24,6 +26,8 @@ resource "aws_iam_policy" "kms_access_policy" {
   policy = templatefile("${path.module}/policies/kms_access_policy.template.json", {
     kms_key_arn = var.storage_key_arn
   })
+
+  tags = var.tags
 }
 
 resource "aws_iam_role_policy_attachment" "kms_access_policy_attachment" {
