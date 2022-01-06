@@ -47,6 +47,8 @@ EOF
 resource "aws_cloudwatch_log_group" "vpc_flow_log_group" {
   name = "${var.prefix}-vpc-flow-log-group"
 
+  tags = var.tags
+
   retention_in_days = 7
 }
 
