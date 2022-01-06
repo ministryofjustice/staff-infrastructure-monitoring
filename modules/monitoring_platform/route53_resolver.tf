@@ -4,6 +4,8 @@ resource "aws_route53_resolver_endpoint" "ima_vpc_outbound" {
   name      = "ima-resolver-${var.prefix}"
   direction = "OUTBOUND"
 
+  tags = var.tags
+
   security_group_ids = [
     aws_security_group.route53_resolver.id
   ]

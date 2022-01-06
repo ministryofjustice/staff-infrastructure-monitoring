@@ -2,6 +2,7 @@ resource "aws_security_group" "route53_resolver" {
   name        = "${var.prefix}-route53-resolver"
   description = "Allow ingress and egress traffic for route53 resolver"
   vpc_id      = aws_vpc.main.id
+  tags        = var.tags
 }
 
 resource "aws_security_group_rule" "dns_1_out" {
