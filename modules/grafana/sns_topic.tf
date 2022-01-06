@@ -1,5 +1,7 @@
 resource "aws_sns_topic" "grafana-alerts" {
   name = "${var.prefix}-grafana-alerts"
+
+  tags = var.tags
 }
 
 locals {
@@ -23,5 +25,7 @@ resource "aws_cloudformation_stack" "email" {
       ${join(",", sort(local.sns_subscriptions))}
     }
   }
+
+  tags = var.tags
   STACK
 }

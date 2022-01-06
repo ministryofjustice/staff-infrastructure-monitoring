@@ -3,7 +3,7 @@ data "aws_availability_zones" "zones" {}
 resource "aws_vpc" "main" {
   cidr_block           = var.vpc_cidr_block
   enable_dns_hostnames = true
-  tags = var.tags
+  tags                 = var.tags
 }
 
 resource "aws_default_security_group" "default" {
