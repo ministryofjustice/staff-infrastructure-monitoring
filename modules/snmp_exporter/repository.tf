@@ -5,6 +5,7 @@ resource "aws_ecr_repository" "snmp_exporter" {
   image_scanning_configuration {
     scan_on_push = true
   }
+  tags = var.tags
 }
 
 resource "aws_ecr_repository_policy" "snmp_exporter_ecr_policy" {

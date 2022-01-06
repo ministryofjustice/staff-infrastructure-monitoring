@@ -57,6 +57,8 @@ resource "aws_ecs_service" "snmp_exporter_ecs_service" {
   depends_on = [
     aws_alb_listener.front_end_snmp_exporter
   ]
+
+  tags = var.tags
 }
 
 resource "aws_cloudwatch_log_group" "snmp_exporter_cloudwatch_log_group" {

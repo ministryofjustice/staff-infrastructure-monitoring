@@ -38,4 +38,5 @@ resource "aws_alb_listener" "front_end_snmp_exporter" {
     target_group_arn = aws_alb_target_group.app_snmp_exporter.id
     type             = "forward"
   }
+  tags = var.tags
 }
