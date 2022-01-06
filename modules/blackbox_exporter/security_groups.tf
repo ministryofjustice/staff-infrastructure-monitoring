@@ -25,7 +25,6 @@ data "aws_subnet" "private_subnets" {
 
   id = var.private_subnet_ids[count.index]
 
-  tags = var.tags
 }
 resource "aws_security_group" "lb_blackbox_exporter" {
   name        = "${var.prefix_pttp}-alb-blackbox-sg"
