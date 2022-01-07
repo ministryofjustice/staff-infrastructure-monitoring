@@ -56,7 +56,7 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
       "hostPort": ${var.container_port},
       "containerPort": ${var.container_port}
     }],
-    "uid": "0",
+    "user": "root",
     "mountPoints": [{
       "sourceVolume": "grafana_data",
       "containerPath": "/var/lib/grafana"
