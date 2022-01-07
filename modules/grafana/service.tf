@@ -92,6 +92,7 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
 resource "aws_ecs_service" "grafana_ecs_service" {
   name = "${var.prefix_pttp}-grafana-ecs-service"
 
+  platform_version = "LATEST"
   launch_type      = "FARGATE"
   desired_count    = var.fargate_count
   cluster          = var.cluster_id
