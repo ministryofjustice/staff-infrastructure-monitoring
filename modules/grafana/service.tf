@@ -10,10 +10,6 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
   execution_role_arn = var.execution_role_arn
   tags               = var.tags
 
-  volume {
-    name = "grafana_data"
-  }
-
   container_definitions = <<DEFINITION
   [{
     "name": "grafana",
@@ -48,18 +44,11 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
       {"name": "GF_EXTERNAL_IMAGE_STORAGE_S3_BUCKET", "value": "${var.storage_bucket_name}"},
       {"name": "GF_EXTERNAL_IMAGE_STORAGE_S3_REGION", "value": "${var.aws_region}"},
       {"name": "GF_RENDERING_SERVER_URL", "value": "http://localhost:8081/render"},
-      {"name": "GF_RENDERING_CALLBACK_URL", "value": "http://localhost:3000"},
-      {"name": "GF_INSTALL_PLUGINS", "value": "alexanderzobnin-zabbix-app,vonage-status-panel,agenty-flowcharting-panel,grafana-polystat-panel,camptocamp-prometheus-alertmanager-datasource,grafana-github-datasource"},
-      {"name": "GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS", "value": "alexanderzobnin-zabbix-datasource,vonage-status-panel,agenty-flowcharting-panel,camptocamp-prometheus-alertmanager-datasource"}
+      {"name": "GF_RENDERING_CALLBACK_URL", "value": "http://localhost:3000"}
     ],
     "portMappings": [{
       "hostPort": ${var.container_port},
       "containerPort": ${var.container_port}
-    }],
-    "user": "104",
-    "mountPoints": [{
-      "sourceVolume": "grafana_data",
-      "containerPath": "/var/lib/grafana"
     }],
     "logConfiguration": {
       "logDriver": "awslogs",
