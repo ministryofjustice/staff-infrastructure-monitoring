@@ -92,11 +92,10 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
 resource "aws_ecs_service" "grafana_ecs_service" {
   name = "${var.prefix_pttp}-grafana-ecs-service"
 
-  platform_version = "1.3.0"
-  launch_type      = "FARGATE"
-  desired_count    = var.fargate_count
-  cluster          = var.cluster_id
-  task_definition  = aws_ecs_task_definition.grafana_task_definition.arn
+  launch_type     = "FARGATE"
+  desired_count   = var.fargate_count
+  cluster         = var.cluster_id
+  task_definition = aws_ecs_task_definition.grafana_task_definition.arn
 
   network_configuration {
     subnets         = var.private_subnet_ids
