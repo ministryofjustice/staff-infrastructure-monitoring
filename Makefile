@@ -6,22 +6,21 @@ fmt:
 	terraform fmt --recursive
 
 init:
-	aws-vault clear $$AWS_VAULT_PROFILE && aws-vault exec $$AWS_VAULT_PROFILE -- terraform init -reconfigure \
+	terraform init -reconfigure \
 	--backend-config="key=terraform.development.state"
 
 validate:
-	aws-vault clear $$AWS_VAULT_PROFILE && aws-vault exec $$AWS_VAULT_PROFILE -- terraform validate
+	terraform validate
 
 plan:
-	aws-vault clear $$AWS_VAULT_PROFILE && aws-vault exec $$AWS_VAULT_PROFILE -- terraform plan
+	terraform plan -out terraform.tfplan
 
 apply:
-	aws-vault clear $$AWS_VAULT_PROFILE
-	aws-vault exec $$AWS_VAULT_PROFILE --duration=2h -- terraform apply
-	ENV=$$ENV aws-vault exec $$AWS_VAULT_PROFILE -- ./scripts/publish_terraform_outputs.sh
+	terraform apply
+	./scripts/publish_terraform_outputs.sh
 
 destroy:
-	aws-vault clear $$AWS_VAULT_PROFILE && aws-vault exec $$AWS_VAULT_PROFILE -- terraform destroy
+	terraform destroy
 
 test:
 	cd test/; docker-compose up -d --remove-orphans; ./run_test.sh

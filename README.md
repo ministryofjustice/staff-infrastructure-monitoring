@@ -48,85 +48,63 @@ Before you start you should ensure that you have installed the following:
 
 You should also have AWS account access to at least the Dev and Shared Services AWS accounts.
 
-### 1. Set up AWS Vault
+## Authenticate with AWS
 
-1. Create a profile for the AWS Dev account
+Terraform is run locally in a similar way to how it is run on the build pipelines.
 
-```
-aws-vault add moj-pttp-dev
-```
+It assumes an IAM role defined in the Shared Services, and targets the AWS account to gain access to the Development environment.
+ This is done in the Terraform AWS provider with the `assume_role` configuration.
 
-This will prompt you for the values of your AWS Dev account's IAM user.
+Authentication is made with the Shared Services AWS account, which then assumes the role into the target environment.  
 
-2. Create a profile for the AWS Shared Services account
+Assuming you have been granted necessary access permissions to the Shared Service Account, please follow the CloudOps best practices provided [step-by-step guide](https://ministryofjustice.github.io/cloud-operations/documentation/team-guide/best-practices/use-aws-sso.html#re-configure-aws-vault) to configure your AWS Vault and AWS Cli with AWS SSO.  
 
-```
-aws-vault add moj-pttp-shared-services
-```
+## Prepare the variables  
 
-This will prompt you for the values of your AWS Shared Services account's IAM user.
+1. Copy `.env.example` to `.env`
+1. Modify the `.env` file and provide values for variables as below:  
 
-3. Check you can log into AWS Management Console for an account using AWS Vault
+| Variables | How? |
+| --- | --- |
+| `AWS_PROFILE=` | your **AWS-CLI** profile name for the **Shared Services** AWS account. Check [this guide](https://ministryofjustice.github.io/cloud-operations/documentation/team-guide/best-practices/use-aws-sso.html#re-configure-aws-vault) if you need help. |
+| `AWS_DEFAULT_REGION=` | `eu-west-2` |
+| `ENV=` | your unique terraform workspace name. :bell: |  
 
-```
-aws-vault login <aws-account-name>
-# For Dev: aws-vault login moj-pttp-dev
-# For Shared Services: aws-vault login moj-pttp-shared-services
-```
+| :bell: HELP |  
+|:-----|  
+| See [Create Terraform workspace](#create-terraform-workspace) section to find out how to create a terraform workspace! |  
 
-This will open up AWS Management Console in your web browser.
-
-4. Open your AWS config file (usually found in `~/.aws/config`)
-5. Add `region=eu-west-2` for both the `profile moj-pttp-dev` and the `profile moj-pttp-shared-services` workspaces to set a default region for your AWS profiles
-
-### 2. Set up MFA on your AWS account
-
-Multi-Factor Authentication (MFA) is required on AWS accounts in this project.
-You will need to do this for both your Dev and Shared Services AWS accounts.
-
-1. Navigate to the AWS Management Console for a given account e.g. `aws-vault login moj-pttp-dev`
-2. Click on **IAM** under Security, Identity, & Compliance in Services
-3. Click on **Users** under Access management in the IAM sidebar
-4. Find and click on your username within the list
-5. Select the **Security credentials** tab, then assign an MFA device using the **Virtual MFA device** option (follow the on-screen instructions for this step)
-6. Edit your local `~/.aws/config` file with the key value pair of `mfa_serial=<iam_role_from_mfa_device>` for each of your accounts. The value for `<iam_role_from_mfa_device>` can be found in the AWS console on your IAM user details page, under **Assigned MFA device**. Ensure that you remove the text "(Virtual)" from the end of key value pair's value when you edit this file.
-
-### 3. Set up your Terraform workspace
-
-1. Copy `.env.example` to `.env`.
-
-```shell
-$ cp .env.example .env
-```
-2. Modify the `.env` file and replace `<your-shared-services-aws-vault-profile>` with `moj-pttp-shared-services` or with your current aws-vault profile for the PTTP Shared Services AWS account. And replace `<thanos-image-repository-url>` with the thanos image url which can be found on Shared Services param store.
-
-1. Prepare your working directory for Terraform
+## Initialize your Terraform
 
 ```shell
 make init
 ```
 
-You will be asked to provide the path to the state file inside the bucket, for development use `terraform.development.state`.
+## Switch to an isolated workspace
 
-4. Create your own personal workspace by replacing `<my-name>` with your name and running:
+If you do not have a Terraform workspace created already, use the command below to create a new workspace.
 
-```
-aws-vault exec moj-pttp-shared-services -- terraform workspace new <my-name>
-```
+### Create Terraform workspace  
 
-5. Ensure your workspace is created by listing all available workspaces:
+```shell
+AWS_PROFILE=mojo-shared-services-cli terraform workspace new "YOUR_UNIQUE_WORKSPACE_NAME"
+```  
 
-```
-aws-vault exec moj-pttp-shared-services -- terraform workspace list
-```
+This should create a new workspace and select that new workspace at the same time.
 
-The current workspace you're using is indicated by an asterisk (*) in the list.
-
-6. If you don't see your workspace selected, run:
-
-```
-aws-vault exec moj-pttp-shared-services -- terraform workspace select <my-name>
-```
+>If you already have a workspace created use the command below to select the right workspace before continue.
+>
+>### View Terraform workspace list
+>
+>```shell
+>AWS_PROFILE=mojo-shared-services-cli terraform workspace list
+>```
+>
+>### Select a Terraform workspace
+>
+>```shell
+>AWS_PROFILE=mojo-shared-services-cli terraform workspace select "YOUR_WORKSPACE_NAME"
+>```  
 
 ### 4. Verify your email address for receiving emails
 
