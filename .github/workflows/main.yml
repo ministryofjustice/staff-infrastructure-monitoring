@@ -28,14 +28,22 @@ jobs:
         run: |
           terraform init -backend=false
           terraform validate
-  lint:
+  lint_terraform:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install TFLint
-        uses: lablabs/setup-tflint@v1.0.2
+        
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v1
         with:
           tflint_version: latest
-      - name: Run linter
-        run: ./scripts/lint_terraform.sh
+          
+      - name: Show version
+        run: tflint --version
+
+      - name: Init TFLint
+        run: tflint --init
+
+      - name: Run TFLint
+        run: tflint -f compact
