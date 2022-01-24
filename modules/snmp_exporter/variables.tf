@@ -32,6 +32,10 @@ variable "private_subnet_ids" {
   type = list(any)
 }
 
+variable "vpc_subnet_cidr_blocks" {
+  type = list(any)
+}
+
 #################### Fargate ####################
 variable "execution_role_arn" {
   type = string

@@ -98,3 +98,12 @@ output "cloudwatch_exporter_access_role_arns" {
 output "ses_mail_from_domain" {
   value = module.grafana_v2.ses_mail_from_domain
 }
+
+######################### Networking Details ###############################
+
+output "subnet_cidr_blocks" {
+  value = {
+    public_subnet_cidr_blocks  = module.monitoring_platform_v2.public_subnet_cidr_blocks
+    private_subnet_cidr_blocks = module.monitoring_platform_v2.private_subnet_cidr_blocks
+  }
+}
