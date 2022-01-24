@@ -212,6 +212,7 @@ module "blackbox_exporter_v2" {
   cluster_id         = module.monitoring_platform_v2.cluster_id
   public_subnet_ids  = module.monitoring_platform_v2.public_subnet_ids
   private_subnet_ids = module.monitoring_platform_v2.private_subnet_ids
+  vpc_subnet_cidr_blocks = concat(module.monitoring_platform_v2.private_subnet_cidr_blocks, module.monitoring_platform_v2.public_subnet_cidr_blocks)
 
   execution_role_arn = module.monitoring_platform_v2.execution_role_arn
 
