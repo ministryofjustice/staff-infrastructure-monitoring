@@ -78,6 +78,13 @@ resource "aws_route" "psn_route_2" {
   destination_cidr_block = var.psn_team_protected_range_2
 }
 
+# Route SOP OCI traffic through the TGW
+resource "aws_route" "sop_oci" {
+  route_table_id         = aws_vpc.main.main_route_table_id
+  gateway_id             = var.transit_gateway_id
+  destination_cidr_block = var.sop_oci_range
+}
+
 # Create a NAT gateway with an EIP for each private subnet to get internet connectivity
 resource "aws_eip" "gw" {
   vpc        = true

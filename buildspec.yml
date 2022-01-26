@@ -46,6 +46,7 @@ env:
     TF_VAR_mojo_dns_ip_2: "/codebuild/pttp-ci-ima-pipeline/$ENV/mojo_dns_ip_2"
     TF_VAR_psn_team_protected_range_1: "/codebuild/pttp-ci-ima-pipeline/$ENV/psn_team_protected_range_1"
     TF_VAR_psn_team_protected_range_2: "/codebuild/pttp-ci-ima-pipeline/$ENV/psn_team_protected_range_2"
+    TF_VAR_sop_oci_range: "/codebuild/pttp-ci-ima-pipeline/$ENV/sop_oci_range"
 phases:
   install:
     on-failure: CONTINUE
