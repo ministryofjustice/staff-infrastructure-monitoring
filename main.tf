@@ -90,6 +90,7 @@ module "monitoring_platform_v2" {
   mojo_dns_ip_2              = var.mojo_dns_ip_2
   psn_team_protected_range_1 = var.psn_team_protected_range_1
   psn_team_protected_range_2 = var.psn_team_protected_range_2
+  sop_oci_range              = var.sop_oci_range
 
   providers = {
     aws = aws.env
