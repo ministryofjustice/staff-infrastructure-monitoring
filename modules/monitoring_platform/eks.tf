@@ -9,7 +9,7 @@ module "monitoring_alerting_cluster" {
   cluster_enabled_log_types       = ["api", "authenticator", "controllerManager"]
   tags                            = var.tags
 
-  subnets = concat(aws_subnet.private.*.id, aws_subnet.public.*.id)
+  subnets = aws_subnet.private.*.id
   vpc_id  = aws_vpc.main.id
 
   worker_groups = [
