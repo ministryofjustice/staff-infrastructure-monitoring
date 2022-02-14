@@ -3,7 +3,7 @@ module "monitoring_alerting_cluster" {
   version                         = "14.0.0"
   create_eks                      = var.is_eks_enabled
   cluster_name                    = "${var.prefix}-cluster"
-  cluster_version                 = "1.19"
+  cluster_version                 = "1.20"
   manage_aws_auth                 = false
   cluster_endpoint_private_access = true
   cluster_enabled_log_types       = ["api", "authenticator", "controllerManager"]
