@@ -66,6 +66,13 @@ resource "aws_route53_resolver_rule_association" "ima_mojo_rule_association" {
   vpc_id           = aws_vpc.main.id
 }
 
+resource "aws_route53_resolver_rule_association" "ima_mojo_rule_association_internal_vpn" {
+  count = var.enable_ima_dns_resolver ? 1 : 0
+
+  resolver_rule_id = aws_route53_resolver_rule.mojo_dns_rule_internal_vpn.*.id[0]
+  vpc_id           = aws_vpc.main.id
+}
+
 resource "aws_route53_resolver_query_log_config" "ima_mojo_resolver_query_log" {
   count = var.enable_ima_dns_resolver ? 1 : 0
 
