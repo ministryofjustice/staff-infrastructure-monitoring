@@ -103,3 +103,11 @@ variable "psn_team_protected_range_2" {
 variable "sop_oci_range" {
   type = string
 }
+
+variable "farnborough_5260_ip" {
+  type = string
+}
+
+variable "corsham_5260_ip" {
+  type = string
+}
