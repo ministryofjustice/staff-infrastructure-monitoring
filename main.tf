@@ -92,7 +92,7 @@ module "monitoring_platform_v2" {
   psn_team_protected_range_2 = var.psn_team_protected_range_2
   sop_oci_range              = var.sop_oci_range
   farnborough_5260_ip        = var.farnborough_5260_ip
-  corsham_5260_ip            = var.corsham_5260_ip  
+  corsham_5260_ip            = var.corsham_5260_ip
 
   providers = {
     aws = aws.env
