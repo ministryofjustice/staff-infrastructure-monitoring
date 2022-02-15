@@ -85,6 +85,20 @@ resource "aws_route" "sop_oci" {
   destination_cidr_block = var.sop_oci_range
 }
 
+# Route Corsham 5260 traffic through the TGW
+resource "aws_route" "corsham_5260" {
+  route_table_id         = aws_vpc.main.main_route_table_id
+  gateway_id             = var.transit_gateway_id
+  destination_cidr_block = var.corsham_5260_ip
+}
+
+# Route Farnham 5260 traffic through the TGW
+resource "aws_route" "farnborough_5260" {
+  route_table_id         = aws_vpc.main.main_route_table_id
+  gateway_id             = var.transit_gateway_id
+  destination_cidr_block = var.farnborough_5260_ip
+}
+
 # Create a NAT gateway with an EIP for each private subnet to get internet connectivity
 resource "aws_eip" "gw" {
   vpc        = true
