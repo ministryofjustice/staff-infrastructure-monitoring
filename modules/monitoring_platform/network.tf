@@ -99,6 +99,20 @@ resource "aws_route" "farnborough_5260" {
   destination_cidr_block = var.farnborough_5260_ip
 }
 
+# Route Corsham mgmt traffic through the TGW
+resource "aws_route" "corsham_mgmt" {
+  route_table_id         = aws_vpc.main.main_route_table_id
+  gateway_id             = var.transit_gateway_id
+  destination_cidr_block = var.corsham_mgmt_range
+}
+
+# Route Farnborough mgmt traffic through the TGW
+resource "aws_route" "farnborough_mgmt" {
+  route_table_id         = aws_vpc.main.main_route_table_id
+  gateway_id             = var.transit_gateway_id
+  destination_cidr_block = var.farnborough_mgmt_range
+}
+
 # Create a NAT gateway with an EIP for each private subnet to get internet connectivity
 resource "aws_eip" "gw" {
   vpc        = true

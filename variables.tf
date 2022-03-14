@@ -175,3 +175,11 @@ variable "farnborough_5260_ip" {
 variable "corsham_5260_ip" {
   type = string
 }
+
+variable "corsham_mgmt_range" {
+  typr = string
+}
+
+variable "farnborough_mgmt_range" {
+  type = string
+}
