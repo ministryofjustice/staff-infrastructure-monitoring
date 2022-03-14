@@ -177,7 +177,7 @@ variable "corsham_5260_ip" {
 }
 
 variable "corsham_mgmt_range" {
-  typr = string
+  type = string
 }
 
 variable "farnborough_mgmt_range" {
