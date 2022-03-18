@@ -18,10 +18,6 @@ resource "aws_s3_bucket" "encrypted" {
     }
   }
 
-  versioning {
-    enabled = var.versioning_enabled
-  }
-
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
@@ -29,6 +25,13 @@ resource "aws_s3_bucket" "encrypted" {
         sse_algorithm     = "aws:kms"
       }
     }
+  }
+}
+
+resource "aws_s3_bucket_versioning" "versioning_encrypted" {
+  bucket = aws_s3_bucket.encrypted[0].id
+  versioning_configuration {
+    status = var.versioning_enabled
   }
 }
 
@@ -52,8 +55,13 @@ resource "aws_s3_bucket" "non-encrypted" {
   versioning {
     enabled = var.versioning_enabled
   }
+}
 
-
+resource "aws_s3_bucket_versioning" "versioning_non_encrypted" {
+  bucket = aws_s3_bucket.non-encrypted[0].id
+  versioning_configuration {
+    status = var.versioning_enabled
+  }
 }
 
 resource "aws_s3_bucket_metric" "encrypted" {
