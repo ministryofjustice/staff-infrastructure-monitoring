@@ -32,8 +32,8 @@ variable "tags" {
 
 variable "versioning_enabled" {
   description = "Controls if S3 bucket should have versioning enabled"
-  default     = true
-  type        = bool
+  default     = "Enabled"
+  type        = string
 }
 
 variable "attach_policy" {
