@@ -30,7 +30,7 @@ variable "tags" {
   type        = map(string)
 }
 
-variable "versioning_enabled" {
+variable "versioning_status" {
   description = "Controls if S3 bucket should have versioning enabled"
   default     = "Enabled"
   type        = string

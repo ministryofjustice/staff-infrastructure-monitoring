@@ -31,7 +31,7 @@ resource "aws_s3_bucket" "encrypted" {
 resource "aws_s3_bucket_versioning" "versioning_encrypted" {
   bucket = "${var.prefix_pttp}-${var.name}"
   versioning_configuration {
-    status = var.versioning_enabled
+    status = var.versioning_status
   }
 }
 
@@ -56,7 +56,7 @@ resource "aws_s3_bucket" "non-encrypted" {
 resource "aws_s3_bucket_versioning" "versioning_non_encrypted" {
   bucket = "${var.prefix_pttp}-${var.name}"
   versioning_configuration {
-    status = var.versioning_enabled
+    status = var.versioning_status
   }
 }
 
