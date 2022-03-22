@@ -29,7 +29,7 @@ resource "aws_s3_bucket" "encrypted" {
 }
 
 resource "aws_s3_bucket_versioning" "versioning_encrypted" {
-  bucket = aws_s3_bucket.encrypted[0].id
+  bucket = "${var.prefix_pttp}-${var.name}"
   versioning_configuration {
     status = var.versioning_enabled
   }
@@ -51,14 +51,10 @@ resource "aws_s3_bucket" "non-encrypted" {
       target_prefix = "logs/${var.name}"
     }
   }
-
-  versioning {
-    enabled = var.versioning_enabled
-  }
 }
 
 resource "aws_s3_bucket_versioning" "versioning_non_encrypted" {
-  bucket = aws_s3_bucket.non-encrypted[0].id
+  bucket = "${var.prefix_pttp}-${var.name}"
   versioning_configuration {
     status = var.versioning_enabled
   }
@@ -75,6 +71,7 @@ resource "aws_s3_bucket_metric" "non-encrypted" {
   bucket = aws_s3_bucket.non-encrypted[0].bucket
   name   = "EntireBucket"
 }
+
 
 resource "aws_kms_key" "this" {
   count       = var.encryption_enabled ? 1 : 0

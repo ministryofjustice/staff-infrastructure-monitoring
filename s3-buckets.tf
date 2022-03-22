@@ -4,7 +4,7 @@ module "blackbox_exporter_lb_access_logging" {
   name                           = "blackbox-exporter-lb-access-logging"
   prefix_pttp                    = module.label_pttp.id
   tags                           = module.label_pttp.tags
-  versioning_enabled             = false
+  versioning_enabled             = "Disabled"
   encryption_enabled             = false
   attach_elb_log_delivery_policy = true
   is_production                  = var.is-production
@@ -21,7 +21,7 @@ module "grafana-image-storage" {
   prefix_pttp        = module.label_pttp.id
   tags               = module.label_pttp.tags
   encryption_enabled = false
-  versioning_enabled = false
+  versioning_enabled = "Disabled"
   is_production      = var.is-production
 
   logging = {
@@ -39,7 +39,7 @@ module "grafana_lb_access_logging" {
   name                           = "grafana-lb-access-logging"
   prefix_pttp                    = module.label_pttp.id
   tags                           = module.label_pttp.tags
-  versioning_enabled             = false
+  versioning_enabled             = "Disabled"
   encryption_enabled             = false
   attach_elb_log_delivery_policy = true
   is_production                  = var.is-production
@@ -55,7 +55,7 @@ module "prometheus_lb_access_logging" {
   name                           = "prometheus-lb-access-logging"
   prefix_pttp                    = module.label_pttp.id
   tags                           = module.label_pttp.tags
-  versioning_enabled             = false
+  versioning_enabled             = "Disabled"
   encryption_enabled             = false
   attach_elb_log_delivery_policy = true
   is_production                  = var.is-production
@@ -89,7 +89,7 @@ module "s3_access_logging" {
   prefix_pttp        = module.label_pttp.id
   tags               = module.label_pttp.tags
   acl                = "log-delivery-write"
-  versioning_enabled = false
+  versioning_enabled = "Disabled"
   is_production      = var.is-production
 
   providers = {
@@ -103,7 +103,7 @@ module "snmp_exporter_lb_access_logging" {
   name                           = "snmp-exporter-lb-access-logging"
   prefix_pttp                    = module.label_pttp.id
   tags                           = module.label_pttp.tags
-  versioning_enabled             = false
+  versioning_enabled             = "Disabled"
   encryption_enabled             = false
   attach_elb_log_delivery_policy = true
   is_production                  = var.is-production
@@ -120,7 +120,7 @@ module "vpc_flow_logging" {
   prefix_pttp        = module.label_pttp.id
   tags               = module.label_pttp.tags
   acl                = "log-delivery-write"
-  versioning_enabled = false
+  versioning_enabled = "Disabled"
   is_production      = var.is-production
 
   providers = {
@@ -134,7 +134,7 @@ module "grafana_lb_access_logging_v2" {
   name                              = "grafana-lb-access-logging-v2"
   prefix_pttp                       = module.label_pttp.id
   tags                              = module.label_pttp.tags
-  versioning_enabled                = false
+  versioning_enabled                = "Disabled"
   encryption_enabled                = false
   attach_elb_log_delivery_policy    = true
   is_production                     = var.is-production
@@ -151,7 +151,7 @@ module "prometheus_lb_access_logging_v2" {
   name                              = "prometheus-lb-access-logging-v2"
   prefix_pttp                       = module.label_pttp.id
   tags                              = module.label_pttp.tags
-  versioning_enabled                = false
+  versioning_enabled                = "Disabled"
   encryption_enabled                = false
   attach_elb_log_delivery_policy    = true
   is_production                     = var.is-production
@@ -168,7 +168,7 @@ module "snmp_exporter_lb_access_logging_v2" {
   name                              = "snmp-exporter-lb-access-logging-v2"
   prefix_pttp                       = module.label_pttp.id
   tags                              = module.label_pttp.tags
-  versioning_enabled                = false
+  versioning_enabled                = "Disabled"
   encryption_enabled                = false
   attach_elb_log_delivery_policy    = true
   is_production                     = var.is-production
@@ -185,7 +185,7 @@ module "blackbox_exporter_lb_access_logging_v2" {
   name                              = "blackbox-exporter-lb-access-logging-v2"
   prefix_pttp                       = module.label_pttp.id
   tags                              = module.label_pttp.tags
-  versioning_enabled                = false
+  versioning_enabled                = "Disabled"
   encryption_enabled                = false
   attach_elb_log_delivery_policy    = true
   is_production                     = var.is-production
