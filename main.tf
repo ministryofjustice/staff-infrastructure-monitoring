@@ -95,7 +95,10 @@ module "monitoring_platform_v2" {
   corsham_5260_ip            = var.corsham_5260_ip
   corsham_mgmt_range         = "${var.corsham_mgmt_range}.0/24"
   farnborough_mgmt_range     = "${var.farnborough_mgmt_range}.0/24"
-
+  
+  providers = {
+    aws = aws.env
+  }
 }
 
 module "grafana_v2" {
