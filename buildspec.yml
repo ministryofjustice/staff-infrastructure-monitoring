@@ -62,6 +62,7 @@ phases:
   build:
     commands:
       - export AWS_DEFAULT_REGION=eu-west-2
+      - export TF_LOG=trace
       - terraform --version
       - terraform init -upgrade -no-color --backend-config="key=terraform.$ENV.state"
       - terraform providers
