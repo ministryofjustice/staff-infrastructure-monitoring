@@ -9,7 +9,9 @@ module "blackbox_exporter_lb_access_logging" {
   attach_elb_log_delivery_policy = true
   is_production                  = var.is-production
 
-  provider = aws.env
+  providers = {
+    aws = aws.env
+  }
 }
 
 module "grafana-image-storage" {
@@ -26,7 +28,9 @@ module "grafana-image-storage" {
     target_bucket = module.s3_access_logging.bucket_name
   }
 
-  provider = aws.env
+  providers = {
+    aws = aws.env
+  }
 }
 
 module "grafana_lb_access_logging" {
@@ -40,7 +44,9 @@ module "grafana_lb_access_logging" {
   attach_elb_log_delivery_policy = true
   is_production                  = var.is-production
 
-  provider = aws.env
+  providers = {
+    aws = aws.env
+  }
 }
 
 module "prometheus_lb_access_logging" {
@@ -54,7 +60,9 @@ module "prometheus_lb_access_logging" {
   attach_elb_log_delivery_policy = true
   is_production                  = var.is-production
 
-  provider = aws.env
+  providers = {
+    aws = aws.env
+  }
 }
 
 module "prometheus-thanos-storage" {
@@ -69,7 +77,9 @@ module "prometheus-thanos-storage" {
     target_bucket = module.s3_access_logging.bucket_name
   }
 
-  provider = aws.env
+  providers = {
+    aws = aws.env
+  }
 }
 
 module "s3_access_logging" {
@@ -82,7 +92,9 @@ module "s3_access_logging" {
   versioning_status = "Suspended"
   is_production     = var.is-production
 
-  provider = aws.env
+  providers = {
+    aws = aws.env
+  }
 }
 
 module "snmp_exporter_lb_access_logging" {
@@ -96,7 +108,9 @@ module "snmp_exporter_lb_access_logging" {
   attach_elb_log_delivery_policy = true
   is_production                  = var.is-production
 
-  provider = aws.env
+  providers = {
+    aws = aws.env
+  }
 }
 
 module "vpc_flow_logging" {
@@ -109,7 +123,9 @@ module "vpc_flow_logging" {
   versioning_status = "Suspended"
   is_production     = var.is-production
 
-  provider = aws.env
+  providers = {
+    aws = aws.env
+  }
 }
 
 module "grafana_lb_access_logging_v2" {
@@ -124,7 +140,9 @@ module "grafana_lb_access_logging_v2" {
   is_production                     = var.is-production
   override_attach_mfa_delete_policy = true
 
-  provider = aws.env
+  providers = {
+    aws = aws.env
+  }
 }
 
 module "prometheus_lb_access_logging_v2" {
@@ -139,7 +157,9 @@ module "prometheus_lb_access_logging_v2" {
   is_production                     = var.is-production
   override_attach_mfa_delete_policy = true
 
-  provider = aws.env
+  providers = {
+    aws = aws.env
+  }
 }
 
 module "snmp_exporter_lb_access_logging_v2" {
@@ -154,7 +174,9 @@ module "snmp_exporter_lb_access_logging_v2" {
   is_production                     = var.is-production
   override_attach_mfa_delete_policy = true
 
-  provider = aws.env
+  providers = {
+    aws = aws.env
+  }
 }
 
 module "blackbox_exporter_lb_access_logging_v2" {
@@ -169,5 +191,7 @@ module "blackbox_exporter_lb_access_logging_v2" {
   is_production                     = var.is-production
   override_attach_mfa_delete_policy = true
 
-  provider = aws.env
+  providers = {
+    aws = aws.env
+  }
 }
