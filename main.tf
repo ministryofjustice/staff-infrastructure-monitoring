@@ -11,6 +11,7 @@ terraform {
       version               = "~> 3.0"
       configuration_aliases = [aws.env]
     }
+  }
 }
 
 provider "aws" {
