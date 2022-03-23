@@ -11,5 +11,10 @@ terraform {
       source  = "grafana/grafana"
       version = "1.17.0"
     }
+
+    template = {
+      source  = "hashicorp/template"
+      version = "2.2.0"
+    }
   }
 }
