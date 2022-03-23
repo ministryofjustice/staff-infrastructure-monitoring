@@ -96,9 +96,8 @@ module "monitoring_platform_v2" {
   corsham_mgmt_range         = "${var.corsham_mgmt_range}.0/24"
   farnborough_mgmt_range     = "${var.farnborough_mgmt_range}.0/24"
 
-  providers = {
-    aws = aws.env
-  }
+  provider = aws.env
+
 }
 
 module "grafana_v2" {
@@ -147,9 +146,7 @@ module "grafana_v2" {
 
   lb_access_logging_bucket_name = module.grafana_lb_access_logging.bucket_name
 
-  providers = {
-    aws = aws.env
-  }
+  provider = aws.env
 }
 
 module "prometheus_v2" {
@@ -178,9 +175,7 @@ module "prometheus_v2" {
 
   lb_access_logging_bucket_name = module.prometheus_lb_access_logging.bucket_name
 
-  providers = {
-    aws = aws.env
-  }
+  provider = aws.env
 }
 
 module "snmp_exporter_v2" {
@@ -201,9 +196,7 @@ module "snmp_exporter_v2" {
 
   lb_access_logging_bucket_name = module.snmp_exporter_lb_access_logging.bucket_name
 
-  providers = {
-    aws = aws.env
-  }
+  provider = aws.env
 }
 
 module "blackbox_exporter_v2" {
@@ -224,9 +217,7 @@ module "blackbox_exporter_v2" {
 
   lb_access_logging_bucket_name = module.blackbox_exporter_lb_access_logging.bucket_name
 
-  providers = {
-    aws = aws.env
-  }
+  provider = aws.env
 }
 
 module "cloudwatch_exporter" {
@@ -236,9 +227,7 @@ module "cloudwatch_exporter" {
   cloudwatch_access_policy_arn = module.monitoring_platform_v2.cloudwatch_access_policy
   tags                         = module.label_mojo.tags
 
-  providers = {
-    aws = aws.env
-  }
+  provider = aws.env
 }
 
 module "test_bastion" {
@@ -252,9 +241,7 @@ module "test_bastion" {
     module.monitoring_platform_v2
   ]
 
-  providers = {
-    aws = aws.env
-  }
+  provider = aws.env
 
   count = var.enable_test_bastion == true ? 1 : 0
 }
