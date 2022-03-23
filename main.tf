@@ -4,6 +4,13 @@ terraform {
     bucket     = "pttp-ci-infrastructure-ima-client-core-tf-state"
     lock_table = "pttp-ci-infrastructure-ima-client-core-tf-lock-table"
   }
+
+  required_providers {
+    aws = {
+      source                = "hashicorp/aws"
+      version               = "~> 3.0"
+      configuration_aliases = [aws.env]
+    }
 }
 
 provider "aws" {
