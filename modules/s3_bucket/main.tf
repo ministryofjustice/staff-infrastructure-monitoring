@@ -26,13 +26,15 @@ resource "aws_s3_bucket" "encrypted" {
       target_prefix = "logs/${var.name}"
     }
   }
+}
 
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        kms_master_key_id = aws_kms_key.this[0].arn
-        sse_algorithm     = "aws:kms"
-      }
+resource "aws_s3_bucket_server_side_encryption_configuration" "encrypted_s3" {
+  bucket = "${var.prefix_pttp}-${var.name}"
+
+  rule {
+    apply_server_side_encryption_by_default {
+      kms_master_key_id = var.kms_key_arn
+      sse_algorithm     = "aws:kms"
     }
   }
 }
@@ -82,10 +84,10 @@ resource "aws_s3_bucket_metric" "non-encrypted" {
 }
 
 
-resource "aws_kms_key" "this" {
-  count       = var.encryption_enabled ? 1 : 0
-  description = "${var.prefix_pttp}-${var.name} encryption key"
-}
+# resource "aws_kms_key" "this" {
+#   count       = var.encryption_enabled ? 1 : 0
+#   description = "${var.prefix_pttp}-${var.name} encryption key"
+# }
 
 
 # S3 Bucket Policy

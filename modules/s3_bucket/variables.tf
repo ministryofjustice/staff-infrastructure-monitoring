@@ -64,3 +64,11 @@ variable "is_production" {
   description = "Enforces Bucket Policy for Production Environments"
   type        = bool
 }
+
+variable "kms_key_arn" {
+  type = string
+}
+
+variable "kms_key_id" {
+  type = string
+}
