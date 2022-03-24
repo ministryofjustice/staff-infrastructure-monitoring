@@ -1,3 +1,12 @@
+terraform{
+  required_providers {
+    aws = {
+      source                = "hashicorp/aws"
+      version               = "3.75.0"
+    }
+  }
+}
+
 resource "aws_iam_role" "cloudwatch_exporter_assume_role" {
   name        = "${var.prefix}-cloudwatch-exporter-prod-assume-role"
   description = "Allows the production root account access to Cloudwatch metrics for the current environment"

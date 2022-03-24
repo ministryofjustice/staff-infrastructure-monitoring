@@ -1,3 +1,12 @@
+terraform{
+  required_providers {
+    aws = {
+      source                = "hashicorp/aws"
+      version               = "3.75.0"
+    }
+  }
+}
+
 locals {
   attach_policy = var.attach_elb_log_delivery_policy || var.attach_policy || var.is_production
 }
