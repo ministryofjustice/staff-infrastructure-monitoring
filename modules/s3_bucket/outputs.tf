@@ -7,9 +7,10 @@ output "bucket_name" {
 }
 
 output "kms_key_arn" {
-  value = concat(aws_kms_key.this.*.arn, [""])[0]
+  value = var.kms_key_arn
 }
 
 output "kms_key_id" {
-  value = concat(aws_kms_key.this.*.key_id, [""])[0]
+  value = var.kms_key_id
 }
+
