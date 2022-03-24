@@ -12,8 +12,8 @@ module "blackbox_exporter_lb_access_logging" {
   encryption_enabled             = false
   attach_elb_log_delivery_policy = true
   is_production                  = var.is-production
-  kms_key_arn   = aws_kms_key.s3_encryption_kms_key.arn
-  kms_key_id = aws_kms_key.s3_encryption_kms_key.key_id
+  kms_key_arn                    = aws_kms_key.s3_encryption_kms_key.arn
+  kms_key_id                     = aws_kms_key.s3_encryption_kms_key.key_id
 
   providers = {
     aws = aws.env
@@ -29,8 +29,8 @@ module "grafana-image-storage" {
   encryption_enabled = false
   versioning_status  = "Suspended"
   is_production      = var.is-production
-  kms_key_arn   = aws_kms_key.s3_encryption_kms_key.arn
-  kms_key_id = aws_kms_key.s3_encryption_kms_key.key_id
+  kms_key_arn        = aws_kms_key.s3_encryption_kms_key.arn
+  kms_key_id         = aws_kms_key.s3_encryption_kms_key.key_id
 
   logging = {
     target_bucket = module.s3_access_logging.bucket_name
@@ -51,8 +51,8 @@ module "grafana_lb_access_logging" {
   encryption_enabled             = false
   attach_elb_log_delivery_policy = true
   is_production                  = var.is-production
-  kms_key_arn   = aws_kms_key.s3_encryption_kms_key.arn
-  kms_key_id = aws_kms_key.s3_encryption_kms_key.key_id
+  kms_key_arn                    = aws_kms_key.s3_encryption_kms_key.arn
+  kms_key_id                     = aws_kms_key.s3_encryption_kms_key.key_id
 
   providers = {
     aws = aws.env
@@ -69,8 +69,8 @@ module "prometheus_lb_access_logging" {
   encryption_enabled             = false
   attach_elb_log_delivery_policy = true
   is_production                  = var.is-production
-  kms_key_arn   = aws_kms_key.s3_encryption_kms_key.arn
-  kms_key_id = aws_kms_key.s3_encryption_kms_key.key_id
+  kms_key_arn                    = aws_kms_key.s3_encryption_kms_key.arn
+  kms_key_id                     = aws_kms_key.s3_encryption_kms_key.key_id
 
   providers = {
     aws = aws.env
@@ -85,7 +85,7 @@ module "prometheus-thanos-storage" {
   tags          = module.label_pttp.tags
   is_production = var.is-production
   kms_key_arn   = aws_kms_key.s3_encryption_kms_key.arn
-  kms_key_id = aws_kms_key.s3_encryption_kms_key.key_id
+  kms_key_id    = aws_kms_key.s3_encryption_kms_key.key_id
 
   logging = {
     target_bucket = module.s3_access_logging.bucket_name
@@ -95,7 +95,7 @@ module "prometheus-thanos-storage" {
     aws = aws.env
   }
 
-  depends_on = [ aws_kms_key.s3_encryption_kms_key ]
+  depends_on = [aws_kms_key.s3_encryption_kms_key]
 }
 
 module "s3_access_logging" {
@@ -107,8 +107,8 @@ module "s3_access_logging" {
   acl               = "log-delivery-write"
   versioning_status = "Suspended"
   is_production     = var.is-production
-  kms_key_arn   = aws_kms_key.s3_encryption_kms_key.arn
-  kms_key_id = aws_kms_key.s3_encryption_kms_key.key_id
+  kms_key_arn       = aws_kms_key.s3_encryption_kms_key.arn
+  kms_key_id        = aws_kms_key.s3_encryption_kms_key.key_id
 
   providers = {
     aws = aws.env
@@ -125,8 +125,8 @@ module "snmp_exporter_lb_access_logging" {
   encryption_enabled             = false
   attach_elb_log_delivery_policy = true
   is_production                  = var.is-production
-  kms_key_arn   = aws_kms_key.s3_encryption_kms_key.arn
-  kms_key_id = aws_kms_key.s3_encryption_kms_key.key_id
+  kms_key_arn                    = aws_kms_key.s3_encryption_kms_key.arn
+  kms_key_id                     = aws_kms_key.s3_encryption_kms_key.key_id
 
   providers = {
     aws = aws.env
@@ -142,8 +142,8 @@ module "vpc_flow_logging" {
   acl               = "log-delivery-write"
   versioning_status = "Suspended"
   is_production     = var.is-production
-  kms_key_arn   = aws_kms_key.s3_encryption_kms_key.arn
-  kms_key_id = aws_kms_key.s3_encryption_kms_key.key_id
+  kms_key_arn       = aws_kms_key.s3_encryption_kms_key.arn
+  kms_key_id        = aws_kms_key.s3_encryption_kms_key.key_id
 
   providers = {
     aws = aws.env
@@ -161,8 +161,8 @@ module "grafana_lb_access_logging_v2" {
   attach_elb_log_delivery_policy    = true
   is_production                     = var.is-production
   override_attach_mfa_delete_policy = true
-  kms_key_arn   = aws_kms_key.s3_encryption_kms_key.arn
-  kms_key_id = aws_kms_key.s3_encryption_kms_key.key_id
+  kms_key_arn                       = aws_kms_key.s3_encryption_kms_key.arn
+  kms_key_id                        = aws_kms_key.s3_encryption_kms_key.key_id
 
   providers = {
     aws = aws.env
@@ -180,8 +180,8 @@ module "prometheus_lb_access_logging_v2" {
   attach_elb_log_delivery_policy    = true
   is_production                     = var.is-production
   override_attach_mfa_delete_policy = true
-  kms_key_arn   = aws_kms_key.s3_encryption_kms_key.arn
-  kms_key_id = aws_kms_key.s3_encryption_kms_key.key_id
+  kms_key_arn                       = aws_kms_key.s3_encryption_kms_key.arn
+  kms_key_id                        = aws_kms_key.s3_encryption_kms_key.key_id
 
   providers = {
     aws = aws.env
@@ -199,8 +199,8 @@ module "snmp_exporter_lb_access_logging_v2" {
   attach_elb_log_delivery_policy    = true
   is_production                     = var.is-production
   override_attach_mfa_delete_policy = true
-  kms_key_arn   = aws_kms_key.s3_encryption_kms_key.arn
-  kms_key_id = aws_kms_key.s3_encryption_kms_key.key_id
+  kms_key_arn                       = aws_kms_key.s3_encryption_kms_key.arn
+  kms_key_id                        = aws_kms_key.s3_encryption_kms_key.key_id
 
   providers = {
     aws = aws.env
@@ -218,8 +218,8 @@ module "blackbox_exporter_lb_access_logging_v2" {
   attach_elb_log_delivery_policy    = true
   is_production                     = var.is-production
   override_attach_mfa_delete_policy = true
-  kms_key_arn   = aws_kms_key.s3_encryption_kms_key.arn
-  kms_key_id = aws_kms_key.s3_encryption_kms_key.key_id
+  kms_key_arn                       = aws_kms_key.s3_encryption_kms_key.arn
+  kms_key_id                        = aws_kms_key.s3_encryption_kms_key.key_id
 
   providers = {
     aws = aws.env

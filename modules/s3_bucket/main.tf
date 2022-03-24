@@ -30,7 +30,7 @@ resource "aws_s3_bucket" "encrypted" {
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "encrypted_s3" {
   bucket = "${var.prefix_pttp}-${var.name}"
-  
+
   rule {
     apply_server_side_encryption_by_default {
       kms_master_key_id = var.kms_key_arn
