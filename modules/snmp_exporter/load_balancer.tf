@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "3.75.0"
+    }
+  }
+}
+
 resource "aws_alb" "main_snmp_exporter" {
   name = "${var.prefix_pttp}-snmp-alb"
 
