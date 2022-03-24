@@ -1,5 +1,7 @@
 resource "aws_kms_key" "s3_encryption_kms_key" {
   description = "storage encryption key"
+
+  provider = aws.env
 }
 
 module "blackbox_exporter_lb_access_logging" {
