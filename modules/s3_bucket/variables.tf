@@ -10,10 +10,15 @@ variable "encryption_enabled" {
   type        = bool
 }
 
-variable "logging" {
-  description = "Map containing access bucket logging configuration."
-  type        = map(string)
-  default     = {}
+# variable "logging" {
+#   description = "Map containing access bucket logging configuration."
+#   type        = map(string)
+#   default     = {}
+# }
+
+variable "target_bucket" {
+  type    = string
+  default = ""
 }
 
 variable "name" {
