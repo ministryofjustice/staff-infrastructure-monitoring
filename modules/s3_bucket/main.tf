@@ -14,18 +14,21 @@ locals {
 resource "aws_s3_bucket" "encrypted" {
   count  = var.encryption_enabled ? 1 : 0
   bucket = "${var.prefix_pttp}-${var.name}"
-  acl    = var.acl
 
   tags = var.tags
+}
 
-  dynamic "logging" {
-    for_each = length(keys(var.logging)) == 0 ? [] : [var.logging]
+resource "aws_s3_bucket_acl" "encrypted" {
+  bucket = "${var.prefix_pttp}-${var.name}"
+  acl    = var.acl
+}
 
-    content {
-      target_bucket = logging.value.target_bucket
-      target_prefix = "logs/${var.name}"
-    }
-  }
+resource "aws_s3_bucket_logging" "encrypted_logging" {
+  count  = var.target_bucket == "" ? 0 : 1
+  bucket = "${var.prefix_pttp}-${var.name}"
+
+  target_bucket = var.target_bucket
+  target_prefix = "logs/${var.name}"
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "encrypted_s3" {
@@ -50,18 +53,21 @@ resource "aws_s3_bucket_versioning" "versioning_encrypted" {
 resource "aws_s3_bucket" "non-encrypted" {
   count  = var.encryption_enabled ? 0 : 1
   bucket = "${var.prefix_pttp}-${var.name}"
-  acl    = var.acl
 
   tags = var.tags
+}
 
-  dynamic "logging" {
-    for_each = length(keys(var.logging)) == 0 ? [] : [var.logging]
+resource "aws_s3_bucket_acl" "non-encrypted" {
+  bucket = "${var.prefix_pttp}-${var.name}"
+  acl    = var.acl
+}
 
-    content {
-      target_bucket = logging.value.target_bucket
-      target_prefix = "logs/${var.name}"
-    }
-  }
+resource "aws_s3_bucket_logging" "non_encrypted_logging" {
+  count  = var.target_bucket == "" ? 0 : 1
+  bucket = "${var.prefix_pttp}-${var.name}"
+
+  target_bucket = var.target_bucket
+  target_prefix = "logs/${var.name}"
 }
 
 resource "aws_s3_bucket_versioning" "versioning_non_encrypted" {

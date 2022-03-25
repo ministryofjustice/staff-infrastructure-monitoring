@@ -33,10 +33,7 @@ module "grafana-image-storage" {
   is_production      = var.is-production
   kms_key_arn        = aws_kms_key.s3_encryption_kms_key.arn
   kms_key_id         = aws_kms_key.s3_encryption_kms_key.key_id
-
-  logging = {
-    target_bucket = module.s3_access_logging.bucket_name
-  }
+  target_bucket      = module.s3_access_logging.bucket_name
 
   providers = {
     aws = aws.env
@@ -88,10 +85,7 @@ module "prometheus-thanos-storage" {
   is_production = var.is-production
   kms_key_arn   = aws_kms_key.s3_encryption_kms_key.arn
   kms_key_id    = aws_kms_key.s3_encryption_kms_key.key_id
-
-  logging = {
-    target_bucket = module.s3_access_logging.bucket_name
-  }
+  target_bucket = module.s3_access_logging.bucket_name
 
   providers = {
     aws = aws.env
