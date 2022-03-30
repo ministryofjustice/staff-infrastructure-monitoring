@@ -79,13 +79,14 @@ module "prometheus_lb_access_logging" {
 module "prometheus-thanos-storage" {
   source = "./modules/s3_bucket"
 
-  name          = "thanos-storage"
-  prefix_pttp   = module.label_pttp.id
-  tags          = module.label_pttp.tags
-  is_production = var.is-production
-  kms_key_arn   = aws_kms_key.s3_encryption_kms_key.arn
-  kms_key_id    = aws_kms_key.s3_encryption_kms_key.key_id
-  target_bucket = module.s3_access_logging.bucket_name
+  name               = "thanos-storage"
+  prefix_pttp        = module.label_pttp.id
+  tags               = module.label_pttp.tags
+  encryption_enabled = true
+  is_production      = var.is-production
+  kms_key_arn        = aws_kms_key.s3_encryption_kms_key.arn
+  kms_key_id         = aws_kms_key.s3_encryption_kms_key.key_id
+  target_bucket      = module.s3_access_logging.bucket_name
 
   providers = {
     aws = aws.env
