@@ -82,7 +82,7 @@ module "prometheus-thanos-storage" {
   name               = "thanos-storage"
   prefix_pttp        = module.label_pttp.id
   tags               = module.label_pttp.tags
-  encryption_enabled = false
+  encryption_enabled = true
   is_production      = var.is-production
   kms_key_arn        = aws_kms_key.s3_encryption_kms_key.arn
   kms_key_id         = aws_kms_key.s3_encryption_kms_key.key_id
