@@ -80,11 +80,11 @@ output "eks_cluster_worker_iam_role_arn" {
 }
 
 output "prometheus_thanos_storage_bucket_name" {
-  value = module.prometheus-thanos-storage.bucket_name
+  value = module.prometheus-thanos-store.bucket_name
 }
 
 output "prometheus_thanos_storage_kms_key_id" {
-  value = module.prometheus-thanos-storage.kms_key_id
+  value = module.prometheus-thanos-store.kms_key_id
 }
 
 output "cloudwatch_exporter_assume_role_arn" {
