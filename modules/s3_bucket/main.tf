@@ -32,7 +32,6 @@ resource "aws_s3_bucket_logging" "encrypted_logging" {
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "encrypted_s3" {
-  count  = var.encryption_enabled ? 1 : 0
   bucket = "${var.prefix_pttp}-${var.name}"
 
   rule {
