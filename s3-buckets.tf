@@ -95,6 +95,25 @@ module "prometheus-thanos-storage" {
   depends_on = [aws_kms_key.s3_encryption_kms_key]
 }
 
+module "prometheus-thanos-store" {
+  source = "./modules/s3_bucket"
+
+  name               = "thanos-store"
+  prefix_pttp        = module.label_mojo.id
+  tags               = module.label_mojo.tags
+  encryption_enabled = true
+  is_production      = var.is-production
+  kms_key_arn        = aws_kms_key.s3_encryption_kms_key.arn
+  kms_key_id         = aws_kms_key.s3_encryption_kms_key.key_id
+  target_bucket      = module.s3_access_logging.bucket_name
+
+  providers = {
+    aws = aws.env
+  }
+
+  depends_on = [aws_kms_key.s3_encryption_kms_key]
+}
+
 module "s3_access_logging" {
   source = "./modules/s3_bucket"
 
