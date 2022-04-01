@@ -76,9 +76,9 @@ module "monitoring_platform_v2" {
   is_eks_enabled = true
   is_production  = var.is-production == "true"
 
-  storage_bucket_arn  = module.prometheus-thanos-storage.bucket_arn
-  storage_bucket_name = module.prometheus-thanos-storage.bucket_name
-  storage_key_arn     = module.prometheus-thanos-storage.kms_key_arn
+  storage_bucket_arn  = module.prometheus-thanos-store.bucket_arn
+  storage_bucket_name = module.prometheus-thanos-store.bucket_name
+  storage_key_arn     = module.prometheus-thanos-store.kms_key_arn
 
   vpc_flow_log_bucket_arn = module.vpc_flow_logging.bucket_arn
 
@@ -172,9 +172,9 @@ module "prometheus_v2" {
 
   thanos_image_repository_url = var.thanos_image_repository_url
 
-  storage_bucket_name = module.prometheus-thanos-storage.bucket_name
-  storage_key_arn     = module.prometheus-thanos-storage.kms_key_arn
-  storage_key_id      = module.prometheus-thanos-storage.kms_key_id
+  storage_bucket_name = module.prometheus-thanos-store.bucket_name
+  storage_key_arn     = module.prometheus-thanos-store.kms_key_arn
+  storage_key_id      = module.prometheus-thanos-store.kms_key_id
 
   lb_access_logging_bucket_name = module.prometheus_lb_access_logging.bucket_name
 
