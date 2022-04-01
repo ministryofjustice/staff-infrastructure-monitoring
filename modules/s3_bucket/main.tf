@@ -16,6 +16,15 @@ resource "aws_s3_bucket" "encrypted" {
   bucket = "${var.prefix_pttp}-${var.name}"
 
   tags = var.tags
+
+  lifecycle {
+    ignore_changes = [
+      server_side_encryption_configuration,
+      versioning,
+      logging,
+      acl
+    ]
+  }
 }
 
 resource "aws_s3_bucket_acl" "encrypted" {
@@ -56,6 +65,14 @@ resource "aws_s3_bucket" "non-encrypted" {
   bucket = "${var.prefix_pttp}-${var.name}"
 
   tags = var.tags
+
+  lifecycle {
+    ignore_changes = [
+      versioning,
+      logging,
+      acl
+    ]
+  }
 }
 
 resource "aws_s3_bucket_acl" "non-encrypted" {
