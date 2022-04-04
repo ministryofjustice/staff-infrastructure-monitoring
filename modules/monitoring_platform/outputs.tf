@@ -51,8 +51,8 @@ output "cloudwatch_access_policy" {
 }
 
 output "thanos_secure_certificate_name" {
-  value = { 
+  value = {
     domain_name = aws_acm_certificate.thanos_receiver.domain_name
-    arn = aws_acm_certificate.thanos_receiver.arn
+    arn         = aws_acm_certificate.thanos_receiver.arn
   }
 }
