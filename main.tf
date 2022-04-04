@@ -61,7 +61,7 @@ module "label_mojo" {
 module "monitoring_platform_v2" {
   source = "./modules/monitoring_platform"
 
-  env    = module.label_mojo.stage  
+  env    = module.label_mojo.stage
   prefix = module.label_mojo.id
   tags   = module.label_mojo.tags
 
