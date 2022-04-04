@@ -61,6 +61,7 @@ module "label_mojo" {
 module "monitoring_platform_v2" {
   source = "./modules/monitoring_platform"
 
+  env    = module.label_mojo.stage  
   prefix = module.label_mojo.id
   tags   = module.label_mojo.tags
 
@@ -95,6 +96,8 @@ module "monitoring_platform_v2" {
   corsham_5260_ip            = var.corsham_5260_ip
   corsham_mgmt_range         = "${var.corsham_mgmt_range}.0/24"
   farnborough_mgmt_range     = "${var.farnborough_mgmt_range}.0/24"
+
+  vpn_hosted_zone_domain = var.vpn_hosted_zone_domain
 
   providers = {
     aws = aws.env
