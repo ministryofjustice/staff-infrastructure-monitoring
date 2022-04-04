@@ -79,6 +79,10 @@ output "eks_cluster_worker_iam_role_arn" {
   value = module.monitoring_platform_v2.eks_cluster_worker_iam_role_arn
 }
 
+output "thanos_secure_certificate_name" {
+  value = module.monitoring_platform_v2.thanos_secure_certificate_name
+}
+
 output "prometheus_thanos_storage_bucket_name" {
   value = module.prometheus-thanos-store.bucket_name
 }
