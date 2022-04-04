@@ -49,3 +49,7 @@ output "eks_cluster_worker_iam_role_arn" {
 output "cloudwatch_access_policy" {
   value = aws_iam_policy.cloudwatch_access_eks_policy.arn
 }
+
+output "thanos_secure_certificate_name" {
+  value = module.aws_acm_certificate.thanos_receiver.domain_name
+}
