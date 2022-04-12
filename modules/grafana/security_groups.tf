@@ -28,6 +28,13 @@ resource "aws_security_group" "lb_grafana" {
   ingress {
     protocol    = "tcp"
     from_port   = var.host_port
+    to_port     = var.host_port
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    protocol    = "tcp"
+    from_port   = var.container_port
     to_port     = var.container_port
     cidr_blocks = ["0.0.0.0/0"]
   }
