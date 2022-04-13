@@ -65,7 +65,7 @@ resource "aws_security_group" "db_in" {
     protocol    = "tcp"
     from_port   = var.db_port
     to_port     = var.db_port
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.vpc_cidr_range]
   }
 
   tags = var.tags
