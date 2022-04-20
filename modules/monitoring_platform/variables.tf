@@ -120,10 +120,3 @@ variable "farnborough_mgmt_range" {
   type = string
 }
 
-variable "env" {
-  type = string
-}
-
-variable "vpn_hosted_zone_domain" {
-  type = string
-}
