@@ -24,8 +24,6 @@ owners and support teams to monitor the health of the MoJ infrastructure and
 identify failures as early as possible ahead of the end users noticing and
 reporting them. For alerting see [this](https://github.com/ministryofjustice/staff-infrastructure-monitoring-config/#alert-manager) repository.
 
-- [Architecture Decision Record (ADR)](architecture-decision-record)
-
 ### Our repositories
 
 - [IMA Platform Infrastructure](https://github.com/ministryofjustice/staff-infrastructure-monitoring) - to provision the infrastructure that the IMA Platfrom is deployed on
