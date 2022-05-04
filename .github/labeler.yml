@@ -1,0 +1,7 @@
+infrastructure-monitoring:
+  - '**'
+
+documentation:
+  - "diagrams/**"
+  - "documentation/**"
+  - "README.md"
