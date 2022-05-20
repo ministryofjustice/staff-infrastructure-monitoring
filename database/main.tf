@@ -6,7 +6,7 @@ provider "aws" {
 }
 
 module "label" {
-  version = "0.24.0"
+  version = "0.25.0"
   source  = "cloudposse/label/null"
 
   delimiter = "-"
