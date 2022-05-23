@@ -21,14 +21,6 @@ variable "assume_role" {
   type = string
 }
 
-variable "grafana_image_repository_url" {
-  type = string
-}
-
-variable "grafana_image_renderer_repository_url" {
-  type = string
-}
-
 variable "grafana_url" {
   type = string
 }
