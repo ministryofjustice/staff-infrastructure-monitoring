@@ -77,16 +77,6 @@ variable "container_port" {
   default     = 3000
 }
 
-variable "grafana_image_repository_url" {
-  description = "Docker image to run in the ECS cluster"
-  type        = string
-}
-
-variable "grafana_image_renderer_repository_url" {
-  description = "Docker image to run in the ECS cluster"
-  type        = string
-}
-
 variable "fargate_cpu" {
   description = "Fargate instance CPU units to provision (1 vCPU = 1024 CPU units)"
   default     = "256"

@@ -15,7 +15,7 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
     "name": "grafana",
     "cpu": ${var.fargate_cpu},
     "memory": ${var.fargate_memory},
-    "image": "${var.grafana_image_repository_url}:latest",
+    "image": "grafana/grafana:8.3.3",
     "environment": [
       {"name": "GF_DATABASE_TYPE", "value": "postgres"},
       {"name": "GF_DATABASE_USER", "value": "${var.db_username}"},
@@ -64,7 +64,7 @@ resource "aws_ecs_task_definition" "grafana_task_definition" {
     "name": "grafana-image-renderer",
     "cpu": ${var.fargate_cpu},
     "memory": ${var.fargate_memory},
-    "image": "${var.grafana_image_renderer_repository_url}:latest",
+    "image": "grafana/grafana-image-renderer:3.4.2",
     "environment": [
       {"name": "LOG_LEVEL", "value": "debug"}
     ],
