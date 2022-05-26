@@ -21,7 +21,7 @@
 
 The Infrastructure Monitoring and Alerting (IMA) Platform aims to allow service
 owners and support teams to monitor the health of the MoJ infrastructure and
-identify failures as early as possible ahead of the end users noticing and
+identify failures as early as possible ahead of the end users
 reporting them. For alerting see [this](https://github.com/ministryofjustice/staff-infrastructure-monitoring-config/#alert-manager) repository.
 
 ### Our repositories
