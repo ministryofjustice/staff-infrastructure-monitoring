@@ -92,6 +92,30 @@ variable "mojo_dns_ip_2" {
   type = string
 }
 
+variable "dom1_dns_range_1" {
+  type = string
+}
+
+variable "dom1_dns_range_2" {
+  type = string
+}
+
+variable "quantum_dns_range_1" {
+  type = string
+}
+
+variable "quantum_dns_range_2" {
+  type = string
+}
+
+variable "quantum_dns_ip_1" {
+  type = string
+}
+
+variable "quantum_dns_ip_2" {
+  type = string
+}
+
 variable "psn_team_protected_range_1" {
   type = string
 }

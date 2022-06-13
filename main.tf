@@ -88,6 +88,12 @@ module "monitoring_platform_v2" {
   gsi_domain                 = var.gsi_domain
   mojo_dns_ip_1              = var.mojo_dns_ip_1
   mojo_dns_ip_2              = var.mojo_dns_ip_2
+  dom1_dns_range_1           = var.dom1_dns_range_1
+  dom1_dns_range_2           = var.dom1_dns_range_2
+  quantum_dns_range_1        = var.quantum_dns_range_1
+  quantum_dns_range_2        = var.quantum_dns_range_2
+  quantum_dns_ip_1           = var.quantum_dns_ip_1
+  quantum_dns_ip_2           = var.quantum_dns_ip_2
   psn_team_protected_range_1 = var.psn_team_protected_range_1
   psn_team_protected_range_2 = var.psn_team_protected_range_2
   sop_oci_range              = var.sop_oci_range

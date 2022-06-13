@@ -175,3 +175,28 @@ variable "corsham_mgmt_range" {
 variable "farnborough_mgmt_range" {
   type = string
 }
+
+######################## Quantum and DOM1 DNS #############################
+variable "dom1_dns_range_1" {
+  type = string
+}
+
+variable "dom1_dns_range_2" {
+  type = string
+}
+
+variable "quantum_dns_range_1" {
+  type = string
+}
+
+variable "quantum_dns_range_2" {
+  type = string
+}
+
+variable "quantum_dns_ip_1" {
+  type = string
+}
+
+variable "quantum_dns_ip_2" {
+  type = string
+}
