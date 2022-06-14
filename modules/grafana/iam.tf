@@ -30,7 +30,7 @@ resource "aws_iam_user" "cloudwatch_datasource_user" {
 }
 
 resource "aws_iam_user_policy" "cloudwatch_datasource_access_policy" {
-  policy = templatefile("${path.module}/policies/cloudwatch_metrics_and_logs.json")
+  policy = file("${path.module}/policies/cloudwatch_metrics_and_logs.json")
   user   = aws_iam_user.cloudwatch_datasource_user.name
 }
 
