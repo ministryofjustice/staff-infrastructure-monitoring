@@ -10,7 +10,7 @@ module "monitoring_alerting_cluster" {
   tags                            = var.tags
 
   subnet_ids = aws_subnet.private.*.id
-  vpc_id  = aws_vpc.main.id
+  vpc_id     = aws_vpc.main.id
 
   eks_managed_node_groups = [
     {
