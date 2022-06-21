@@ -1,18 +1,18 @@
 module "monitoring_alerting_cluster" {
   source                          = "terraform-aws-modules/eks/aws"
   version                         = "18.24.1"
-  create_eks                      = var.is_eks_enabled
+  create                          = var.is_eks_enabled
   cluster_name                    = "${var.prefix}-cluster"
   cluster_version                 = "1.21"
-  manage_aws_auth                 = false
+  manage_aws_auth_configmap       = false
   cluster_endpoint_private_access = true
   cluster_enabled_log_types       = ["api", "authenticator", "controllerManager"]
   tags                            = var.tags
 
-  subnets = aws_subnet.private.*.id
+  subnet_ids = aws_subnet.private.*.id
   vpc_id  = aws_vpc.main.id
 
-  worker_groups = [
+  eks_managed_node_groups = [
     {
       name                 = "prometheus-worker-group"
       instance_type        = "t3.medium"
