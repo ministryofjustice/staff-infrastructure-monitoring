@@ -83,6 +83,7 @@ module "monitoring_platform_v2" {
   vpc_flow_log_bucket_arn = module.vpc_flow_logging.bucket_arn
 
   cloudwatch_exporter_access_role_arns = compact(split(",", trimspace(var.cloudwatch_exporter_access_role_arns)))
+  byoip_pool_id                        = var.byoip_pool_id
 
   enable_ima_dns_resolver    = var.enable_ima_dns_resolver
   gsi_domain                 = var.gsi_domain

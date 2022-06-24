@@ -12,6 +12,7 @@ env:
     SHARED_SERVICES_ACCOUNT_ID: "/codebuild/staff_device_shared_services_account_id"
     TF_VAR_production_account_id: "/codebuild/pttp-ci-ima-pipeline/production_account_id"
     TF_VAR_assume_role: "/codebuild/pttp-ci-ima-pipeline/$ENV/assume_role"
+    TF_VAR_byoip_pool_id: "/staff-device/dns/$ENV/public_ip_pool_id"
     TF_VAR_grafana_db_name: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_db_name"
     TF_VAR_grafana_db_endpoint: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_db_endpoint"
     TF_VAR_grafana_db_endpoint_v2: "/codebuild/pttp-ci-ima-pipeline/$ENV/grafana_db_endpoint_v2"
