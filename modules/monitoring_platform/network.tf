@@ -178,8 +178,10 @@ resource "aws_route" "farnborough_mgmt" {
 
 # Create a NAT gateway with an EIP for each private subnet to get internet connectivity
 resource "aws_eip" "gw" {
-  vpc        = true
-  count      = var.az_count
+  vpc              = true
+  count            = var.az_count
+  public_ipv4_pool = var.byoip_pool_id
+
   depends_on = [aws_internet_gateway.gw]
 
   tags = var.tags
