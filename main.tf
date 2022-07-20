@@ -18,6 +18,7 @@ provider "aws" {
 
 locals {
   vpc_cidr_range = "10.180.100.0/22"
+  enable_eks     = var.env == "production" ? true : false
 }
 provider "grafana" {
   url  = var.grafana_url
@@ -75,6 +76,7 @@ module "monitoring_platform_v2" {
 
   is_eks_enabled = true
   is_production  = var.is-production == "true"
+  #count          = local.enable_eks ? 1 : 0
 
   storage_bucket_arn  = module.prometheus-thanos-store.bucket_arn
   storage_bucket_name = module.prometheus-thanos-store.bucket_name

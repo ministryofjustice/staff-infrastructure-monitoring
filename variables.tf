@@ -13,6 +13,9 @@ variable "is-production" {
   default = "true"
 }
 
+variable "env" {
+  type = string
+}
 variable "production_account_id" {
   type = string
 }
