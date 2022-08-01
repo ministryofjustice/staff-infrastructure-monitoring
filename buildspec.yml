@@ -75,7 +75,6 @@ phases:
       - terraform apply --auto-approve -no-color
       - ./scripts/publish_terraform_outputs.sh
 
-
   post_build:
     commands:
       - ./scripts/authenticate_docker.sh
