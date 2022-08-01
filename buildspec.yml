@@ -78,6 +78,6 @@ phases:
   post_build:
     commands:
       - ./scripts/authenticate_docker.sh
-      - cd ../scripts/
+      - cd scripts/
       - bundle install
       - bundle exec ruby create_ci_user.rb
