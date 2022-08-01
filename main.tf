@@ -73,7 +73,7 @@ module "monitoring_platform_v2" {
   public_subnet_cidr_blocks   = [for cidr_block in cidrsubnets("10.180.100.0/22", 2, 2, 2) : cidrsubnets(cidr_block, 1, 1)[1]]
   network_services_cidr_block = "10.180.104.0/22"
 
-  is_eks_enabled = true
+  is_eks_enabled = var.is_eks_enabled
   is_production  = var.is-production == "true"
 
   storage_bucket_arn  = module.prometheus-thanos-store.bucket_arn
