@@ -16,7 +16,7 @@ module "monitoring_alerting_cluster" {
     {
       name                 = "prometheus-worker-group"
       instance_type        = "t3.medium"
-      asg_desired_capacity = 3
+      asg_desired_capacity = 4
       root_volume_type     = "gp2"
     },
   ]
