@@ -42,7 +42,7 @@ Before you start you should ensure that you have installed the following:
 - [AWS Command Line Interface (CLI)](https://aws.amazon.com/cli/) - to manage AWS services
 - [AWS Vault](https://github.com/99designs/aws-vault) (>= 6.0.0) - to easily manage and switch between AWS account profiles on the command line
 - [tfenv](https://github.com/tfutils/tfenv) - to easily manage and switch versions Terraform versions
-- [Terraform](https://www.terraform.io/) (0.14.x installed via tfenv) - to manage infrastructure 
+- [Terraform](https://www.terraform.io/) (1.1.x installed via tfenv) - to manage infrastructure 
 
 You should also have AWS account access to at least the Dev and Shared Services AWS accounts.
 
@@ -118,13 +118,14 @@ This should update your **Verification Status** to **Verified** AWS.
 
 ### 5. Set up your own development infrastructure
 
-1. Duplicate `terraform.tfvars.example` and rename the file to `terraform.tfvars`. This is also saved in the shared services aws accounts parameter store ([`/staff-infrastructure-monitoring/terraform.tfvars`](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/staff-infrastructure-monitoring/terraform.tfvars/description?region=eu-west-2&tab=Table)) with any shared values populated.
+1. Run `make generate-tfvars`. This will pull down the tfvars file from aws parameter store, there are some values you'll have to complete yourself, or replace placeholders with your workspace name.
 
 ```
 $ cp terraform.tfvars.example terraform.tfvars
 ```
 
 2. Set values for all the variables with `grafana_db_name` and `grafana_db_endpoint` set to `foo` for now. These values will be set after creating your own infrastructure.
+
 3. Create your infrastructure by running:
 
 ```
