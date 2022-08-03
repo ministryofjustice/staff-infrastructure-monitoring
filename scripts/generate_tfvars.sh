@@ -3,7 +3,7 @@
 set -euo pipefail
 
 get_outputs() {
-  printf "\nGenerating tfvars file for $ENV\n\n"
+  printf "\nGenerating tfvars file for workspace name: $ENV\n\n"
 
   tfvars=`aws ssm get-parameter --with-decryption --name /staff-infrastructure-monitoring/terraform.tfvars | jq -r .Parameter.Value`
 }
