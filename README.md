@@ -39,10 +39,11 @@ reporting them. For alerting see [this](https://github.com/ministryofjustice/sta
 ### Prerequisites
 
 Before you start you should ensure that you have installed the following:
+
 - [AWS Command Line Interface (CLI)](https://aws.amazon.com/cli/) - to manage AWS services
 - [AWS Vault](https://github.com/99designs/aws-vault) (>= 6.0.0) - to easily manage and switch between AWS account profiles on the command line
 - [tfenv](https://github.com/tfutils/tfenv) - to easily manage and switch versions Terraform versions
-- [Terraform](https://www.terraform.io/) (0.14.x installed via tfenv) - to manage infrastructure 
+- [Terraform](https://www.terraform.io/) (1.1.x installed via tfenv) - to manage infrastructure
 
 You should also have AWS account access to at least the Dev and Shared Services AWS accounts.
 
@@ -51,26 +52,26 @@ You should also have AWS account access to at least the Dev and Shared Services 
 Terraform is run locally in a similar way to how it is run on the build pipelines.
 
 It assumes an IAM role defined in the Shared Services, and targets the AWS account to gain access to the Development environment.
- This is done in the Terraform AWS provider with the `assume_role` configuration.
+This is done in the Terraform AWS provider with the `assume_role` configuration.
 
-Authentication is made with the Shared Services AWS account, which then assumes the role into the target environment.  
+Authentication is made with the Shared Services AWS account, which then assumes the role into the target environment.
 
-Assuming you have been granted necessary access permissions to the Shared Service Account, please follow the CloudOps best practices provided [step-by-step guide](https://ministryofjustice.github.io/cloud-operations/documentation/team-guide/best-practices/use-aws-sso.html#re-configure-aws-vault) to configure your AWS Vault and AWS Cli with AWS SSO.  
+Assuming you have been granted necessary access permissions to the Shared Service Account, please follow the CloudOps best practices provided [step-by-step guide](https://ministryofjustice.github.io/cloud-operations/documentation/team-guide/best-practices/use-aws-sso.html#re-configure-aws-vault) to configure your AWS Vault and AWS Cli with AWS SSO.
 
-## Prepare the variables  
+## Prepare the variables
 
 1. Copy `.env.example` to `.env`
-1. Modify the `.env` file and provide values for variables as below:  
+1. Modify the `.env` file and provide values for variables as below:
 
-| Variables | How? |
-| --- | --- |
-| `AWS_PROFILE=` | your **AWS-CLI** profile name for the **Shared Services** AWS account. Check [this guide](https://ministryofjustice.github.io/cloud-operations/documentation/team-guide/best-practices/use-aws-sso.html#re-configure-aws-vault) if you need help. |
-| `AWS_DEFAULT_REGION=` | `eu-west-2` |
-| `ENV=` | your unique terraform workspace name. :bell: |  
+| Variables             | How?                                                                                                                                                                                                                                              |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `AWS_PROFILE=`        | your **AWS-CLI** profile name for the **Shared Services** AWS account. Check [this guide](https://ministryofjustice.github.io/cloud-operations/documentation/team-guide/best-practices/use-aws-sso.html#re-configure-aws-vault) if you need help. |
+| `AWS_DEFAULT_REGION=` | `eu-west-2`                                                                                                                                                                                                                                       |
+| `ENV=`                | your unique terraform workspace name. :bell:                                                                                                                                                                                                      |
 
-| :bell: HELP |  
-|:-----|  
-| See [Create Terraform workspace](#create-terraform-workspace) section to find out how to create a terraform workspace! |  
+| :bell: HELP                                                                                                            |
+| :--------------------------------------------------------------------------------------------------------------------- |
+| See [Create Terraform workspace](#create-terraform-workspace) section to find out how to create a terraform workspace! |
 
 ## Initialize your Terraform
 
@@ -82,27 +83,27 @@ make init
 
 If you do not have a Terraform workspace created already, use the command below to create a new workspace.
 
-### Create Terraform workspace  
+### Create Terraform workspace
 
 ```shell
 AWS_PROFILE=mojo-shared-services-cli terraform workspace new "YOUR_UNIQUE_WORKSPACE_NAME"
-```  
+```
 
 This should create a new workspace and select that new workspace at the same time.
 
->If you already have a workspace created use the command below to select the right workspace before continue.
+> If you already have a workspace created use the command below to select the right workspace before continue.
 >
->### View Terraform workspace list
+> ### View Terraform workspace list
 >
->```shell
->AWS_PROFILE=mojo-shared-services-cli terraform workspace list
->```
+> ```shell
+> AWS_PROFILE=mojo-shared-services-cli terraform workspace list
+> ```
 >
->### Select a Terraform workspace
+> ### Select a Terraform workspace
 >
->```shell
->AWS_PROFILE=mojo-shared-services-cli terraform workspace select "YOUR_WORKSPACE_NAME"
->```  
+> ```shell
+> AWS_PROFILE=mojo-shared-services-cli terraform workspace select "YOUR_WORKSPACE_NAME"
+> ```
 
 ### 4. Verify your email address for receiving emails
 
@@ -118,13 +119,14 @@ This should update your **Verification Status** to **Verified** AWS.
 
 ### 5. Set up your own development infrastructure
 
-1. Duplicate `terraform.tfvars.example` and rename the file to `terraform.tfvars`. This is also saved in the shared services aws accounts parameter store ([`/staff-infrastructure-monitoring/terraform.tfvars`](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/staff-infrastructure-monitoring/terraform.tfvars/description?region=eu-west-2&tab=Table)) with any shared values populated.
+1. Run `make generate-tfvars`. This will pull down the tfvars file from aws parameter store, there are some values you'll have to complete yourself, or replace placeholders with your workspace name.
 
 ```
 $ cp terraform.tfvars.example terraform.tfvars
 ```
 
 2. Set values for all the variables with `grafana_db_name` and `grafana_db_endpoint` set to `foo` for now. These values will be set after creating your own infrastructure.
+
 3. Create your infrastructure by running:
 
 ```
@@ -142,6 +144,7 @@ $ cd database/ && aws-vault exec moj-pttp-dev -- terraform init
 ```
 $ cp terraform.tfvars.example terraform.tfvars
 ```
+
 You will find the values for these `tfvars` outputted in the console after running the command in step 3
 
 6. Set values for all the variables using the Terraform outputs from creating your infrastructure in Step 1
@@ -173,11 +176,11 @@ To do so, see the README for each:
 - [Blackbox Exporter](https://github.com/ministryofjustice/staff-infrastructure-monitoring-blackbox-exporter)
 - [Metric Aggregation Server](https://github.com/ministryofjustice/staff-infrastructure-metric-aggregation-server) (Prometheus)
 
-11. Before you move onto any other repo's run the following to export your terraform outputs to parameter store: 
+11. Before you move onto any other repo's run the following to export your terraform outputs to parameter store:
 
 ```
 $ export ENV=<your-workspace-name>
-$ aws-vault exec moj-pttp-shared-services -- ./scripts/publish_terraform_outputs.sh 
+$ aws-vault exec moj-pttp-shared-services -- ./scripts/publish_terraform_outputs.sh
 ```
 
 ## Usage
