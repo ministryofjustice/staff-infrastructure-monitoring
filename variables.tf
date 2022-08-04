@@ -200,3 +200,13 @@ variable "quantum_dns_ip_1" {
 variable "quantum_dns_ip_2" {
   type = string
 }
+
+variable "byoip_pool_id" {
+  type = string
+}
+
+############# EKS Cluster feature flag #############219
+variable "is_eks_enabled" {
+  type    = bool
+  default = false
+}

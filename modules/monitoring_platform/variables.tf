@@ -29,6 +29,10 @@ variable "transit_gateway_route_table_id" {
   type = string
 }
 
+variable "byoip_pool_id" {
+  type = string
+}
+
 variable "vpc_cidr_block" {
   type = string
 }
