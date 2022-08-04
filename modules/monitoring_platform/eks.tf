@@ -16,9 +16,10 @@ module "monitoring_alerting_cluster" {
 module "eks_managed_node_group" {
   source = "terraform-aws-modules/eks/aws//modules/eks-managed-node-group"
 
-  name            = "${var.prefix}-eks-mng"
-  cluster_name    = module.monitoring_alerting_cluster.cluster_id
-  cluster_version = module.monitoring_alerting_cluster.cluster_version
+  name                     = "${var.prefix}-eks-mng"
+  iam_role_use_name_prefix = false
+  cluster_name             = module.monitoring_alerting_cluster.cluster_id
+  cluster_version          = module.monitoring_alerting_cluster.cluster_version
 
   vpc_id     = aws_vpc.main.id
   subnet_ids = aws_subnet.private.*.id
