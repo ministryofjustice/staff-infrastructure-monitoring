@@ -6,7 +6,7 @@ fmt:
 	terraform fmt --recursive
 
 init:
-	terraform init -reconfigure \
+	terraform init -upgrade -reconfigure \
 	--backend-config="key=terraform.development.state"
 
 generate-tfvars:

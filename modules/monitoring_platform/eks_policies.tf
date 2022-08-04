@@ -11,7 +11,7 @@ resource "aws_iam_policy" "s3_access_policy" {
 
 resource "aws_iam_role_policy_attachment" "s3_access_policy_attachment" {
   policy_arn = aws_iam_policy.s3_access_policy.arn
-  role       = module.monitoring_alerting_cluster.worker_iam_role_name
+  role       = module.eks_managed_node_group.iam_role_name
   count      = var.is_eks_enabled ? 1 : 0
 }
 
@@ -25,7 +25,7 @@ resource "aws_iam_policy" "kms_access_policy" {
 
 resource "aws_iam_role_policy_attachment" "kms_access_policy_attachment" {
   policy_arn = aws_iam_policy.kms_access_policy.arn
-  role       = module.monitoring_alerting_cluster.worker_iam_role_name
+  role       = module.eks_managed_node_group.iam_role_name
   count      = var.is_eks_enabled ? 1 : 0
 }
 
@@ -37,7 +37,7 @@ resource "aws_iam_policy" "route_53_access_policy" {
 
 resource "aws_iam_role_policy_attachment" "route_53_access_policy_attachment" {
   policy_arn = aws_iam_policy.route_53_access_policy.arn
-  role       = module.monitoring_alerting_cluster.worker_iam_role_name
+  role       = module.eks_managed_node_group.iam_role_name
   count      = var.is_eks_enabled ? 1 : 0
 }
 
@@ -49,13 +49,13 @@ resource "aws_iam_policy" "cloudwatch_access_eks_policy" {
 
 resource "aws_iam_role_policy_attachment" "cloudwatch_access_eks_policy_attachment" {
   policy_arn = aws_iam_policy.cloudwatch_access_eks_policy.arn
-  role       = module.monitoring_alerting_cluster.worker_iam_role_name
+  role       = module.eks_managed_node_group.iam_role_name
   count      = var.is_eks_enabled ? 1 : 0
 }
 
 resource "aws_iam_role_policy" "assume_cross_account_roles" {
   count  = local.any_cloudwatch_exporter_roles && var.is_eks_enabled ? 1 : 0
-  role   = module.monitoring_alerting_cluster.worker_iam_role_name
+  role   = module.eks_managed_node_group.iam_role_name
   policy = element(data.aws_iam_policy_document.assume_cross_account_roles.*.json, 0)
 }
 
