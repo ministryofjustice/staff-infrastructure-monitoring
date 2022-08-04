@@ -15,6 +15,7 @@ module "monitoring_alerting_cluster" {
 
 module "eks_managed_node_group" {
   source = "terraform-aws-modules/eks/aws//modules/eks-managed-node-group"
+  create = var.is_eks_enabled
 
   name                     = "${var.prefix}-eks-mng"
   iam_role_use_name_prefix = false
