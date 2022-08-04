@@ -43,7 +43,7 @@ output "eks_cluster_endpoint" {
 }
 
 output "eks_cluster_worker_iam_role_arn" {
-  value = module.monitoring_alerting_cluster.worker_iam_role_arn
+  value = module.eks_managed_node_group.iam_role_arn
 }
 
 output "cloudwatch_access_policy" {
