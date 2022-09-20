@@ -5,7 +5,7 @@ env:
     TF_INPUT: 0
     TF_VAR_env: $ENV
     TF_IN_AUTOMATION: true
-    TF_VAR_enable_transit_gateway: true
+    TF_VAR_enable_transit_gateway: false
     TF_VAR_owner_email: pttp@justice.gov.uk
     TF_VAR_enable_critical_notifications: true
   parameter-store:
