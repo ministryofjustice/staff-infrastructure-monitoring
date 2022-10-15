@@ -1,6 +1,6 @@
 module "monitoring_alerting_cluster" {
   source                          = "terraform-aws-modules/eks/aws"
-  version                         = "18.26.6"
+  version                         = "18.30.2"
   create                          = var.is_eks_enabled
   cluster_name                    = "${var.prefix}-cluster"
   cluster_version                 = "1.21"
