@@ -72,12 +72,4 @@ phases:
       - terraform providers
       - terraform workspace new $ENV || true
       - terraform workspace select $ENV
-      - terraform apply --auto-approve -no-color
-      - ./scripts/publish_terraform_outputs.sh
-
-  post_build:
-    commands:
-      - ./scripts/authenticate_docker.sh
-      - cd scripts/
-      - bundle install
-      - bundle exec ruby create_ci_user.rb
+      - terraform destroy --auto-approve -no-color
