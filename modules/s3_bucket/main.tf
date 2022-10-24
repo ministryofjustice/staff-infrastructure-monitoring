@@ -27,10 +27,10 @@ resource "aws_s3_bucket" "encrypted" {
   }
 }
 
-resource "aws_s3_bucket_acl" "encrypted" {
-  bucket = "${var.prefix_pttp}-${var.name}"
-  acl    = var.acl
-}
+# resource "aws_s3_bucket_acl" "encrypted" {
+#   bucket = "${var.prefix_pttp}-${var.name}"
+#   acl    = var.acl
+# }
 
 resource "aws_s3_bucket_logging" "encrypted_logging" {
   count  = 0
@@ -41,7 +41,7 @@ resource "aws_s3_bucket_logging" "encrypted_logging" {
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "encrypted_s3" {
-  count  = var.encryption_enabled ? 1 : 0
+  count  = 0
   bucket = "${var.prefix_pttp}-${var.name}"
 
   rule {
@@ -52,12 +52,12 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "encrypted_s3" {
   }
 }
 
-resource "aws_s3_bucket_versioning" "versioning_encrypted" {
-  bucket = "${var.prefix_pttp}-${var.name}"
-  versioning_configuration {
-    status = var.versioning_status
-  }
-}
+# resource "aws_s3_bucket_versioning" "versioning_encrypted" {
+#   bucket = "${var.prefix_pttp}-${var.name}"
+#   versioning_configuration {
+#     status = var.versioning_status
+#   }
+# }
 
 
 resource "aws_s3_bucket" "non-encrypted" {
@@ -75,10 +75,10 @@ resource "aws_s3_bucket" "non-encrypted" {
   }
 }
 
-resource "aws_s3_bucket_acl" "non-encrypted" {
-  bucket = "${var.prefix_pttp}-${var.name}"
-  acl    = var.acl
-}
+# resource "aws_s3_bucket_acl" "non-encrypted" {
+#   bucket = "${var.prefix_pttp}-${var.name}"
+#   acl    = var.acl
+# }
 
 resource "aws_s3_bucket_logging" "non_encrypted_logging" {
   count  = 0
@@ -96,13 +96,13 @@ resource "aws_s3_bucket_logging" "non_encrypted_logging" {
 # }
 
 resource "aws_s3_bucket_metric" "encrypted" {
-  count  = var.encryption_enabled ? 1 : 0
+  count  = 0
   bucket = aws_s3_bucket.encrypted[0].bucket
   name   = "EntireBucket"
 }
 
 resource "aws_s3_bucket_metric" "non-encrypted" {
-  count  = var.encryption_enabled ? 0 : 1
+  count  = 0
   bucket = aws_s3_bucket.non-encrypted[0].bucket
   name   = "EntireBucket"
 }
@@ -117,7 +117,7 @@ resource "aws_s3_bucket_metric" "non-encrypted" {
 # S3 Bucket Policy
 
 resource "aws_s3_bucket_policy" "this" {
-  count = local.attach_policy ? 1 : 0
+  count = 0
 
   bucket = var.encryption_enabled ? aws_s3_bucket.encrypted[0].id : aws_s3_bucket.non-encrypted[0].id
   policy = data.aws_iam_policy_document.combined[0].json
