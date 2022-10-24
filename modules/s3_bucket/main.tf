@@ -33,7 +33,7 @@ resource "aws_s3_bucket_acl" "encrypted" {
 }
 
 resource "aws_s3_bucket_logging" "encrypted_logging" {
-  count  = var.target_bucket == "" ? 0 : 1
+  count  = 0
   bucket = "${var.prefix_pttp}-${var.name}"
 
   target_bucket = var.target_bucket
@@ -81,7 +81,7 @@ resource "aws_s3_bucket_acl" "non-encrypted" {
 }
 
 resource "aws_s3_bucket_logging" "non_encrypted_logging" {
-  count  = var.target_bucket == "" ? 0 : 1
+  count  = 0
   bucket = "${var.prefix_pttp}-${var.name}"
 
   target_bucket = var.target_bucket
