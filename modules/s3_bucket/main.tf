@@ -88,12 +88,12 @@ resource "aws_s3_bucket_logging" "non_encrypted_logging" {
   target_prefix = "logs/${var.name}"
 }
 
-resource "aws_s3_bucket_versioning" "versioning_non_encrypted" {
-  bucket = "${var.prefix_pttp}-${var.name}"
-  versioning_configuration {
-    status = var.versioning_status
-  }
-}
+# resource "aws_s3_bucket_versioning" "versioning_non_encrypted" {
+#   bucket = "${var.prefix_pttp}-${var.name}"
+#   versioning_configuration {
+#     status = var.versioning_status
+#   }
+# }
 
 resource "aws_s3_bucket_metric" "encrypted" {
   count  = var.encryption_enabled ? 1 : 0
